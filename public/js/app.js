@@ -1871,29 +1871,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       almacenes: [],
       modoEditar: false,
       almacen: {
-        nombre: '',
-        descripcion: ''
+        nombre: ''
       }
     };
   },
   created: function created() {
     var _this = this;
 
-    axios.get('/almacenes').then(function (res) {
+    axios.get('/almacen').then(function (res) {
       _this.almacenes = res.data;
     });
   },
@@ -1901,17 +1892,16 @@ __webpack_require__.r(__webpack_exports__);
     agregar: function agregar() {
       var _this2 = this;
 
-      if (this.almacen.nombre.trim() === '' || this.almacen.descripcion.trim() === '') {
+      if (this.almacen.nombre.trim() === '') {
         alert('Debes completar todos los campos antes de guardar');
         return;
       }
 
       var almacenNuevo = this.almacen;
       this.almacen = {
-        nombre: '',
-        descripcion: ''
+        nombre: ''
       };
-      axios.post('/almacenes', almacenNuevo).then(function (res) {
+      axios.post('/almacen', almacenNuevo).then(function (res) {
         var almacenServidor = res.data;
 
         _this2.almacenes.push(almacenServidor);
@@ -1919,7 +1909,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     editarFormulario: function editarFormulario(item) {
       this.almacen.nombre = item.nombre;
-      this.almacen.descripcion = item.descripcion;
       this.almacen.id = item.id;
       this.modoEditar = true;
     },
@@ -1927,10 +1916,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var params = {
-        nombre: almacen.nombre,
-        descripcion: almacen.descripcion
+        nombre: almacen.nombre
       };
-      axios.put("/almacenes/".concat(almacen.id), params).then(function (res) {
+      axios.put("/almacen/".concat(almacen.id), params).then(function (res) {
         _this3.modoEditar = false;
 
         var index = _this3.almacenes.findIndex(function (item) {
@@ -1946,7 +1934,7 @@ __webpack_require__.r(__webpack_exports__);
       var confirmacion = confirm("Eliminar almacen ".concat(almacen.nombre));
 
       if (confirmacion) {
-        axios["delete"]("/almacenes/".concat(almacen.id)).then(function () {
+        axios["delete"]("/almacen/".concat(almacen.id)).then(function () {
           _this4.almacenes.splice(index, 1);
         });
       }
@@ -1954,8 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
     cancelarEdicion: function cancelarEdicion() {
       this.modoEditar = false;
       this.almacen = {
-        nombre: '',
-        descripcion: ''
+        nombre: ''
       };
     }
   }
@@ -37339,28 +37326,6 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.almacen.descripcion,
-                  expression: "almacen.descripcion"
-                }
-              ],
-              staticClass: "form-control mb-2",
-              attrs: { type: "text", placeholder: "Descripción de la almacen" },
-              domProps: { value: _vm.almacen.descripcion },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.almacen, "descripcion", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
             _c(
               "button",
               { staticClass: "btn btn-warning", attrs: { type: "submit" } },
@@ -37413,28 +37378,6 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.almacen.descripcion,
-                  expression: "almacen.descripcion"
-                }
-              ],
-              staticClass: "form-control mb-2",
-              attrs: { type: "text", placeholder: "Descripción de la almacen" },
-              domProps: { value: _vm.almacen.descripcion },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.almacen, "descripcion", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
             _c(
               "button",
               { staticClass: "btn btn-primary", attrs: { type: "submit" } },
@@ -37445,7 +37388,7 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("h3", [_vm._v("Lista de almacens:")]),
+    _c("h3", [_vm._v("Lista de almacenes:")]),
     _vm._v(" "),
     _c(
       "ul",
@@ -37453,12 +37396,10 @@ var render = function() {
       _vm._l(_vm.almacenes, function(item, index) {
         return _c("li", { key: index, staticClass: "list-group-item" }, [
           _c("span", { staticClass: "badge badge-primary float-right" }, [
-            _vm._v("\n          " + _vm._s(item.updated_at) + "\n        ")
+            _vm._v(" Almacen Tag\n        ")
           ]),
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(item.nombre))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(item.descripcion))]),
           _vm._v(" "),
           _c("p", [
             _c(

@@ -9,6 +9,9 @@
 
   <title>Admin | Nueva Inglaterra</title>
 
+  <!-- Menu Toggle Script --> 
+  <script> function toogle(){ var x = document.getElementById("wrapper"); x.classList.toggle("toggled"); } </script>
+
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -42,7 +45,7 @@
       <div id="page-content-wrapper">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-          <button class="btn btn-primary" id="menu-toggle"><<</button>
+          <button class="btn btn-primary" id="toggleButton" onClick="toogle();"><<</button>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -77,21 +80,7 @@
       </div>
       <!-- /#page-content-wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
-
-    <!-- Bootstrap core JavaScript
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    -->
-    <!-- Menu Toggle Script 
-    <script>
-      $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-      });
-    </script>
-    -->
+    </div>    
   </div>
 </body>
 
