@@ -4,23 +4,18 @@
     <div class="card-body">
   <div>
     <div v-if="modoEditar">
-    <form @submit.prevent="editarAlmacen(almacen)">
       <h3>Editar almacen</h3>
       <input type="text" class="form-control mb-2" placeholder="Nombre de la almacen" v-model="almacen.nombre">
-      <button class="btn btn-warning" type="submit">Editar</button>
+      <button class="btn btn-warning" @click="editarAlmacen(almacen)">Editar</button>
       <button class="btn btn-danger" @click="cancelar">Cancelar</button>
-    </form>
     <hr>
     </div>
-    
+
     <div v-if="modoCrear">
-      <form @submit.prevent="agregar()">
       <h3>Nuevo Almacen</h3>
       <input type="text" class="form-control mb-2" placeholder="Nombre de la almacen" v-model="almacen.nombre">
-      <button class="btn btn-warning" type="submit">Editar</button>
+      <button class="btn btn-primary" @click="agregar">Guardar</button>
       <button class="btn btn-danger" @click="cancelar">Cancelar</button>
-    </form>
-
     </div>
 
     <table class="table" v-if="modoVista">
@@ -65,17 +60,19 @@ export default {
   },
   methods:{
     agregar(){
-      if(this.almacen.nombre.trim() === ''){
+      if(this.almacen.nombre.length == 0){
         alert('Debes completar todos los campos antes de guardar');
         return;
       }
       const almacenNuevo = this.almacen;
-      this.almacen = {nombre: ''};    
-      
+      this.almacen = {nombre: ''};
+
       axios.post('./almacenes', almacenNuevo)
         .then((res) =>{
           const almacenServidor = res.data;
-          this.modoCrear=true;
+          this.modoCrear=false;
+          modoEditar: false;
+          this.modoVista=true;
           this.almacenes.push(almacenServidor);
         })
     },
@@ -90,10 +87,16 @@ export default {
       this.modoVista = false;
     },
     editarAlmacen(almacen){
+      if(this.almacen.nombre.length == 0){
+        alert('Debes completar todos los campos antes de Actualizar');
+        return;
+      }
       const params = {nombre: almacen.nombre};
       axios.put(`./almacenes/${almacen.idAlmacen}`, params)
         .then(res=>{
           this.modoEditar = false;
+          this.modoCrear = false;
+          this.modoVista = true;
           this.almacen.nombre = '';
           const index = this.almacenes.findIndex(item => item.idAlmacen === almacen.idAlmacen);
           this.almacenes[index] = res.data;
