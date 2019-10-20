@@ -1,6 +1,6 @@
 <template>
 <div class="card">
-  <div class="card-header"><b>GESTIÓN DE ALMACENES</b> <button class="btn btn-primary btn-sm" @click="crearFormulario()">+</button> </div>
+  <div class="card-header"><button class="btn btn-primary btn-sm" @click="crearFormulario()">☩</button> <b>GESTIÓN DE ALMACENES</b> </div>
     <div class="card-body">
   <div>
     <div v-if="modoEditar">
@@ -23,8 +23,8 @@
 
     </div>
 
-    <table class="table table-dark">
-  <thead>
+    <table class="table" v-if="modoVista">
+  <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Nombre</th>
@@ -36,8 +36,8 @@
       <th scope="row">{{item.idAlmacen}}</th>
       <td>{{item.nombre}}</td>
       <td>
-        <button class="btn btn-warning btn-sm" @click="editarFormulario(item)">Editar</button>
-        <button class="btn btn-danger btn-sm" @click="eliminarAlmacen(item, index)">Eliminar</button>
+        <button class="btn btn-warning btn-sm" @click="editarFormulario(item)">✎ </button>
+        <button class="btn btn-danger btn-sm" @click="eliminarAlmacen(item, index)">✕ </button>
       </td>
     </tr>
   </tbody>
@@ -54,6 +54,7 @@ export default {
       almacenes: [],
       modoEditar: false,
       modoCrear: false,
+      modoVista: true,
       almacen: {nombre: ''}
     }
   },
@@ -80,11 +81,13 @@ export default {
     },
     crearFormulario(){
       this.modoCrear = true;
+      this.modoVista = false;
     },
     editarFormulario(item){
       this.almacen.nombre = item.nombre;
       this.almacen.idAlmacen = item.idAlmacen;
       this.modoEditar = true;
+      this.modoVista = false;
     },
     editarAlmacen(almacen){
       const params = {nombre: almacen.nombre};
@@ -108,6 +111,7 @@ export default {
     cancelar(){
       this.modoCrear = false;
       this.modoEditar = false;
+      this.modoVista = true;
       this.almacen = {nombre: ''};
     }
   }

@@ -1893,6 +1893,7 @@ __webpack_require__.r(__webpack_exports__);
       almacenes: [],
       modoEditar: false,
       modoCrear: false,
+      modoVista: true,
       almacen: {
         nombre: ''
       }
@@ -1927,11 +1928,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     crearFormulario: function crearFormulario() {
       this.modoCrear = true;
+      this.modoVista = false;
     },
     editarFormulario: function editarFormulario(item) {
       this.almacen.nombre = item.nombre;
       this.almacen.idAlmacen = item.idAlmacen;
       this.modoEditar = true;
+      this.modoVista = false;
     },
     editarAlmacen: function editarAlmacen(almacen) {
       var _this3 = this;
@@ -1964,6 +1967,7 @@ __webpack_require__.r(__webpack_exports__);
     cancelar: function cancelar() {
       this.modoCrear = false;
       this.modoEditar = false;
+      this.modoVista = true;
       this.almacen = {
         nombre: ''
       };
@@ -37314,8 +37318,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header" }, [
-      _c("b", [_vm._v("GESTIÓN DE ALMACENES")]),
-      _vm._v(" "),
       _c(
         "button",
         {
@@ -37326,8 +37328,10 @@ var render = function() {
             }
           }
         },
-        [_vm._v("+")]
-      )
+        [_vm._v("☩")]
+      ),
+      _vm._v(" "),
+      _c("b", [_vm._v("GESTIÓN DE ALMACENES")])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -37458,51 +37462,53 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("table", { staticClass: "table table-dark" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.almacenes, function(item, index) {
-              return _c("tr", { key: index }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _vm._v(_vm._s(item.idAlmacen))
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.nombre))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning btn-sm",
-                      on: {
-                        click: function($event) {
-                          return _vm.editarFormulario(item)
-                        }
-                      }
-                    },
-                    [_vm._v("Editar")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger btn-sm",
-                      on: {
-                        click: function($event) {
-                          return _vm.eliminarAlmacen(item, index)
-                        }
-                      }
-                    },
-                    [_vm._v("Eliminar")]
-                  )
-                ])
-              ])
-            }),
-            0
-          )
-        ])
+        _vm.modoVista
+          ? _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.almacenes, function(item, index) {
+                  return _c("tr", { key: index }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(item.idAlmacen))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.nombre))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning btn-sm",
+                          on: {
+                            click: function($event) {
+                              return _vm.editarFormulario(item)
+                            }
+                          }
+                        },
+                        [_vm._v("✎ ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm",
+                          on: {
+                            click: function($event) {
+                              return _vm.eliminarAlmacen(item, index)
+                            }
+                          }
+                        },
+                        [_vm._v("✕ ")]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          : _vm._e()
       ])
     ])
   ])
@@ -37512,7 +37518,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
