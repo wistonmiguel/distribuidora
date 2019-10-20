@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Almacen;
 
 class AlmacenController extends Controller
@@ -19,8 +18,9 @@ class AlmacenController extends Controller
      */
     public function index(Request $request)
     {
+        //return Almacen::all();
         if($request->ajax()){
-            return Nota::where('user_id', auth()->id())->get();
+            return Almacen::all();
         }else{
             return view('almacen');
         }
@@ -33,11 +33,7 @@ class AlmacenController extends Controller
      */
     public function create()
     {
-        $almacen = new Almacen();
-        $almacen->nombre = $request->nombre;
-        $almacen->save();
-
-        return $nota;
+        
     }
 
     /**
@@ -48,7 +44,11 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $almacen = new Almacen();
+        $almacen->nombre = $request->nombre;
+        $almacen->save();
+
+        return $almacen;
     }
 
     /**
@@ -94,9 +94,9 @@ class AlmacenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idAlmacen)
     {
-        $almacen = Almacen::find($id);
+        $almacen = Almacen::find($idAlmacen);
         $almacen->delete();
     }
 }

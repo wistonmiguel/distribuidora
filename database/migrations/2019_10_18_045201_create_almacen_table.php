@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProveedorsTable extends Migration
+class CreateAlmacenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateProveedorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('proveedores', function (Blueprint $table) {
-            $table->bigIncrements('idProveedor');
-            $table->string('Nombre');
-            $table->string('Telefono');
-            $table->string('Direccion');
+        Schema::create('almacen', function (Blueprint $table) {
+            $table->bigIncrements('idAlmacen');
+            $table->string('nombre');
         });
     }
 
@@ -28,6 +26,6 @@ class CreateProveedorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proveedores');
+        Schema::dropIfExists('almacen');
     }
 }

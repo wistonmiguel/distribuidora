@@ -1871,11 +1871,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       almacenes: [],
       modoEditar: false,
+      modoCrear: false,
       almacen: {
         nombre: ''
       }
@@ -1884,7 +1901,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get('/almacen').then(function (res) {
+    axios.get('./almacenes').then(function (res) {
       _this.almacenes = res.data;
     });
   },
@@ -1901,15 +1918,19 @@ __webpack_require__.r(__webpack_exports__);
       this.almacen = {
         nombre: ''
       };
-      axios.post('/almacen', almacenNuevo).then(function (res) {
+      axios.post('./almacenes', almacenNuevo).then(function (res) {
         var almacenServidor = res.data;
+        _this2.modoCrear = true;
 
         _this2.almacenes.push(almacenServidor);
       });
     },
+    crearFormulario: function crearFormulario() {
+      this.modoCrear = true;
+    },
     editarFormulario: function editarFormulario(item) {
       this.almacen.nombre = item.nombre;
-      this.almacen.id = item.id;
+      this.almacen.idAlmacen = item.idAlmacen;
       this.modoEditar = true;
     },
     editarAlmacen: function editarAlmacen(almacen) {
@@ -1918,11 +1939,12 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         nombre: almacen.nombre
       };
-      axios.put("/almacen/".concat(almacen.id), params).then(function (res) {
+      axios.put("./almacenes/".concat(almacen.idAlmacen), params).then(function (res) {
         _this3.modoEditar = false;
+        _this3.almacen.nombre = '';
 
         var index = _this3.almacenes.findIndex(function (item) {
-          return item.id === almacen.id;
+          return item.idAlmacen === almacen.idAlmacen;
         });
 
         _this3.almacenes[index] = res.data;
@@ -1931,15 +1953,16 @@ __webpack_require__.r(__webpack_exports__);
     eliminarAlmacen: function eliminarAlmacen(almacen, index) {
       var _this4 = this;
 
-      var confirmacion = confirm("Eliminar almacen ".concat(almacen.nombre));
+      var confirmacion = confirm("Eliminar ".concat(almacen.nombre));
 
       if (confirmacion) {
-        axios["delete"]("/almacen/".concat(almacen.id)).then(function () {
+        axios["delete"]("./almacenes/".concat(almacen.idAlmacen)).then(function () {
           _this4.almacenes.splice(index, 1);
         });
       }
     },
-    cancelarEdicion: function cancelarEdicion() {
+    cancelar: function cancelar() {
+      this.modoCrear = false;
       this.modoEditar = false;
       this.almacen = {
         nombre: ''
@@ -37289,152 +37312,217 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.modoEditar
-      ? _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.editarAlmacen(_vm.almacen)
-              }
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _c("b", [_vm._v("GESTIÓN DE ALMACENES")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary btn-sm",
+          on: {
+            click: function($event) {
+              return _vm.crearFormulario()
             }
-          },
-          [
-            _c("h3", [_vm._v("Editar almacen")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+          }
+        },
+        [_vm._v("+")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", [
+        _vm.modoEditar
+          ? _c("div", [
+              _c(
+                "form",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.almacen.nombre,
-                  expression: "almacen.nombre"
-                }
-              ],
-              staticClass: "form-control mb-2",
-              attrs: { type: "text", placeholder: "Nombre de la almacen" },
-              domProps: { value: _vm.almacen.nombre },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.editarAlmacen(_vm.almacen)
+                    }
                   }
-                  _vm.$set(_vm.almacen, "nombre", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-warning", attrs: { type: "submit" } },
-              [_vm._v("Editar")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger",
-                attrs: { type: "submit" },
-                on: { click: _vm.cancelarEdicion }
-              },
-              [_vm._v("Cancelar")]
-            )
-          ]
-        )
-      : _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.agregar($event)
-              }
-            }
-          },
-          [
-            _c("h3", [_vm._v("Agregar almacen")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+                },
+                [
+                  _c("h3", [_vm._v("Editar almacen")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.almacen.nombre,
+                        expression: "almacen.nombre"
+                      }
+                    ],
+                    staticClass: "form-control mb-2",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Nombre de la almacen"
+                    },
+                    domProps: { value: _vm.almacen.nombre },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.almacen, "nombre", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: { click: _vm.cancelar }
+                    },
+                    [_vm._v("Cancelar")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.modoCrear
+          ? _c("div", [
+              _c(
+                "form",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.almacen.nombre,
-                  expression: "almacen.nombre"
-                }
-              ],
-              staticClass: "form-control mb-2",
-              attrs: { type: "text", placeholder: "Nombre de la almacen" },
-              domProps: { value: _vm.almacen.nombre },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.agregar()
+                    }
                   }
-                  _vm.$set(_vm.almacen, "nombre", $event.target.value)
-                }
-              }
+                },
+                [
+                  _c("h3", [_vm._v("Nuevo Almacen")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.almacen.nombre,
+                        expression: "almacen.nombre"
+                      }
+                    ],
+                    staticClass: "form-control mb-2",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Nombre de la almacen"
+                    },
+                    domProps: { value: _vm.almacen.nombre },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.almacen, "nombre", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: { click: _vm.cancelar }
+                    },
+                    [_vm._v("Cancelar")]
+                  )
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("table", { staticClass: "table table-dark" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.almacenes, function(item, index) {
+              return _c("tr", { key: index }, [
+                _c("th", { attrs: { scope: "row" } }, [
+                  _vm._v(_vm._s(item.idAlmacen))
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.nombre))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-sm",
+                      on: {
+                        click: function($event) {
+                          return _vm.editarFormulario(item)
+                        }
+                      }
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm",
+                      on: {
+                        click: function($event) {
+                          return _vm.eliminarAlmacen(item, index)
+                        }
+                      }
+                    },
+                    [_vm._v("Eliminar")]
+                  )
+                ])
+              ])
             }),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-              [_vm._v("Agregar")]
-            )
-          ]
-        ),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Lista de almacenes:")]),
-    _vm._v(" "),
-    _c(
-      "ul",
-      { staticClass: "list-group" },
-      _vm._l(_vm.almacenes, function(item, index) {
-        return _c("li", { key: index, staticClass: "list-group-item" }, [
-          _c("span", { staticClass: "badge badge-primary float-right" }, [
-            _vm._v(" Almacen Tag\n        ")
-          ]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(item.nombre))]),
-          _vm._v(" "),
-          _c("p", [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning btn-sm",
-                on: {
-                  click: function($event) {
-                    return _vm.editarFormulario(item)
-                  }
-                }
-              },
-              [_vm._v("Editar")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger btn-sm",
-                on: {
-                  click: function($event) {
-                    return _vm.eliminarAlmacen(item, index)
-                  }
-                }
-              },
-              [_vm._v("Eliminar")]
-            )
-          ])
+            0
+          )
         ])
-      }),
-      0
-    )
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
