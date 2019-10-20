@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Bienvenido {{ Auth::user()->name }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,8 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    Bienvenido a su Panel de Administración Nueva Inglaterra!
+                    <div class="my-4" style="text-align: center;">
+                    <img class="img-fluid" src="{{ asset('./img/logo.png') }}" />
+                    </div>
                 </div>
             </div>
         </div>
