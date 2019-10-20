@@ -19,11 +19,31 @@ class AlmacenController extends Controller
     public function index(Request $request)
     {
         //return Almacen::all();
+        /*
         if($request->ajax()){
             return Almacen::all();
         }else{
             return view('almacen');
         }
+        */
+        if($request->ajax()){
+        $almacen = Almacen::orderBy('idAlmacen', 'DESC')->paginate(3);
+        return [
+            'pagination' => [
+                'total'         => $almacen->total(),
+                'current_page'  => $almacen->currentPage(),
+                'per_page'      => $almacen->perPage(),
+                'last_page'     => $almacen->lastPage(),
+                'from'          => $almacen->firstItem(),
+                'to'            => $almacen->lastItem(),
+            ],
+            'almacen' => $almacen
+        ];
+    }
+    else
+    {
+        return view('almacen');
+    }
     }
 
     /**
@@ -33,7 +53,7 @@ class AlmacenController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**

@@ -9,7 +9,7 @@
 
   <title>Admin | Nueva Inglaterra</title>
 
-  <!-- Menu Toggle Script --> 
+  <!-- Menu Toggle Script -->
   <script> function toogle(){ var x = document.getElementById("wrapper"); x.classList.toggle("toggled"); } </script>
 
   <!-- Scripts -->
@@ -45,7 +45,7 @@
       <div id="page-content-wrapper">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-          <button class="btn btn-primary" id="toggleButton" onClick="toogle();"><<</button>
+          <a title='Menu Lateral' style='cursor: pointer;' id="toggleButton" onClick="toogle();">🔁</a>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -80,7 +80,7 @@
       </div>
       <!-- /#page-content-wrapper -->
 
-    </div>    
+    </div>
   </div>
 </body>
 
