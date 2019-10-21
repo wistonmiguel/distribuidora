@@ -5,8 +5,14 @@
  */
 
 require('./bootstrap');
+import Vue from "vue";
+import App from "./App";
+import Vuelidate from "vuelidate";
+import "./assets/styles/app.scss";
 
-window.Vue = require('vue');
+Vue.config.productionTip = false;
+
+Vue.use(Vuelidate);
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,7 +32,6 @@ Vue.component('almacen-crud', require('./components/AlmacenComponent.vue').defau
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 const app = new Vue({
     el: '#app',
 });

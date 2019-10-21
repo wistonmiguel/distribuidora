@@ -18,14 +18,6 @@ class AlmacenController extends Controller
      */
     public function index(Request $request)
     {
-        //return Almacen::all();
-        /*
-        if($request->ajax()){
-            return Almacen::all();
-        }else{
-            return view('almacen');
-        }
-        */
         if($request->ajax()){
         $almacen = Almacen::orderBy('idAlmacen', 'DESC')->paginate(3);
         return [
@@ -64,6 +56,10 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required'
+        ]);
+
         $almacen = new Almacen();
         $almacen->nombre = $request->nombre;
         $almacen->save();
