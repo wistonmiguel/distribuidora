@@ -2,13 +2,13 @@
     <div class="card">
         <div class="card-header" v-if="modoVista">
             <button title="Nuevo" style="border-radius: 80%;" class="btn btn-primary btn-sm" @click="viewCreateForm()">✚</button>
-            &nbsp;&nbsp;&nbsp;<b>GESTIÓN DE PROVEEDORES</b>
+            &nbsp;&nbsp;&nbsp;<b>GESTIÓN DE PRODUCTOS</b>
         </div>
         <div class="card-header" v-if="modoCrear">
-            <b>NUEVO PROVEEDOR</b>
+            <b>NUEVO PRODUCTO</b>
         </div>
         <div class="card-header" v-if="modoEditar">
-            <b>EDICIÓN DE PROVEEDOR</b>
+            <b>EDICIÓN DE PRODUCTO</b>
         </div>
         <div class="card-body">
             <div>
@@ -16,11 +16,11 @@
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
                         <label for="formGroupExampleInput">Nombre</label>
-                        <input type="text" class="form-control mb-2" placeholder="Nombre del Proveedor" v-model="model.Nombre">
-                        <label for="formGroupExampleInput">Telefono</label>
-                        <input type="text" class="form-control mb-2" placeholder="Telefono del Proveedor" v-model="model.Telefono">
-                        <label for="formGroupExampleInput">Direccion</label>
-                        <input type="text" class="form-control mb-2" placeholder="Direccion del Proveedor" v-model="model.Direccion">
+                        <input type="text" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Descripcion">
+                        <label for="formGroupExampleInput">Marca</label>
+                        <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Marca">
+                        <label for="formGroupExampleInput">Proveedor</label>
+                        <input type="text" class="form-control mb-2" placeholder="Proveedor del Producto" v-model="model.idProveedor">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-warning" @click="updateModel(model)">Actualizar</button>
@@ -33,11 +33,11 @@
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
                         <label for="formGroupExampleInput">Nombre</label>
-                        <input type="text" class="form-control mb-2" placeholder="Nombre del Proveedor" v-model="model.Nombre">
-                        <label for="formGroupExampleInput">Telefono</label>
-                        <input type="text" class="form-control mb-2" placeholder="Telefono del Proveedor" v-model="model.Telefono">
-                        <label for="formGroupExampleInput">Direccion</label>
-                        <input type="text" class="form-control mb-2" placeholder="Direccion del Proveedor" v-model="model.Direccion">
+                        <input type="text" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Descripcion">
+                        <label for="formGroupExampleInput">Marca</label>
+                        <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Marca">
+                        <label for="formGroupExampleInput">Proveedor</label>
+                        <input type="text" class="form-control mb-2" placeholder="Proveedor del Producto" v-model="model.idProveedor">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
@@ -53,8 +53,8 @@
 
                         <!-- MODEL_ATTR -->
                         <th>Nombre</th>
-                        <th>Telefono</th>
-                        <th>Direccion</th>
+                        <th>Marca</th>
+                        <th>Proveedor</th>
 
                         <th width="15%" scope="col">Acciones</th>
                         </tr>
@@ -63,10 +63,10 @@
                         <tr v-for="(item, index) in models" :key="index">
 
                         <!-- MODEL_ATTR -->
-                        <th scope="row">{{item.idProveedor}}</th>
-                        <td>{{item.Nombre}}</td>
-                        <td>{{item.Telefono}}</td>
-                        <td>{{item.Direccion}}</td>
+                        <th scope="row">{{item.idProducto}}</th>
+                        <td>{{item.Descripcion}}</td>
+                        <td>{{item.Marca}}</td>
+                        <td>{{item.idProveedor}}</td>
 
                         <td>
                             <button title="Editar" class="btn btn-success btn-sm" @click="viewUpdateForm(item)"><b style='color: white;'>✎</b></button>
@@ -118,11 +118,11 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Nombre: '', Telefono: '', Direccion: ''}
+      model: {Descripcion: '', Marca: '', idProveedor: ''}
     }
   },
   created(){
-    axios.get('./proveedores').then(res=>{
+    axios.get('./productos').then(res=>{
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     })
@@ -158,22 +158,22 @@ export default {
   },
   methods:{
     getAllData(page){
-    axios.get('./proveedores?page='+page).then(res=>{
+    axios.get('./productos?page='+page).then(res=>{
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     })
     },
     insertModel(page){
-      if(this.model.Nombre.length == 0){
+      if(this.model.Descripcion.length == 0){
         alert('Debes completar todos los campos antes de guardar');
         return;
       }
       const newModel = this.model;
 
       //MODEL_ATTR
-      this.model = {Nombre: '', Telefono: '', Direccion: ''};
+      this.model = {Descripcion: '', Marca: '', idProveedor: ''};
 
-      axios.post('./proveedores', newModel)
+      axios.post('./productos', newModel)
         .then((res) =>{
           this.modoCrear=false;
           this.modoEditar=false;
@@ -189,43 +189,43 @@ export default {
     },
     viewUpdateForm(item){
         //MODEL_ATTR
+        this.model.idProducto = item.idProducto;
+        this.model.Descripcion = item.Descripcion;
+        this.model.Marca = item.Marca;
         this.model.idProveedor = item.idProveedor;
-        this.model.Nombre = item.Nombre;
-        this.model.Telefono = item.Telefono;
-        this.model.Direccion = item.Direccion;
 
         this.modoEditar = true;
         this.modoCrear = false;
         this.modoVista = false;
     },
     updateModel(model){
-      if(this.model.Nombre.length == 0){
+      if(this.model.Descripcion.length == 0){
         alert('Debes completar todos los campos antes de Actualizar');
         return;
       }
 
       //MODEL_ATTR
-      const params = {Nombre: model.Nombre, Telefono: model.Telefono, Direccion: model.Direccion};
+      const params = {Descripcion: model.Descripcion, Marca: model.Marca, idProveedor: model.idProveedor};
 
-      axios.put(`./proveedores/${model.idProveedor}`, params)
+      axios.put(`./productos/${model.idProducto}`, params)
         .then(res=>{
           this.modoEditar = false;
           this.modoCrear = false;
           this.modoVista = true;
 
           //MODEL_ATTR
-          this.model.Nombre = '';
-          this.model.Telefono = '';
-          this.model.Direccion = '';
+          this.model.Descripcion = '';
+          this.model.Marca = '';
+          this.model.idProveedor = '';
 
-          const index = this.models.findIndex(item => item.idProveedor === model.idProveedor);
+          const index = this.models.findIndex(item => item.idProducto === model.idProducto);
           this.models[index] = res.data;
         })
     },
     deleteModel(model, index, page){
-      const confirmacion = confirm(`Eliminar ${model.Nombre}`);
+      const confirmacion = confirm(`Eliminar ${model.Descripcion}`);
       if(confirmacion){
-        axios.delete(`./proveedores/${model.idProveedor}`)
+        axios.delete(`./productos/${model.idProducto}`)
           .then(()=>{
         //this.models.splice(index, 1);
             this.changePage(page);
@@ -237,8 +237,7 @@ export default {
       this.modoEditar = false;
       this.modoVista = true;
 
-      //MODEL_ATTR
-      this.model = {Nombre: '', Telefono: '', Direccion: ''};
+      this.model = {Descripcion: '', Marca: '', idProveedor: ''};
     },
     changePage(page){
         //alert(page);

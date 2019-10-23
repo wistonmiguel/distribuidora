@@ -35,9 +35,10 @@
       <div class="bg-light border-right" id="sidebar-wrapper">
         <div class="sidebar-heading">Nueva Inglaterra App</div>
         <div class="list-group list-group-flush">
-          <a href="{{ asset('./home') }}" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+          <a href="{{ asset('./home') }}" class="list-group-item list-group-item-action bg-light">CATÁLOGOS</a>
           <a href="{{ asset('./almacenes') }}" class="list-group-item list-group-item-action bg-light">Almacen</a>
           <a href="{{ asset('./proveedores') }}" class="list-group-item list-group-item-action bg-light">Proveedor</a>
+          <a href="{{ asset('./productos') }}" class="list-group-item list-group-item-action bg-light">Productos</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
