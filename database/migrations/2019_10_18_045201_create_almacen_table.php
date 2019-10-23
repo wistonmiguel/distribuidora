@@ -15,7 +15,7 @@ class CreateAlmacenTable extends Migration
     {
         Schema::create('almacen', function (Blueprint $table) {
             $table->bigIncrements('idAlmacen');
-            $table->string('nombre');
+            $table->string('Nombre');
         });
     }
 

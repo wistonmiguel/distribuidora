@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Almacen;
+use App\Proveedor;
 
-class AlmacenController extends Controller
+class ProveedorController extends Controller
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class AlmacenController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-        $data_model = Almacen::orderBy('idAlmacen', 'DESC')->paginate(3);
+        $data_model = Proveedor::orderBy('idProveedor', 'DESC')->paginate(3);
         return [
             'pagination' => [
                 'total'         => $data_model->total(),
@@ -34,7 +34,7 @@ class AlmacenController extends Controller
     }
     else
     {
-        return view('almacen');
+        return view('proveedor');
     }
     }
 
@@ -60,8 +60,10 @@ class AlmacenController extends Controller
             'Nombre' => 'required'
         ]);
 
-        $data_model = new Almacen();
+        $data_model = new Proveedor();
         $data_model->Nombre = $request->Nombre;
+        $data_model->Telefono = $request->Telefono;
+        $data_model->Direccion = $request->Direccion;
         $data_model->save();
 
         return $data_model;
@@ -98,8 +100,10 @@ class AlmacenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data_model = Almacen::find($id);
+        $data_model = Proveedor::find($id);
         $data_model->Nombre = $request->Nombre;
+        $data_model->Telefono = $request->Telefono;
+        $data_model->Direccion = $request->Direccion;
         $data_model->save();
         return $data_model;
     }
@@ -110,9 +114,9 @@ class AlmacenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($idAlmacen)
+    public function destroy($idProveedor)
     {
-        $data_model = Almacen::find($idAlmacen);
+        $data_model = Proveedor::find($idProveedor);
         $data_model->delete();
     }
 }

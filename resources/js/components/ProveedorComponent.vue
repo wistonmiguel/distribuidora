@@ -2,20 +2,24 @@
     <div class="card">
         <div class="card-header" v-if="modoVista">
             <button title="Nuevo" style="border-radius: 80%;" class="btn btn-primary btn-sm" @click="viewCreateForm()">✚</button>
-            &nbsp;&nbsp;&nbsp;<b>GESTIÓN DE ALMACENES</b>
+            &nbsp;&nbsp;&nbsp;<b>GESTIÓN DE PROVEEDORES</b>
         </div>
         <div class="card-header" v-if="modoCrear">
-            <b>NUEVO ALMACEN</b>
+            <b>NUEVO PROVEEDOR</b>
         </div>
         <div class="card-header" v-if="modoEditar">
-            <b>EDICIÓN DE ALMACEN</b>
+            <b>EDICIÓN DE PROVEEDOR</b>
         </div>
         <div class="card-body">
             <div>
                 <div v-if="modoEditar">
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Nombre del Almacen</label>
-                        <input type="text" class="form-control mb-2" placeholder="Nombre del Almacen" v-model="model.Nombre">
+                        <label for="formGroupExampleInput">Nombre</label>
+                        <input type="text" class="form-control mb-2" placeholder="Nombre del Proveedor" v-model="model.Nombre">
+                        <label for="formGroupExampleInput">Telefono</label>
+                        <input type="text" class="form-control mb-2" placeholder="Telefono del Proveedor" v-model="model.Telefono">
+                        <label for="formGroupExampleInput">Direccion</label>
+                        <input type="text" class="form-control mb-2" placeholder="Direccion del Proveedor" v-model="model.Direccion">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-warning" @click="updateModel(model)">Actualizar</button>
@@ -26,9 +30,12 @@
 
                 <div v-if="modoCrear">
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Nombre del Almacen</label>
-                        <input type="text" class="form-control mb-2" placeholder="Nombre del almacen" v-model="model.Nombre">
-
+                        <label for="formGroupExampleInput">Nombre</label>
+                        <input type="text" class="form-control mb-2" placeholder="Nombre del Proveedor" v-model="model.Nombre">
+                        <label for="formGroupExampleInput">Telefono</label>
+                        <input type="text" class="form-control mb-2" placeholder="Telefono del Proveedor" v-model="model.Telefono">
+                        <label for="formGroupExampleInput">Direccion</label>
+                        <input type="text" class="form-control mb-2" placeholder="Direccion del Proveedor" v-model="model.Direccion">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
@@ -42,13 +49,17 @@
                         <tr>
                         <th width="10%" scope="col">#</th>
                         <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Direccion</th>
                         <th width="15%" scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in models" :key="index">
-                        <th scope="row">{{item.idAlmacen}}</th>
+                        <th scope="row">{{item.idProveedor}}</th>
                         <td>{{item.Nombre}}</td>
+                        <td>{{item.Telefono}}</td>
+                        <td>{{item.Direccion}}</td>
                         <td>
                             <button title="Editar" class="btn btn-success btn-sm" @click="viewUpdateForm(item)"><b style='color: white;'>✎</b></button>
                             <button title="Eliminar" class="btn btn-danger btn-sm" @click="deleteModel(item, index, pagination.current_page)"><b>✕</b></button>
@@ -98,11 +109,11 @@ export default {
     to: 0
     },
     offset: 1,
-      model: {Nombre: ''}
+      model: {Nombre: '', Telefono: '', Direccion: ''}
     }
   },
   created(){
-    axios.get('./almacenes').then(res=>{
+    axios.get('./proveedores').then(res=>{
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     })
@@ -138,7 +149,7 @@ export default {
   },
   methods:{
     getAllData(page){
-    axios.get('./almacenes?page='+page).then(res=>{
+    axios.get('./proveedores?page='+page).then(res=>{
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     })
@@ -149,17 +160,15 @@ export default {
         return;
       }
       const newModel = this.model;
-      this.model = {Nombre: ''};
+      this.model = {Nombre: '', Telefono: '', Direccion: ''};
 
-      axios.post('./almacenes', newModel)
+      axios.post('./proveedores', newModel)
         .then((res) =>{
-          //const almacenServidor = res.data;
           this.modoCrear=false;
           this.modoEditar=false;
           this.modoVista=true;
 
           this.changePage(1);
-          //this.models.push(almacenServidor);
         })
     },
     viewCreateForm(){
@@ -168,33 +177,37 @@ export default {
       this.modoVista = false;
     },
     viewUpdateForm(item){
-      this.model.Nombre = item.Nombre;
-      this.model.idAlmacen = item.idAlmacen;
-      this.modoEditar = true;
-      this.modoCrear = false;
-      this.modoVista = false;
+        this.model.idProveedor = item.idProveedor;
+        this.model.Nombre = item.Nombre;
+        this.model.Telefono = item.Telefono;
+        this.model.Direccion = item.Direccion;
+        this.modoEditar = true;
+        this.modoCrear = false;
+        this.modoVista = false;
     },
     updateModel(model){
       if(this.model.Nombre.length == 0){
         alert('Debes completar todos los campos antes de Actualizar');
         return;
       }
-      const params = {Nombre: model.Nombre};
-      axios.put(`./almacenes/${model.idAlmacen}`, params)
+      const params = {Nombre: model.Nombre, Telefono: model.Telefono, Direccion: model.Direccion};
+      axios.put(`./proveedores/${model.idProveedor}`, params)
         .then(res=>{
           this.modoEditar = false;
           this.modoCrear = false;
           this.modoVista = true;
           this.model.Nombre = '';
+          this.model.Telefono = '';
+          this.model.Direccion = '';
 
-          const index = this.models.findIndex(item => item.idAlmacen === model.idAlmacen);
+          const index = this.models.findIndex(item => item.idProveedor === model.idProveedor);
           this.models[index] = res.data;
         })
     },
     deleteModel(model, index, page){
       const confirmacion = confirm(`Eliminar ${model.Nombre}`);
       if(confirmacion){
-        axios.delete(`./almacenes/${model.idAlmacen}`)
+        axios.delete(`./proveedores/${model.idProveedor}`)
           .then(()=>{
         //this.models.splice(index, 1);
             this.changePage(page);
@@ -208,6 +221,7 @@ export default {
       this.model = {Nombre: ''};
     },
     changePage(page){
+        //alert(page);
         this.pagination.current_page = page;
         this.getAllData(page);
     }

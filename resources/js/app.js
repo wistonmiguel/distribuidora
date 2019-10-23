@@ -5,14 +5,8 @@
  */
 
 require('./bootstrap');
-import Vue from "vue";
-import App from "./App";
-import Vuelidate from "vuelidate";
-import "./assets/styles/app.scss";
 
-Vue.config.productionTip = false;
-
-Vue.use(Vuelidate);
+window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,11 +21,13 @@ Vue.use(Vuelidate);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('almacen-crud', require('./components/AlmacenComponent.vue').default);
+Vue.component('proveedor-crud', require('./components/ProveedorComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
 const app = new Vue({
     el: '#app',
 });
