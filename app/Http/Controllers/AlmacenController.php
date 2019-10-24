@@ -38,6 +38,16 @@ class AlmacenController extends Controller
     }
     }
 
+    //FUNCION PARA IMPLEMENTAR
+    public function getAll(Request $request)
+    {
+            $data_model = Almacen::orderBy('Nombre', 'ASC')->get();
+            return [
+                'model' => $data_model
+            ];
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

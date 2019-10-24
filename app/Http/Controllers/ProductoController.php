@@ -21,23 +21,11 @@ class ProductoController extends Controller
     {
         if($request->ajax()){
 
-        /*
-        $data_model = DB::table('links')
-          ->select('links.title', 'school_status.school_code')
-          ->join('school_status','links.id','=','school_status.link_id')
-          ->where('links.id','!=',35)
-          ->where('school_status.academic_year','=','2014-15')
-          ->get();
-          $data_model = Producto::orderBy('idProducto', 'DESC')->paginate(10);
-          */
-
           $data_model = Producto::select("producto.*", "proveedor.Nombre")
           ->join("proveedor","proveedor.idProveedor","=","producto.idProveedor")
           ->orderBy('producto.idProducto', 'DESC')->paginate(10);
 
-        //return response()->json(['data' => $users], 200);
-
-        return [
+          return [
             'pagination' => [
                 'total'         => $data_model->total(),
                 'current_page'  => $data_model->currentPage(),

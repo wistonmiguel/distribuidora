@@ -23,7 +23,7 @@
                         <input type="text" class="form-control mb-2" placeholder="Direccion del Proveedor" v-model="model.Direccion">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-warning" @click="updateModel(model)">Actualizar</button>
+                        <button class="btn btn-warning" @click="updateModel(model, pagination.current_page)">Actualizar</button>
                         <button class="btn btn-danger" @click="cancelForm">Cancelar</button>
                     </div>
                     <hr>
@@ -198,7 +198,7 @@ export default {
         this.modoCrear = false;
         this.modoVista = false;
     },
-    updateModel(model){
+    updateModel(model, page){
       if(this.model.Nombre.length == 0){
         alert('Debes completar todos los campos antes de Actualizar');
         return;
@@ -217,9 +217,7 @@ export default {
           this.model.Nombre = '';
           this.model.Telefono = '';
           this.model.Direccion = '';
-
-          const index = this.models.findIndex(item => item.idProveedor === model.idProveedor);
-          this.models[index] = res.data;
+          this.changePage(page);
         })
     },
     deleteModel(model, index, page){
@@ -227,7 +225,6 @@ export default {
       if(confirmacion){
         axios.delete(`./proveedores/${model.idProveedor}`)
           .then(()=>{
-        //this.models.splice(index, 1);
             this.changePage(page);
           })
       }

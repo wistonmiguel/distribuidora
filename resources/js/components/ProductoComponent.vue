@@ -130,12 +130,14 @@ export default {
   },
   created(){
     axios.get('./productos').then(res=>{
+    this.models = null;
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     });
 
-    axios.get('./proveedores').then(res=>{
-    this.fk1 = res.data.model.data;
+    axios.get('./proveedores/getAll').then(res=>{
+    this.fk1 = null;
+    this.fk1 = res.data.model;
     });
   },
   computed: {
@@ -205,7 +207,6 @@ export default {
         this.model.Descripcion = item.Descripcion;
         this.model.Marca = item.Marca;
         this.model.idProveedor = item.idProveedor;
-        this.model.Nombre = item.Nombre;
 
         this.modoEditar = true;
         this.modoCrear = false;
@@ -218,7 +219,7 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Descripcion: model.Descripcion, Marca: model.Marca, idProveedor: model.idProveedor, Nombre: model.Nombre};
+      const params = {Descripcion: model.Descripcion, Marca: model.Marca, idProveedor: model.idProveedor};
 
       axios.put(`./productos/${model.idProducto}`, params)
         .then(res=>{
@@ -230,10 +231,7 @@ export default {
           this.model.Descripcion = '';
           this.model.Marca = '';
           this.model.idProveedor = '';
-          this.model.Nombre = '';
 
-          const index = this.models.findIndex(item => item.idProducto === model.idProducto);
-          this.models[index] = res.data;
           this.changePage(1);
         })
     },
@@ -242,7 +240,6 @@ export default {
       if(confirmacion){
         axios.delete(`./productos/${model.idProducto}`)
           .then(()=>{
-        //this.models.splice(index, 1);
             this.changePage(page);
           })
       }
@@ -251,11 +248,9 @@ export default {
       this.modoCrear = false;
       this.modoEditar = false;
       this.modoVista = true;
-
       this.model = {Descripcion: '', Marca: '', idProveedor: ''};
     },
     changePage(page){
-        //alert(page);
         this.pagination.current_page = page;
         this.getAllData(page);
     }

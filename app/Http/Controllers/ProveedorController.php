@@ -19,8 +19,9 @@ class ProveedorController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-        $data_model = Proveedor::orderBy('idProveedor', 'DESC')->paginate(3);
-        return [
+            $data_model = Proveedor::orderBy('idProveedor', 'DESC')->paginate(3);
+
+            return [
             'pagination' => [
                 'total'         => $data_model->total(),
                 'current_page'  => $data_model->currentPage(),
@@ -35,6 +36,17 @@ class ProveedorController extends Controller
     else
     {
         return view('proveedor');
+    }
+    }
+
+    //FUNCION PARA IMPLEMENTAR
+    public function getAll(Request $request)
+    {
+        if($request->ajax()){
+            $data_model = Proveedor::orderBy('Nombre', 'ASC')->get();
+            return [
+                'model' => $data_model
+            ];
     }
     }
 

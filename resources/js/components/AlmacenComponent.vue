@@ -18,7 +18,7 @@
                         <input type="text" class="form-control mb-2" placeholder="Nombre del Almacen" v-model="model.Nombre">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-warning" @click="updateModel(model)">Actualizar</button>
+                        <button class="btn btn-warning" @click="updateModel(model, pagination.current_page)">Actualizar</button>
                         <button class="btn btn-danger" @click="cancelForm">Cancelar</button>
                     </div>
                     <hr>
@@ -103,6 +103,7 @@ export default {
   },
   created(){
     axios.get('./almacenes').then(res=>{
+    this.models = null;
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     })
@@ -139,6 +140,7 @@ export default {
   methods:{
     getAllData(page){
     axios.get('./almacenes?page='+page).then(res=>{
+    this.models = null;
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     })
@@ -153,13 +155,11 @@ export default {
 
       axios.post('./almacenes', newModel)
         .then((res) =>{
-          //const almacenServidor = res.data;
           this.modoCrear=false;
           this.modoEditar=false;
           this.modoVista=true;
 
           this.changePage(1);
-          //this.models.push(almacenServidor);
         })
     },
     viewCreateForm(){
@@ -174,7 +174,7 @@ export default {
       this.modoCrear = false;
       this.modoVista = false;
     },
-    updateModel(model){
+    updateModel(model, page){
       if(this.model.Nombre.length == 0){
         alert('Debes completar todos los campos antes de Actualizar');
         return;
@@ -186,9 +186,7 @@ export default {
           this.modoCrear = false;
           this.modoVista = true;
           this.model.Nombre = '';
-
-          const index = this.models.findIndex(item => item.idAlmacen === model.idAlmacen);
-          this.models[index] = res.data;
+          this.changePage(page);
         })
     },
     deleteModel(model, index, page){

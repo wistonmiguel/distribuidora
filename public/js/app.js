@@ -1946,6 +1946,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('./almacenes').then(function (res) {
+      _this.models = null;
       _this.models = res.data.model.data;
       _this.pagination = res.data.pagination;
     });
@@ -1986,6 +1987,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('./almacenes?page=' + page).then(function (res) {
+        _this2.models = null;
         _this2.models = res.data.model.data;
         _this2.pagination = res.data.pagination;
       });
@@ -2003,13 +2005,11 @@ __webpack_require__.r(__webpack_exports__);
         Nombre: ''
       };
       axios.post('./almacenes', newModel).then(function (res) {
-        //const almacenServidor = res.data;
         _this3.modoCrear = false;
         _this3.modoEditar = false;
         _this3.modoVista = true;
 
-        _this3.changePage(1); //this.models.push(almacenServidor);
-
+        _this3.changePage(1);
       });
     },
     viewCreateForm: function viewCreateForm() {
@@ -2024,7 +2024,7 @@ __webpack_require__.r(__webpack_exports__);
       this.modoCrear = false;
       this.modoVista = false;
     },
-    updateModel: function updateModel(model) {
+    updateModel: function updateModel(model, page) {
       var _this4 = this;
 
       if (this.model.Nombre.length == 0) {
@@ -2041,11 +2041,7 @@ __webpack_require__.r(__webpack_exports__);
         _this4.modoVista = true;
         _this4.model.Nombre = '';
 
-        var index = _this4.models.findIndex(function (item) {
-          return item.idAlmacen === model.idAlmacen;
-        });
-
-        _this4.models[index] = res.data;
+        _this4.changePage(page);
       });
     },
     deleteModel: function deleteModel(model, index, page) {
@@ -2257,11 +2253,13 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('./productos').then(function (res) {
+      _this.models = null;
       _this.models = res.data.model.data;
       _this.pagination = res.data.pagination;
     });
-    axios.get('./proveedores').then(function (res) {
-      _this.fk1 = res.data.model.data;
+    axios.get('./proveedores/getAll').then(function (res) {
+      _this.fk1 = null;
+      _this.fk1 = res.data.model;
     });
   },
   computed: {
@@ -2339,7 +2337,6 @@ __webpack_require__.r(__webpack_exports__);
       this.model.Descripcion = item.Descripcion;
       this.model.Marca = item.Marca;
       this.model.idProveedor = item.idProveedor;
-      this.model.Nombre = item.Nombre;
       this.modoEditar = true;
       this.modoCrear = false;
       this.modoVista = false;
@@ -2356,8 +2353,7 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         Descripcion: model.Descripcion,
         Marca: model.Marca,
-        idProveedor: model.idProveedor,
-        Nombre: model.Nombre
+        idProveedor: model.idProveedor
       };
       axios.put("./productos/".concat(model.idProducto), params).then(function (res) {
         _this4.modoEditar = false;
@@ -2367,13 +2363,6 @@ __webpack_require__.r(__webpack_exports__);
         _this4.model.Descripcion = '';
         _this4.model.Marca = '';
         _this4.model.idProveedor = '';
-        _this4.model.Nombre = '';
-
-        var index = _this4.models.findIndex(function (item) {
-          return item.idProducto === model.idProducto;
-        });
-
-        _this4.models[index] = res.data;
 
         _this4.changePage(1);
       });
@@ -2385,7 +2374,6 @@ __webpack_require__.r(__webpack_exports__);
 
       if (confirmacion) {
         axios["delete"]("./productos/".concat(model.idProducto)).then(function () {
-          //this.models.splice(index, 1);
           _this5.changePage(page);
         });
       }
@@ -2401,7 +2389,6 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     changePage: function changePage(page) {
-      //alert(page);
       this.pagination.current_page = page;
       this.getAllData(page);
     }
@@ -2631,7 +2618,7 @@ __webpack_require__.r(__webpack_exports__);
       this.modoCrear = false;
       this.modoVista = false;
     },
-    updateModel: function updateModel(model) {
+    updateModel: function updateModel(model, page) {
       var _this4 = this;
 
       if (this.model.Nombre.length == 0) {
@@ -2654,11 +2641,7 @@ __webpack_require__.r(__webpack_exports__);
         _this4.model.Telefono = '';
         _this4.model.Direccion = '';
 
-        var index = _this4.models.findIndex(function (item) {
-          return item.idProveedor === model.idProveedor;
-        });
-
-        _this4.models[index] = res.data;
+        _this4.changePage(page);
       });
     },
     deleteModel: function deleteModel(model, index, page) {
@@ -2668,7 +2651,6 @@ __webpack_require__.r(__webpack_exports__);
 
       if (confirmacion) {
         axios["delete"]("./proveedores/".concat(model.idProveedor)).then(function () {
-          //this.models.splice(index, 1);
           _this5.changePage(page);
         });
       }
@@ -38073,7 +38055,10 @@ var render = function() {
                     staticClass: "btn btn-warning",
                     on: {
                       click: function($event) {
-                        return _vm.updateModel(_vm.model)
+                        return _vm.updateModel(
+                          _vm.model,
+                          _vm.pagination.current_page
+                        )
                       }
                     }
                   },
@@ -39026,7 +39011,10 @@ var render = function() {
                     staticClass: "btn btn-warning",
                     on: {
                       click: function($event) {
-                        return _vm.updateModel(_vm.model)
+                        return _vm.updateModel(
+                          _vm.model,
+                          _vm.pagination.current_page
+                        )
                       }
                     }
                   },
