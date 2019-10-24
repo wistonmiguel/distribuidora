@@ -20,7 +20,10 @@
                         <label for="formGroupExampleInput">Marca</label>
                         <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Marca">
                         <label for="formGroupExampleInput">Proveedor</label>
-                        <input type="text" class="form-control mb-2" placeholder="Proveedor del Producto" v-model="model.idProveedor">
+                        <select v-model="model.idProveedor" class="form-control">
+                            <option v-for="item in fk1" :key="item" :value="item.idProveedor">{{item.Nombre}}</option>
+                        </select>
+                        <!-- <input type="text" class="form-control mb-2" placeholder="Proveedor del Producto" v-model="model.idProveedor"> -->
                     </div>
                     <div class="form-group">
                         <button class="btn btn-warning" @click="updateModel(model)">Actualizar</button>
@@ -37,7 +40,10 @@
                         <label for="formGroupExampleInput">Marca</label>
                         <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Marca">
                         <label for="formGroupExampleInput">Proveedor</label>
-                        <input type="text" class="form-control mb-2" placeholder="Proveedor del Producto" v-model="model.idProveedor">
+                        <!-- FK -->
+                        <select v-model="model.idProveedor" class="form-control">
+                            <option v-for="item in fk1" :key="item" :value="item.idProveedor">{{item.Nombre}}</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
@@ -66,7 +72,7 @@
                         <th scope="row">{{item.idProducto}}</th>
                         <td>{{item.Descripcion}}</td>
                         <td>{{item.Marca}}</td>
-                        <td>{{item.idProveedor}}</td>
+                        <td>{{item.Nombre}}</td>
 
                         <td>
                             <button title="Editar" class="btn btn-success btn-sm" @click="viewUpdateForm(item)"><b style='color: white;'>✎</b></button>
@@ -105,6 +111,7 @@ export default {
   data() {
     return {
     models: [],
+    fk1: [], //proveedores
     modoEditar: false,
     modoCrear: false,
     modoVista: true,
@@ -125,7 +132,11 @@ export default {
     axios.get('./productos').then(res=>{
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
-    })
+    });
+
+    axios.get('./proveedores').then(res=>{
+    this.fk1 = res.data.model.data;
+    });
   },
   computed: {
     isActived(){
@@ -159,6 +170,7 @@ export default {
   methods:{
     getAllData(page){
     axios.get('./productos?page='+page).then(res=>{
+    this.models = null;
     this.models = res.data.model.data;
     this.pagination = res.data.pagination;
     })
@@ -193,6 +205,7 @@ export default {
         this.model.Descripcion = item.Descripcion;
         this.model.Marca = item.Marca;
         this.model.idProveedor = item.idProveedor;
+        this.model.Nombre = item.Nombre;
 
         this.modoEditar = true;
         this.modoCrear = false;
@@ -205,7 +218,7 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Descripcion: model.Descripcion, Marca: model.Marca, idProveedor: model.idProveedor};
+      const params = {Descripcion: model.Descripcion, Marca: model.Marca, idProveedor: model.idProveedor, Nombre: model.Nombre};
 
       axios.put(`./productos/${model.idProducto}`, params)
         .then(res=>{
@@ -217,9 +230,11 @@ export default {
           this.model.Descripcion = '';
           this.model.Marca = '';
           this.model.idProveedor = '';
+          this.model.Nombre = '';
 
           const index = this.models.findIndex(item => item.idProducto === model.idProducto);
           this.models[index] = res.data;
+          this.changePage(1);
         })
     },
     deleteModel(model, index, page){

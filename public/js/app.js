@@ -2221,10 +2221,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       models: [],
+      fk1: [],
+      //proveedores
       modoEditar: false,
       modoCrear: false,
       modoVista: true,
@@ -2251,6 +2259,9 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('./productos').then(function (res) {
       _this.models = res.data.model.data;
       _this.pagination = res.data.pagination;
+    });
+    axios.get('./proveedores').then(function (res) {
+      _this.fk1 = res.data.model.data;
     });
   },
   computed: {
@@ -2289,6 +2300,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('./productos?page=' + page).then(function (res) {
+        _this2.models = null;
         _this2.models = res.data.model.data;
         _this2.pagination = res.data.pagination;
       });
@@ -2327,6 +2339,7 @@ __webpack_require__.r(__webpack_exports__);
       this.model.Descripcion = item.Descripcion;
       this.model.Marca = item.Marca;
       this.model.idProveedor = item.idProveedor;
+      this.model.Nombre = item.Nombre;
       this.modoEditar = true;
       this.modoCrear = false;
       this.modoVista = false;
@@ -2343,7 +2356,8 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         Descripcion: model.Descripcion,
         Marca: model.Marca,
-        idProveedor: model.idProveedor
+        idProveedor: model.idProveedor,
+        Nombre: model.Nombre
       };
       axios.put("./productos/".concat(model.idProducto), params).then(function (res) {
         _this4.modoEditar = false;
@@ -2353,12 +2367,15 @@ __webpack_require__.r(__webpack_exports__);
         _this4.model.Descripcion = '';
         _this4.model.Marca = '';
         _this4.model.idProveedor = '';
+        _this4.model.Nombre = '';
 
         var index = _this4.models.findIndex(function (item) {
           return item.idProducto === model.idProducto;
         });
 
         _this4.models[index] = res.data;
+
+        _this4.changePage(1);
       });
     },
     deleteModel: function deleteModel(model, index, page) {
@@ -38473,30 +38490,47 @@ var render = function() {
                   _vm._v("Proveedor")
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.model.idProveedor,
-                      expression: "model.idProveedor"
-                    }
-                  ],
-                  staticClass: "form-control mb-2",
-                  attrs: {
-                    type: "text",
-                    placeholder: "Proveedor del Producto"
-                  },
-                  domProps: { value: _vm.model.idProveedor },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.model.idProveedor,
+                        expression: "model.idProveedor"
                       }
-                      _vm.$set(_vm.model, "idProveedor", $event.target.value)
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.model,
+                          "idProveedor",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                  }
-                })
+                  },
+                  _vm._l(_vm.fk1, function(item) {
+                    return _c(
+                      "option",
+                      { key: item, domProps: { value: item.idProveedor } },
+                      [_vm._v(_vm._s(item.Nombre))]
+                    )
+                  }),
+                  0
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -38586,30 +38620,47 @@ var render = function() {
                   _vm._v("Proveedor")
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.model.idProveedor,
-                      expression: "model.idProveedor"
-                    }
-                  ],
-                  staticClass: "form-control mb-2",
-                  attrs: {
-                    type: "text",
-                    placeholder: "Proveedor del Producto"
-                  },
-                  domProps: { value: _vm.model.idProveedor },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.model.idProveedor,
+                        expression: "model.idProveedor"
                       }
-                      _vm.$set(_vm.model, "idProveedor", $event.target.value)
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.model,
+                          "idProveedor",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                  }
-                })
+                  },
+                  _vm._l(_vm.fk1, function(item) {
+                    return _c(
+                      "option",
+                      { key: item, domProps: { value: item.idProveedor } },
+                      [_vm._v(_vm._s(item.Nombre))]
+                    )
+                  }),
+                  0
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -38656,7 +38707,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.Marca))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.idProveedor))]),
+                    _c("td", [_vm._v(_vm._s(item.Nombre))]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
