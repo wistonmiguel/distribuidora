@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('almacen-crud', require('./components/AlmacenComponent.vue').default);
 Vue.component('proveedor-crud', require('./components/ProveedorComponent.vue').default);
 Vue.component('producto-crud', require('./components/ProductoComponent.vue').default);
+Vue.component('inventario-crud', require('./components/InventarioComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -39,6 +39,7 @@
           <a href="{{ asset('./almacenes') }}" class="list-group-item list-group-item-action bg-light">Almacen</a>
           <a href="{{ asset('./proveedores') }}" class="list-group-item list-group-item-action bg-light">Proveedor</a>
           <a href="{{ asset('./productos') }}" class="list-group-item list-group-item-action bg-light">Productos</a>
+          <a href="{{ asset('./inventarios') }}" class="list-group-item list-group-item-action bg-light">Inventario</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->

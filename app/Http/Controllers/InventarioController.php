@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Producto;
+use App\Inventario;
 //use App\Proveedor;
 
-class ProductoController extends Controller
+class InventarioController extends Controller
 {
     public function __construct()
     {
@@ -20,10 +20,10 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-
-          $data_model = Producto::select("producto.*", "proveedor.Nombre")
-          ->join("proveedor","proveedor.idProveedor","=","producto.idProveedor")
-          ->orderBy('producto.idProducto', 'DESC')->paginate(10);
+          $data_model = Inventario::select("inventario.*", "producto.Descripcion", "almacen.Nombre")
+          ->join("producto","producto.idProducto","=","inventario.idProducto")
+          ->join("almacen","almacen.idAlmacen","=","inventario.idAlmacen")
+          ->orderBy('inventario.idInventario', 'DESC')->paginate(10);
 
           return [
             'pagination' => [
@@ -39,7 +39,7 @@ class ProductoController extends Controller
     }
     else
     {
-        return view('producto');
+        return view('inventario');
     }
     }
 
@@ -47,7 +47,7 @@ class ProductoController extends Controller
     public function getAll(Request $request)
     {
         if($request->ajax()){
-            $data_model = Producto::orderBy('Descripcion', 'ASC')->get();
+            $data_model = Inventario::orderBy('Descripcion', 'ASC')->get();
             return [
                 'model' => $data_model
             ];
@@ -73,15 +73,19 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Descripcion' => 'required',
-            'Marca' => 'required',
-            'idProveedor' => 'required'
+            'Stock' => 'required',
+            'Und_Medida' => 'required',
+            'Presentacion' => 'required',
+            'idProducto' => 'required',
+            'idAlmacen' => 'required'
         ]);
 
-        $data_model = new Producto();
-        $data_model->Descripcion = $request->Descripcion;
-        $data_model->Marca = $request->Marca;
-        $data_model->idProveedor = $request->idProveedor;
+        $data_model = new Inventario();
+        $data_model->Stock = $request->Stock;
+        $data_model->Und_Medida = $request->Und_Medida;
+        $data_model->Presentacion = $request->Presentacion;
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idAlmacen = $request->idAlmacen;
         $data_model->save();
 
         return $data_model;
@@ -118,10 +122,12 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data_model = Producto::find($id);
-        $data_model->Descripcion = $request->Descripcion;
-        $data_model->Marca = $request->Marca;
-        $data_model->idProveedor = $request->idProveedor;
+        $data_model = Inventario::find($id);
+        $data_model->Stock = $request->Stock;
+        $data_model->Und_Medida = $request->Und_Medida;
+        $data_model->Presentacion = $request->Presentacion;
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idAlmacen = $request->idAlmacen;
         $data_model->save();
         return $data_model;
     }
@@ -132,9 +138,9 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($idProducto)
+    public function destroy($idInventario)
     {
-        $data_model = Producto::find($idProducto);
+        $data_model = Inventario::find($idInventario);
         $data_model->delete();
     }
 }

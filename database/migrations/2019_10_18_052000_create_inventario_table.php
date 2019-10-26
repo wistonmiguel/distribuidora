@@ -14,12 +14,15 @@ class CreateInventarioTable extends Migration
     public function up()
     {
         Schema::create('inventario', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('idInventario');
+            $table->unsignedInteger('Stock');
+            $table->string('Und_Medida');
+            $table->string('Presentacion');
+            $table->unsignedBigInteger('idProducto'); // Relación con Producto
+            $table->foreign('idProducto')->references('idProducto')->on('producto'); // clave foranea
             $table->unsignedBigInteger('idAlmacen'); // Relación con Almacen
             $table->foreign('idAlmacen')->references('idAlmacen')->on('almacen'); // clave foranea
-            $table->unsignedBigInteger('idProveedor'); // Relación con Proveedor
-            $table->foreign('idProveedor')->references('idProveedor')->on('proveedor'); // clave foranea
-        });        
+        });
     }
 
     /**
