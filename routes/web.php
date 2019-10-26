@@ -10,3 +10,5 @@ Route::resource('/proveedores', 'ProveedorController')->middleware('auth');
 Route::get('/productos/getAll', 'ProductoController@getAll')->name('allProducto');
 Route::resource('/productos', 'ProductoController')->middleware('auth');
 Route::resource('/inventarios', 'InventarioController')->middleware('auth');
+Route::get('/compradores/getAll', 'CompradorController@getAll')->name('allComprador');
+Route::resource('/compradores', 'CompradorController')->middleware('auth');
