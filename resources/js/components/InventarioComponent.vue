@@ -18,9 +18,27 @@
                         <label for="formGroupExampleInput">Stock</label>
                         <input type="text" class="form-control mb-2" placeholder="Cantidad de Producto" v-model="model.Stock">
                         <label for="formGroupExampleInput">Medida</label>
-                        <input type="text" class="form-control mb-2" placeholder="Unidad de Medida" v-model="model.Und_Medida">
+                        <select v-model="model.Und_Medida" class="form-control">
+                            <option value="ml">ml</option>
+                            <option value="gr">gr</option>
+                            <option value="lt">lt</option>
+                            <option value="yd">yd</option>
+                            <option value="cm">cm</option>
+                            <option value="mt">mt</option>
+                            <option value="Galon">Galon</option>
+                            <option value="Unidad">Unidad</option>
+                        </select>
                         <label for="formGroupExampleInput">Presentacion</label>
-                        <input type="text" class="form-control mb-2" placeholder="Presentacion del Producto" v-model="model.Presentacion">
+                        <select v-model="model.Presentacion" class="form-control">
+                            <option value="Granel">Granel</option>
+                            <option value="Bolsa">Bolsa</option>
+                            <option value="Frasco">Frasco</option>
+                            <option value="Barra">Barra</option>
+                            <option value="Caja">Caja</option>
+                            <option value="Caja 12 Piezas">Caja 12 Piezas</option>
+                            <option value="Caja 24 Piezas">Caja 24 Piezas</option>
+                            <option value="Caja 100 Piezas">Caja 100 Piezas</option>
+                        </select>
                         <label for="formGroupExampleInput">Producto</label>
                         <select v-model="model.idProducto" class="form-control">
                             <option v-for="item1 in fk1" :key="item1" :value="item1.idProducto">{{item1.Descripcion}}</option>
@@ -43,9 +61,29 @@
                         <label for="formGroupExampleInput">Cantidad</label>
                         <input type="text" class="form-control mb-2" placeholder="Cantidad del Producto" v-model="model.Stock">
                         <label for="formGroupExampleInput">Medida</label>
-                        <input type="text" class="form-control mb-2" placeholder="Cantidad del Producto" v-model="model.Und_Medida">
+
+                        <select v-model="model.Und_Medida" class="form-control">
+                            <option value="ml">ml</option>
+                            <option value="gr">gr</option>
+                            <option value="lt">lt</option>
+                            <option value="yd">yd</option>
+                            <option value="cm">cm</option>
+                            <option value="mt">mt</option>
+                            <option value="Galon">Galon</option>
+                            <option value="Unidad">Unidad</option>
+                        </select>
+
                         <label for="formGroupExampleInput">Presentacion</label>
-                        <input type="text" class="form-control mb-2" placeholder="Presentacion del Producto" v-model="model.Presentacion">
+                        <select v-model="model.Presentacion" class="form-control">
+                            <option value="Granel">Granel</option>
+                            <option value="Bolsa">Bolsa</option>
+                            <option value="Frasco">Frasco</option>
+                            <option value="Barra">Barra</option>
+                            <option value="Caja">Caja</option>
+                            <option value="Caja 12 Piezas">Caja 12 Piezas</option>
+                            <option value="Caja 24 Piezas">Caja 24 Piezas</option>
+                            <option value="Caja 100 Piezas">Caja 100 Piezas</option>
+                        </select>
                         <label for="formGroupExampleInput">Producto</label>
                         <!-- FK1 -->
                         <select v-model="model.idProducto" class="form-control">

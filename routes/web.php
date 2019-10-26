@@ -16,3 +16,6 @@ Route::get('/clientes/getAll', 'ClienteController@getAll')->name('allCliente');
 Route::resource('/clientes', 'ClienteController')->middleware('auth');
 Route::get('/tipoPagos/getAll', 'TipoPagoController@getAll')->name('allTipoPago');
 Route::resource('/tipoPagos', 'TipoPagoController')->middleware('auth');
+
+
+Route::resource('/compras', 'CompraController')->middleware('auth');
