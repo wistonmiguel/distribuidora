@@ -1919,8 +1919,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2082,8 +2080,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2513,8 +2509,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2822,8 +2816,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3007,8 +2999,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -38674,9 +38664,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -38732,9 +38720,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -38796,101 +38782,107 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("hr", {
-          staticClass: "mb-4",
-          staticStyle: { "margin-top": "-16px" }
-        }),
+        _vm.modoVista
+          ? _c("hr", {
+              staticClass: "mb-4",
+              staticStyle: { "margin-top": "-16px" }
+            })
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticStyle: { float: "right", "margin-bottom": "-20px" },
-            attrs: { id: "paginationContainer" }
-          },
-          [
-            _c("nav", { attrs: { "aria-label": "..." } }, [
-              _c(
-                "ul",
-                { staticClass: "pagination" },
-                [
-                  _vm.pagination.current_page > 1
-                    ? _c("li", [
-                        _c(
-                          "a",
+        _vm.modoVista
+          ? _c(
+              "div",
+              {
+                staticStyle: { float: "right", "margin-bottom": "-20px" },
+                attrs: { id: "paginationContainer" }
+              },
+              [
+                _c("nav", { attrs: { "aria-label": "..." } }, [
+                  _c(
+                    "ul",
+                    { staticClass: "pagination" },
+                    [
+                      _vm.pagination.current_page > 1
+                        ? _c("li", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#", tabindex: "-1" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.changePage(
+                                      _vm.pagination.current_page - 1
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("Atras")]
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm._l(_vm.pagesNumber, function(page) {
+                        return _c(
+                          "li",
                           {
-                            staticClass: "page-link",
-                            attrs: { href: "#", tabindex: "-1" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.changePage(
-                                  _vm.pagination.current_page - 1
-                                )
-                              }
-                            }
-                          },
-                          [_vm._v("Atras")]
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm._l(_vm.pagesNumber, function(page) {
-                    return _c(
-                      "li",
-                      {
-                        key: page,
-                        class: [page == _vm.isActived ? "page-item active" : ""]
-                      },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "page-link",
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.changePage(page)
-                              }
-                            }
+                            key: page,
+                            class: [
+                              page == _vm.isActived ? "page-item active" : ""
+                            ]
                           },
                           [
-                            _vm._v(" " + _vm._s(page) + " "),
-                            _c("span", { staticClass: "sr-only" }, [
-                              _vm._v("(current)")
-                            ])
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.changePage(page)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(" " + _vm._s(page) + " "),
+                                _c("span", { staticClass: "sr-only" }, [
+                                  _vm._v("(current)")
+                                ])
+                              ]
+                            )
                           ]
                         )
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _vm.pagination.current_page < _vm.pagination.last_page
-                    ? _c("li", { staticClass: "page-item" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "page-link",
-                            attrs: { href: "#", tabindex: "-1" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.changePage(
-                                  _vm.pagination.current_page + 1
-                                )
-                              }
-                            }
-                          },
-                          [_vm._v("Siguiente")]
-                        )
-                      ])
-                    : _vm._e()
-                ],
-                2
-              )
-            ])
-          ]
-        )
+                      }),
+                      _vm._v(" "),
+                      _vm.pagination.current_page < _vm.pagination.last_page
+                        ? _c("li", { staticClass: "page-item" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#", tabindex: "-1" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.changePage(
+                                      _vm.pagination.current_page + 1
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("Siguiente")]
+                            )
+                          ])
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                ])
+              ]
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -39083,9 +39075,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -39199,9 +39189,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -39267,10 +39255,12 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("hr", {
-          staticClass: "mb-4",
-          staticStyle: { "margin-top": "-16px" }
-        }),
+        _vm.modoVista
+          ? _c("hr", {
+              staticClass: "mb-4",
+              staticStyle: { "margin-top": "-16px" }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
@@ -39691,9 +39681,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -39896,9 +39884,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -39964,10 +39950,12 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("hr", {
-          staticClass: "mb-4",
-          staticStyle: { "margin-top": "-16px" }
-        }),
+        _vm.modoVista
+          ? _c("hr", {
+              staticClass: "mb-4",
+              staticStyle: { "margin-top": "-16px" }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
@@ -40266,9 +40254,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -40396,9 +40382,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -40464,10 +40448,12 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("hr", {
-          staticClass: "mb-4",
-          staticStyle: { "margin-top": "-16px" }
-        }),
+        _vm.modoVista
+          ? _c("hr", {
+              staticClass: "mb-4",
+              staticStyle: { "margin-top": "-16px" }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
@@ -40755,9 +40741,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -40871,9 +40855,7 @@ var render = function() {
                   },
                   [_vm._v("Cancelar")]
                 )
-              ]),
-              _vm._v(" "),
-              _c("hr")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -40939,10 +40921,12 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("hr", {
-          staticClass: "mb-4",
-          staticStyle: { "margin-top": "-16px" }
-        }),
+        _vm.modoVista
+          ? _c("hr", {
+              staticClass: "mb-4",
+              staticStyle: { "margin-top": "-16px" }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",

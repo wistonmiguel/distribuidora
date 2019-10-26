@@ -21,7 +21,6 @@
                         <button class="btn btn-warning" @click="updateModel(model, pagination.current_page)">Actualizar</button>
                         <button class="btn btn-danger" @click="cancelForm">Cancelar</button>
                     </div>
-                    <hr>
                 </div>
 
                 <div v-if="modoCrear">
@@ -34,7 +33,6 @@
                         <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
                         <button class="btn btn-danger" @click="cancelForm">Cancelar</button>
                     </div>
-                    <hr>
                 </div>
 
                 <table class="table" v-if="modoVista">
@@ -57,9 +55,9 @@
                     </tbody>
                 </table>
 
-                <hr class="mb-4" style="margin-top: -16px;">
+                <hr v-if="modoVista" class="mb-4" style="margin-top: -16px;">
 
-                <div id="paginationContainer" style="float: right; margin-bottom: -20px;">
+                <div v-if="modoVista" id="paginationContainer" style="float: right; margin-bottom: -20px;">
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li v-if="pagination.current_page > 1">
