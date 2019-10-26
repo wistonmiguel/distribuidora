@@ -42,6 +42,7 @@
           <a href="{{ asset('./inventarios') }}" class="list-group-item list-group-item-action bg-light">Inventario</a>
           <a href="{{ asset('./compradores') }}" class="list-group-item list-group-item-action bg-light">Compradores</a>
           <a href="{{ asset('./clientes') }}" class="list-group-item list-group-item-action bg-light">Clientes</a>
+          <a href="{{ asset('./tipoPagos') }}" class="list-group-item list-group-item-action bg-light">Tipos de Pago</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
