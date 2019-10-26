@@ -12,3 +12,5 @@ Route::resource('/productos', 'ProductoController')->middleware('auth');
 Route::resource('/inventarios', 'InventarioController')->middleware('auth');
 Route::get('/compradores/getAll', 'CompradorController@getAll')->name('allComprador');
 Route::resource('/compradores', 'CompradorController')->middleware('auth');
+Route::get('/clientes/getAll', 'ClienteController@getAll')->name('allCliente');
+Route::resource('/clientes', 'ClienteController')->middleware('auth');

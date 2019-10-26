@@ -36,10 +36,12 @@
         <div class="sidebar-heading">Nueva Inglaterra App</div>
         <div class="list-group list-group-flush">
           <a href="{{ asset('./home') }}" class="list-group-item list-group-item-action bg-light">CATÁLOGOS</a>
-          <a href="{{ asset('./almacenes') }}" class="list-group-item list-group-item-action bg-light">Almacen</a>
-          <a href="{{ asset('./proveedores') }}" class="list-group-item list-group-item-action bg-light">Proveedor</a>
+          <a href="{{ asset('./almacenes') }}" class="list-group-item list-group-item-action bg-light">Almacenes</a>
+          <a href="{{ asset('./proveedores') }}" class="list-group-item list-group-item-action bg-light">Proveedores</a>
           <a href="{{ asset('./productos') }}" class="list-group-item list-group-item-action bg-light">Productos</a>
           <a href="{{ asset('./inventarios') }}" class="list-group-item list-group-item-action bg-light">Inventario</a>
+          <a href="{{ asset('./compradores') }}" class="list-group-item list-group-item-action bg-light">Compradores</a>
+          <a href="{{ asset('./clientes') }}" class="list-group-item list-group-item-action bg-light">Clientes</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
