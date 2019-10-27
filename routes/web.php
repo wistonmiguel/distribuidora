@@ -20,3 +20,5 @@ Route::resource('/tipoPagos', 'TipoPagoController')->middleware('auth');
 
 Route::get('/compras/getAll', 'CompraController@getAll')->name('allCompra');
 Route::resource('/compras', 'CompraController')->middleware('auth');
+Route::get('/detallecompras/getAll', 'CompraDetalleController@getAll')->name('allCompraDetalle');
+Route::resource('/detallecompras', 'CompraDetalleController')->middleware('auth');

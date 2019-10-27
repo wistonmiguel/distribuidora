@@ -2548,6 +2548,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2585,9 +2587,10 @@ __webpack_require__.r(__webpack_exports__);
       },
       model2: {
         idProducto: '',
-        idTransaccion: '',
+        Producto: '',
         Cantidad: '',
-        Precio: ''
+        Precio: '',
+        Total: ''
       }
     };
   },
@@ -2661,7 +2664,8 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var newModel = this.model; //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
+      var newModel = this.model;
+      var newModel2 = this.models2; //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
 
       this.model = {
         Fecha: '',
@@ -2670,11 +2674,22 @@ __webpack_require__.r(__webpack_exports__);
         idComprador: '',
         idProveedor: ''
       };
-      axios.post('./compras', newModel).then(function (res) {
+      this.model2 = {
+        idProducto: '',
+        Producto: '',
+        Cantidad: '',
+        Precio: '',
+        Total: ''
+      };
+      axios.post('./compras', {
+        newModel: newModel,
+        newModel2: newModel2
+      }).then(function (res) {
         _this3.modoCrear = false;
         _this3.modoCrearDetalle = false;
         _this3.modoEditar = false;
         _this3.modoVista = true;
+        _this3.models2 = null;
 
         _this3.changePage(1);
       });
@@ -2758,6 +2773,7 @@ __webpack_require__.r(__webpack_exports__);
       this.modoCrear = true;
       this.modoEditar = false;
       this.modoVista = false;
+      this.models2 = null;
     },
     cancelForm: function cancelForm() {
       this.modoCrear = false;
@@ -2771,23 +2787,27 @@ __webpack_require__.r(__webpack_exports__);
         idComprador: '',
         idProveedor: ''
       };
+      this.models2 = null;
     },
     changePage: function changePage(page) {
       this.pagination.current_page = page;
       this.getAllData(page);
     },
     addItem: function addItem() {
+      var array = this.Producto.split(',');
       var model2 = {
-        idProducto: this.idProducto,
-        idTransaccion: this.idTransaccion,
+        idProducto: array[0],
+        Producto: array[1],
         Cantidad: this.Cantidad,
-        Precio: this.Precio
+        Precio: this.Precio,
+        Total: this.Cantidad * this.Precio
       };
       this.models2.push(model2);
       this.idProducto = '';
-      this.idTransaccion = '';
+      this.Producto = '';
       this.Cantidad = '';
       this.Precio = '';
+      this.Total = '';
     }
   }
 });
@@ -40821,8 +40841,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.idProducto,
-                              expression: "idProducto"
+                              value: _vm.Producto,
+                              expression: "Producto"
                             }
                           ],
                           staticClass: "custom-select",
@@ -40837,7 +40857,7 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.idProducto = $event.target.multiple
+                              _vm.Producto = $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
                             }
@@ -40846,7 +40866,12 @@ var render = function() {
                         _vm._l(_vm.fk4, function(item) {
                           return _c(
                             "option",
-                            { key: item, domProps: { value: item.idProducto } },
+                            {
+                              key: item,
+                              domProps: {
+                                value: item.idProducto + "," + item.Descripcion
+                              }
+                            },
                             [_vm._v(_vm._s(item.Descripcion))]
                           )
                         }),
@@ -40957,11 +40982,13 @@ var render = function() {
                           return _c("tr", { key: item }, [
                             _c("td", [_vm._v(_vm._s(item.idProducto))]),
                             _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(item.Producto))]),
+                            _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(item.Cantidad))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.idProducto))]),
-                            _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(item.Precio))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(item.Total))]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -41210,9 +41237,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
-        _c("th", [_vm._v("Cantidad")]),
+        _c("th", [_vm._v("Codigo")]),
         _vm._v(" "),
         _c("th", [_vm._v("Producto")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("th", [_vm._v("Precio de Compra")]),
         _vm._v(" "),

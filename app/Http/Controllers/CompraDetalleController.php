@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB; use App\Quotation;
-use App\Compra;
 use App\CompraDetalle;
+//use App\Proveedor;
 
-class CompraController extends Controller
+class CompraDetalleController extends Controller
 {
     public function __construct()
     {
@@ -21,11 +20,9 @@ class CompraController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-
-          $data_model = Compra::select(DB::raw("DATE_FORMAT(compra.Fecha, '%d/%m/%Y') AS FechaESP"), "compra.*", "proveedor.Nombre AS NProv", "tipo_pago.Nombre AS NTP")
-          ->join("proveedor","proveedor.idProveedor","=","compra.idProveedor")
-          ->join("tipo_pago","tipo_pago.idTipoPago","=","compra.idTipoPago")
-          ->orderBy('compra.idTransaccion', 'DESC')->paginate(10);
+          $data_model = CompraDetalle::select("detallecompra.*", "producto.Descripcion")
+          ->join("producto","producto.idProducto","=","detallecompra.idProducto")
+          ->orderBy('detallecompra.idDetalle', 'DESC')->paginate(10);
 
           return [
             'pagination' => [
@@ -38,10 +35,22 @@ class CompraController extends Controller
             ],
             'model' => $data_model
         ];
+
     }
     else
     {
         return view('compra');
+    }
+    }
+
+    //FUNCION PARA IMPLEMENTAR
+    public function getAll(Request $request)
+    {
+        if($request->ajax()){
+            $data_model = CompraDetalle::orderBy('idDetalle', 'ASC')->get();
+            return [
+                'model' => $data_model
+            ];
     }
     }
 
@@ -65,48 +74,20 @@ class CompraController extends Controller
     {
         /*
         $request->validate([
-            'Fecha' => 'required',
-            'Estado' => 'required',
-            'idTipoPago' => 'required',
-            'idComprador' => 'required',
+            'Descripcion' => 'required',
+            'Marca' => 'required',
             'idProveedor' => 'required'
         ]);
         */
 
-    DB::beginTransaction();
+        $data_model = new CompraDetalle();
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Cantidad = $request->Cantidad;
+        $data_model->Precio = $request->Precio;
+        $data_model->save();
 
-    try{
-        // Database operations
-        $data_model = new Compra();
-        $data_model->Fecha = $request->newModel['Fecha'];
-        $data_model->Estado = $request->newModel['Estado'];
-        $data_model->idTipoPago = $request->newModel['idTipoPago'];
-        $data_model->idComprador = $request->newModel['idComprador'];
-        $data_model->idProveedor = $request->newModel['idProveedor'];
-
-        if($data_model->save())
-            {
-                $last_id = $data_model->idTransaccion;
-
-                //GUARDAR DETALLE
-                foreach ($request->newModel2 as $detalle) {
-                    //echo $detalle['idProducto']." con idTransaccion: ".$last_id." <br>";
-                    $data_model2 = null;
-                    $data_model2 = new CompraDetalle();
-                    $data_model2->idProducto = $detalle['idProducto'];
-                    $data_model2->idTransaccion = $last_id;
-                    $data_model2->Cantidad = $detalle['Cantidad'];
-                    $data_model2->Precio = $detalle['Precio'];
-                    $data_model2->save();
-                }
-            }
-
-        DB::commit();
-        //return $data_model;
-    }catch(\Exception $e){
-    // rollback operation for failure
-        DB::rollback();
-    }
+        return $data_model;
     }
 
     /**
@@ -140,10 +121,11 @@ class CompraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data_model = Compra::find($id);
-        $data_model->Descripcion = $request->Descripcion;
-        $data_model->Marca = $request->Marca;
-        $data_model->idProveedor = $request->idProveedor;
+        $data_model = CompraDetalle::find($id);
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Cantidad = $request->Cantidad;
+        $data_model->Precio = $request->Precio;
         $data_model->save();
         return $data_model;
     }
@@ -154,9 +136,9 @@ class CompraController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($idCompra)
+    public function destroy($idDetalle)
     {
-        $data_model = Compra::find($idCompra);
+        $data_model = CompraDetalle::find($idDetalle);
         $data_model->delete();
     }
 }

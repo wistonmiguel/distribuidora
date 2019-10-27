@@ -75,8 +75,8 @@
                                 <div class="input-group-prepend">
                                 <div class="input-group-text">Producto</div>
                                 </div>
-                                <select class="custom-select" id="idProducto" v-model="idProducto">
-                                <option v-for="item in fk4" :key="item" :value="item.idProducto">{{item.Descripcion}}</option>
+                                <select class="custom-select" id="idProducto" v-model="Producto">
+                                <option v-for="item in fk4" :key="item" :value="item.idProducto+','+item.Descripcion">{{item.Descripcion}}</option>
                             </select>
                             </div>
                             </div>
@@ -109,8 +109,9 @@
                             <thead class="thead-dark">
                                 <tr>
                                 <!-- MODEL_ATTR -->
-                                <th>Cantidad</th>
+                                <th>Codigo</th>
                                 <th>Producto</th>
+                                <th>Cantidad</th>
                                 <th>Precio de Compra</th>
                                 <th>Total</th>
 
@@ -120,9 +121,10 @@
                             <tbody>
                                 <tr v-for="item in models2" :key="item">
                                 <td>{{ item.idProducto }}</td>
+                                <td>{{ item.Producto }}</td>
                                 <td>{{ item.Cantidad }}</td>
-                                <td>{{ item.idProducto }}</td>
                                 <td>{{ item.Precio }}</td>
+                                <td>{{ item.Total }}</td>
 
                                 <td>
                                     <button title="Eliminar" class="btn btn-danger btn-sm" @click="deleteModel(item, index, pagination.current_page)"><b>-</b></button>
@@ -214,7 +216,7 @@ export default {
     offset: 1,
       //MODEL_ATTR
       model: {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''},
-      model2: {idProducto: '', idTransaccion: '', Cantidad: '', Precio: ''}
+      model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
     }
   },
   created(){
@@ -282,16 +284,20 @@ export default {
         return;
       }
       const newModel = this.model;
+      const newModel2 = this.models2;
 
       //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
       this.model = {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''};
+      this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
-      axios.post('./compras', newModel)
+      axios.post('./compras', { newModel, newModel2 })
         .then((res) =>{
           this.modoCrear=false;
           this.modoCrearDetalle = false;
           this.modoEditar=false;
           this.modoVista=true;
+
+          this.models2 = null;
 
           this.changePage(1);
         })
@@ -301,6 +307,7 @@ export default {
       this.modoCrearDetalle = false;
       this.modoEditar = false;
       this.modoVista = false;
+
       var today = new Date();
       this.model.Fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     },
@@ -368,6 +375,7 @@ export default {
       this.modoCrear = true;
       this.modoEditar = false;
       this.modoVista = false;
+      this.models2 = null;
     },
     cancelForm(){
       this.modoCrear = false;
@@ -375,24 +383,29 @@ export default {
       this.modoEditar = false;
       this.modoVista = true;
       this.model = {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''};
+      this.models2 = null;
     },
     changePage(page){
         this.pagination.current_page = page;
         this.getAllData(page);
     },
     addItem(){
+        var array = this.Producto.split(',');
+
       var model2 = {
-        idProducto:this.idProducto,
-        idTransaccion:this.idTransaccion,
+        idProducto: array[0],
+        Producto:array[1],
         Cantidad:this.Cantidad,
-        Precio: this.Precio
+        Precio: this.Precio,
+        Total: this.Cantidad * this.Precio
       };
       this.models2.push(model2)
 
       this.idProducto = '';
-      this.idTransaccion = '';
+      this.Producto = '';
       this.Cantidad = '';
       this.Precio = '';
+      this.Total = '';
     }
   }
 }
