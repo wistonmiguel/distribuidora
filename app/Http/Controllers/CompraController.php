@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB; use App\Quotation;
 use App\Compra;
 
 class CompraController extends Controller
@@ -20,7 +21,7 @@ class CompraController extends Controller
     {
         if($request->ajax()){
 
-          $data_model = Compra::select("compra.*", "proveedor.Nombre", "tipo_pago.Nombre")
+          $data_model = Compra::select(DB::raw("DATE_FORMAT(compra.Fecha, '%d/%m/%Y') AS FechaESP"), "compra.*", "proveedor.Nombre AS NProv", "tipo_pago.Nombre AS NTP")
           ->join("proveedor","proveedor.idProveedor","=","compra.idProveedor")
           ->join("tipo_pago","tipo_pago.idTipoPago","=","compra.idTipoPago")
           ->orderBy('compra.idTransaccion', 'DESC')->paginate(10);
@@ -43,17 +44,6 @@ class CompraController extends Controller
     }
     }
 
-    //FUNCION PARA IMPLEMENTAR
-    public function getAll(Request $request)
-    {
-        if($request->ajax()){
-            $data_model = Compra::orderBy('Descripcion', 'ASC')->get();
-            return [
-                'model' => $data_model
-            ];
-    }
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -73,14 +63,18 @@ class CompraController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Descripcion' => 'required',
-            'Marca' => 'required',
+            'Fecha' => 'required',
+            'Estado' => 'required',
+            'idTipoPago' => 'required',
+            'idComprador' => 'required',
             'idProveedor' => 'required'
         ]);
 
         $data_model = new Compra();
-        $data_model->Descripcion = $request->Descripcion;
-        $data_model->Marca = $request->Marca;
+        $data_model->Fecha = $request->Fecha;
+        $data_model->Estado = $request->Estado;
+        $data_model->idTipoPago = $request->idTipoPago;
+        $data_model->idComprador = $request->idComprador;
         $data_model->idProveedor = $request->idProveedor;
         $data_model->save();
 

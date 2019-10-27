@@ -9,6 +9,7 @@ Route::get('/proveedores/getAll', 'ProveedorController@getAll')->name('allProvee
 Route::resource('/proveedores', 'ProveedorController')->middleware('auth');
 Route::get('/productos/getAll', 'ProductoController@getAll')->name('allProducto');
 Route::resource('/productos', 'ProductoController')->middleware('auth');
+Route::get('/inventarios/getAll', 'InventarioController@getAll')->name('allInventario');
 Route::resource('/inventarios', 'InventarioController')->middleware('auth');
 Route::get('/compradores/getAll', 'CompradorController@getAll')->name('allComprador');
 Route::resource('/compradores', 'CompradorController')->middleware('auth');
@@ -17,5 +18,5 @@ Route::resource('/clientes', 'ClienteController')->middleware('auth');
 Route::get('/tipoPagos/getAll', 'TipoPagoController@getAll')->name('allTipoPago');
 Route::resource('/tipoPagos', 'TipoPagoController')->middleware('auth');
 
-
+Route::get('/compras/getAll', 'CompraController@getAll')->name('allCompra');
 Route::resource('/compras', 'CompraController')->middleware('auth');

@@ -133,7 +133,7 @@
 
                 <hr v-if="modoVista" class="mb-4" style="margin-top: -16px;">
 
-                <div id="paginationContainer" style="float: right; margin-bottom: -20px;">
+                <div v-if="modoVista" id="paginationContainer" style="float: right; margin-bottom: -20px;">
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li v-if="pagination.current_page > 1">

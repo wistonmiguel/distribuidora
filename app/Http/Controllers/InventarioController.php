@@ -47,7 +47,9 @@ class InventarioController extends Controller
     public function getAll(Request $request)
     {
         if($request->ajax()){
-            $data_model = Inventario::orderBy('Descripcion', 'ASC')->get();
+            $data_model = Inventario::select("inventario.idInventario", "inventario.Stock", "inventario.idProducto", "producto.Descripcion")
+            ->join("producto","producto.idProducto","=","inventario.idProducto")
+            ->orderBy('producto.Descripcion', 'DESC')->get(10);
             return [
                 'model' => $data_model
             ];

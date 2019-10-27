@@ -7,6 +7,9 @@
         <div class="card-header" v-if="modoCrear">
             <b>NUEVA COMPRA</b>
         </div>
+        <div class="card-header" v-if="modoCrearDetalle">
+            <b>DETALLE DE LA COMPRA</b>
+        </div>
         <div class="card-header" v-if="modoEditar">
             <b>EDICIÓN DE TRANSACCIÓN DE COMPRA</b>
         </div>
@@ -31,34 +34,116 @@
                     </div>
                 </div>
 
-                <div v-if="modoCrear">
+                <div v-show="modoCrear">
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
-                        <label for="formGroupExampleInput">Nombre</label>
                         <input type="text" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Fecha">
-                        <label for="formGroupExampleInput">Marca</label>
-                        <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Activa">
+                        <label for="formGroupExampleInput">Estado</label>
+                        <select v-model="model.Estado" class="form-control">
+                            <option value="Cancelada">Cancelada</option>
+                            <option value="Pendiente">Pendiente</option>
+                        </select>
+                        <label for="formGroupExampleInput">Tipo de Pago</label>
+                        <!-- FK -->
+                        <select v-model="model.idTipoPago" class="form-control">
+                            <option v-for="item in fk1" :key="item" :value="item.idTipoPago">{{item.Nombre}}</option>
+                        </select>
+                        <label for="formGroupExampleInput">Comprador</label>
+                        <!-- FK -->
+                        <select v-model="model.idComprador" class="form-control">
+                            <option v-for="item in fk2" :key="item" :value="item.idComprador">{{item.Nombre}}</option>
+                        </select>
                         <label for="formGroupExampleInput">Proveedor</label>
                         <!-- FK -->
                         <select v-model="model.idProveedor" class="form-control">
-                            <option v-for="item in fk1" :key="item" :value="item.idProveedor">{{item.Nombre}}</option>
+                            <option v-for="item in fk3" :key="item" :value="item.idProveedor">{{item.Nombre}}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
+                        <button class="btn btn-success" @click="nextForm">Siguiente</button>
                         <button class="btn btn-danger" @click="cancelForm">Cancelar</button>
+                    </div>
+                </div>
+
+                <div v-if="modoCrearDetalle">
+                    <div class="form-group col-12">
+                        <!-- MODEL_ATTR -->
+
+                        <div class="form-row align-items-center">
+                            <div class="col-lg-7 col-md-6 col-xs-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Producto</div>
+                                </div>
+                                <select class="custom-select" id="idProducto" v-model="idProducto">
+                                <option v-for="item in fk4" :key="item" :value="item.idProducto">{{item.Descripcion}}</option>
+                            </select>
+                            </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-xs-12">
+                            <label class="sr-only" for="inlineFormInputGroup">Cantidad</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Cantidad</div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroup" v-model="Cantidad">
+                            </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6 col-xs-12">
+                            <label class="sr-only" for="inlineFormInputGroup">Precio</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                <div class="input-group-text">Precio</div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroup" v-model="Precio">
+                            </div>
+                            </div>
+                            <div class="col-lg-1 col-md-6 col-xs-12">
+                            <button @click="addItem()" class="btn btn-primary mb-2 btn-block">✚</button>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <table class="table" v-if="modoCrearDetalle">
+                            <thead class="thead-dark">
+                                <tr>
+                                <!-- MODEL_ATTR -->
+                                <th>Cantidad</th>
+                                <th>Producto</th>
+                                <th>Precio de Compra</th>
+                                <th>Total</th>
+
+                                <th width="15%" scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in models2" :key="item">
+                                <td>{{ item.idProducto }}</td>
+                                <td>{{ item.Cantidad }}</td>
+                                <td>{{ item.idProducto }}</td>
+                                <td>{{ item.Precio }}</td>
+
+                                <td>
+                                    <button title="Eliminar" class="btn btn-danger btn-sm" @click="deleteModel(item, index, pagination.current_page)"><b>-</b></button>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <button class="btn btn-success" @click="backForm">Volver</button>
+                        <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
                     </div>
                 </div>
 
                 <table class="table" v-if="modoVista">
                     <thead class="thead-dark">
                         <tr>
-                        <th width="10%" scope="col">#</th>
-
                         <!-- MODEL_ATTR -->
                         <th>Fecha</th>
-                        <th>Estado</th>
+                        <th>Proveedor</th>
                         <th>Tipo de Pago</th>
+                        <th>Estado</th>
 
                         <th width="15%" scope="col">Acciones</th>
                         </tr>
@@ -67,10 +152,10 @@
                         <tr v-for="(item, index) in models" :key="index">
 
                         <!-- MODEL_ATTR -->
-                        <th scope="row">{{item.idTransaccion}}</th>
-                        <td>{{item.Fecha}}</td>
+                        <td>{{item.FechaESP}}</td>
+                        <td>{{item.NProv}}</td>
+                        <td>{{item.NTP}}</td>
                         <td>{{item.Estado}}</td>
-                        <td>{{item.Nombre}}</td>
 
                         <td>
                             <button title="Editar" class="btn btn-success btn-sm" @click="viewUpdateForm(item)"><b style='color: white;'>✎</b></button>
@@ -82,7 +167,7 @@
 
                 <hr v-if="modoVista" class="mb-4" style="margin-top: -16px;">
 
-                <div id="paginationContainer" style="float: right; margin-bottom: -20px;">
+                <div v-if="modoVista" id="paginationContainer" style="float: right; margin-bottom: -20px;">
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li v-if="pagination.current_page > 1">
@@ -109,9 +194,14 @@ export default {
   data() {
     return {
     models: [],
-    fk1: [], //
+    fk1: [], //Tipo de Pago
+    fk2: [], //Compradores
+    fk3: [], //Proveedores
+    fk4: [], //Productos
+    models2: [], //Detalles
     modoEditar: false,
     modoCrear: false,
+    modoDetalle: false,
     modoVista: true,
     pagination:{
     total: 0,
@@ -123,7 +213,8 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Descripcion: '', Marca: '', idProveedor: ''}
+      model: {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''},
+      model2: {idProducto: '', idTransaccion: '', Cantidad: '', Precio: ''}
     }
   },
   created(){
@@ -133,9 +224,19 @@ export default {
     this.pagination = res.data.pagination;
     });
 
-    axios.get('./proveedores/getAll').then(res=>{
+    axios.get('./tipoPagos/getAll').then(res=>{
     this.fk1 = null;
     this.fk1 = res.data.model;
+    });
+
+    axios.get('./compradores/getAll').then(res=>{
+    this.fk2 = null;
+    this.fk2 = res.data.model;
+    });
+
+    axios.get('./proveedores/getAll').then(res=>{
+    this.fk3 = null;
+    this.fk3 = res.data.model;
     });
   },
   computed: {
@@ -183,11 +284,12 @@ export default {
       const newModel = this.model;
 
       //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
-      this.model = {Descripcion: '', Marca: '', idProveedor: ''};
+      this.model = {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''};
 
       axios.post('./compras', newModel)
         .then((res) =>{
           this.modoCrear=false;
+          this.modoCrearDetalle = false;
           this.modoEditar=false;
           this.modoVista=true;
 
@@ -196,18 +298,23 @@ export default {
     },
     viewCreateForm(){
       this.modoCrear = true;
+      this.modoCrearDetalle = false;
       this.modoEditar = false;
       this.modoVista = false;
+      var today = new Date();
+      this.model.Fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     },
     viewUpdateForm(item){
         //MODEL_ATTR
         this.model.idTransaccion = item.idTransaccion;
         this.model.Fecha = item.Fecha;
-        this.model.Activa = item.Activa;
+        this.model.Estado = item.Estado;
+        this.model.idComprador = item.idComprador;
         this.model.idProveedor = item.idProveedor;
 
         this.modoEditar = true;
         this.modoCrear = false;
+        this.modoCrearDetalle = false;
         this.modoVista = false;
     },
     updateModel(model){
@@ -217,24 +324,27 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Descripcion: model.Fecha, Marca: model.Activa, idProveedor: model.idProveedor};
+      const params = {Fecha: model.Fecha, Estado: model.Estado, idTipoPago: model.idTipoPago, idComprador: model.idComprador, idProveedor: model.idProveedor};
 
       axios.put(`./compras/${model.idTransaccion}`, params)
         .then(res=>{
           this.modoEditar = false;
+          this.modoCrearDetalle = false;
           this.modoCrear = false;
           this.modoVista = true;
 
           //MODEL_ATTR
-          this.model.Fecha = '';
-          this.model.Activa = '';
+          //this.model.Fecha = '';
+          this.model.Estado = '';
+          this.model.idTipoPago = '';
+          this.model.idComprador = '';
           this.model.idProveedor = '';
 
           this.changePage(1);
         })
     },
     deleteModel(model, index, page){
-      const confirmacion = confirm(`Eliminar ${model.Fecha}`);
+      const confirmacion = confirm(`Eliminar la Compra con fecha ${model.FechaESP}`);
       if(confirmacion){
         axios.delete(`./compras/${model.idTransaccion}`)
           .then(()=>{
@@ -242,15 +352,47 @@ export default {
           })
       }
     },
-    cancelForm(){
+    nextForm(){
+      this.modoCrearDetalle = true;
       this.modoCrear = false;
       this.modoEditar = false;
+      this.modoVista = false;
+
+      axios.get('./productos/getAll').then(res=>{
+        this.fk4 = null;
+        this.fk4 = res.data.model;
+        });
+    },
+    backForm(){
+      this.modoCrearDetalle = false;
+      this.modoCrear = true;
+      this.modoEditar = false;
+      this.modoVista = false;
+    },
+    cancelForm(){
+      this.modoCrear = false;
+      this.modoCrearDetalle = false;
+      this.modoEditar = false;
       this.modoVista = true;
-      this.model = {Descripcion: '', Marca: '', idProveedor: ''};
+      this.model = {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''};
     },
     changePage(page){
         this.pagination.current_page = page;
         this.getAllData(page);
+    },
+    addItem(){
+      var model2 = {
+        idProducto:this.idProducto,
+        idTransaccion:this.idTransaccion,
+        Cantidad:this.Cantidad,
+        Precio: this.Precio
+      };
+      this.models2.push(model2)
+
+      this.idProducto = '';
+      this.idTransaccion = '';
+      this.Cantidad = '';
+      this.Precio = '';
     }
   }
 }
