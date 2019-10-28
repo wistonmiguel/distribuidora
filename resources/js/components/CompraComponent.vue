@@ -10,27 +10,90 @@
         <div class="card-header" v-if="modoCrearDetalle">
             <b>DETALLE DE LA COMPRA</b>
         </div>
-        <div class="card-header" v-if="modoEditar">
+        <div class="card-header" v-if="modoDetalle">
             <b>EDICIÓN DE TRANSACCIÓN DE COMPRA</b>
         </div>
         <div class="card-body">
             <div>
-                <div v-if="modoEditar">
+                <div v-if="modoDetalle">
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
-                        <label for="formGroupExampleInput">Nombre</label>
-                        <input type="text" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Fecha">
-                        <label for="formGroupExampleInput">Marca</label>
-                        <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Activa">
-                        <label for="formGroupExampleInput">Proveedor</label>
-                        <select v-model="model.idProveedor" class="form-control">
-                            <option v-for="item in fk1" :key="item" :value="item.idProveedor">{{item.Nombre}}</option>
-                        </select>
-                        <!-- <input type="text" class="form-control mb-2" placeholder="Proveedor del Producto" v-model="model.idProveedor"> -->
+
+                        <div class="row">
+
+                        <div class="col-3">
+                            <div class="card text-right">
+                                <div class="card-header primary">
+                                    FECHA
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ model.FechaESP }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="card text-right">
+                                <div class="card-header primary">
+                                    ESTADO
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ model.Estado }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="card text-right">
+                                <div class="card-header primary">
+                                    PROVEEDOR
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ model.NProv }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="card text-right">
+                                <div class="card-header primary">
+                                      TIPO DE PAGO
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ model.NTP }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <table class="table" id="tablaDetalle" v-if="modoDetalle">
+                                <thead class="thead-dark">
+                                    <tr>
+                                    <!-- MODEL_ATTR -->
+                                    <th>Codigo</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio de Compra</th>
+                                    <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in models2" :key="item">
+                                    <td>{{ item.idProducto }}</td>
+                                    <td>{{ item.Descripcion }}</td>
+                                    <td>{{ item.Cantidad }}</td>
+                                    <td>{{ item.Precio }}</td>
+                                    <td>{{ item.Cantidad * item.Precio }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        </div>
+
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-warning" @click="updateModel(model)">Actualizar</button>
-                        <button class="btn btn-danger" @click="cancelForm">Cancelar</button>
+                    <div class="form-group text-right">
+                        <button class="btn btn-danger" @click="cancelForm">Volver</button>
                     </div>
                 </div>
 
@@ -59,7 +122,7 @@
                             <option v-for="item in fk3" :key="item" :value="item.idProveedor">{{item.Nombre}}</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group text-right">
                         <button class="btn btn-success" @click="nextForm">Siguiente</button>
                         <button class="btn btn-danger" @click="cancelForm">Cancelar</button>
                     </div>
@@ -105,7 +168,7 @@
 
                         <br>
 
-                        <table class="table" v-if="modoCrearDetalle">
+                        <table class="table" id="tablaDetalle" v-if="modoCrearDetalle">
                             <thead class="thead-dark">
                                 <tr>
                                 <!-- MODEL_ATTR -->
@@ -119,6 +182,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr v-if="emptyTable">
+                                    <td colspan="6"> No hay Datos<hr></td>
+                                </tr>
                                 <tr v-for="item in models2" :key="item">
                                 <td>{{ item.idProducto }}</td>
                                 <td>{{ item.Producto }}</td>
@@ -127,14 +193,15 @@
                                 <td>{{ item.Total }}</td>
 
                                 <td>
-                                    <button title="Eliminar" class="btn btn-danger btn-sm" @click="deleteModel(item, index, pagination.current_page)"><b>-</b></button>
+                                    <button title="Excluir" class="btn btn-danger btn-sm" @click="removeItem(item, index)"><b>-</b></button>
                                 </td>
                                 </tr>
                             </tbody>
                         </table>
-
-                        <button class="btn btn-success" @click="backForm">Volver</button>
-                        <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
+                        <div class=" text-right mt-4">
+                            <button class="btn btn-success" @click="backForm">Volver</button>
+                            <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
+                        </div>
                     </div>
                 </div>
 
@@ -160,7 +227,7 @@
                         <td>{{item.Estado}}</td>
 
                         <td>
-                            <button title="Editar" class="btn btn-success btn-sm" @click="viewUpdateForm(item)"><b style='color: white;'>✎</b></button>
+                            <button title="Ver Detalle" class="btn btn-success btn-sm" @click="viewDetails(item)"><b style='color: white;'>👁</b></button>
                             <button title="Eliminar" class="btn btn-danger btn-sm" @click="deleteModel(item, index, pagination.current_page)"><b>✕</b></button>
                         </td>
                         </tr>
@@ -201,10 +268,11 @@ export default {
     fk3: [], //Proveedores
     fk4: [], //Productos
     models2: [], //Detalles
-    modoEditar: false,
+    modoDetalle: false,
     modoCrear: false,
     modoDetalle: false,
     modoVista: true,
+    emptyTable: true,
     pagination:{
     total: 0,
     current_page: 0,
@@ -294,10 +362,8 @@ export default {
         .then((res) =>{
           this.modoCrear=false;
           this.modoCrearDetalle = false;
-          this.modoEditar=false;
+          this.modoDetalle=false;
           this.modoVista=true;
-
-          this.models2 = null;
 
           this.changePage(1);
         })
@@ -305,24 +371,29 @@ export default {
     viewCreateForm(){
       this.modoCrear = true;
       this.modoCrearDetalle = false;
-      this.modoEditar = false;
+      this.modoDetalle = false;
       this.modoVista = false;
 
       var today = new Date();
       this.model.Fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     },
-    viewUpdateForm(item){
+    viewDetails(item){
         //MODEL_ATTR
         this.model.idTransaccion = item.idTransaccion;
-        this.model.Fecha = item.Fecha;
+        this.model.FechaESP = item.FechaESP;
         this.model.Estado = item.Estado;
-        this.model.idComprador = item.idComprador;
-        this.model.idProveedor = item.idProveedor;
+        this.model.NProv = item.NProv;
+        this.model.NTP = item.NTP;
 
-        this.modoEditar = true;
+        this.modoDetalle = true;
         this.modoCrear = false;
         this.modoCrearDetalle = false;
         this.modoVista = false;
+
+        axios.get('./detallecompras/getAll/', { params : {id: item.idTransaccion} } ).then (res => {
+        this.models2 = null;
+        this.models2 = res.data.model;
+    });
     },
     updateModel(model){
       if(this.model.Fecha.length == 0){
@@ -335,7 +406,7 @@ export default {
 
       axios.put(`./compras/${model.idTransaccion}`, params)
         .then(res=>{
-          this.modoEditar = false;
+          this.modoDetalle = false;
           this.modoCrearDetalle = false;
           this.modoCrear = false;
           this.modoVista = true;
@@ -362,7 +433,7 @@ export default {
     nextForm(){
       this.modoCrearDetalle = true;
       this.modoCrear = false;
-      this.modoEditar = false;
+      this.modoDetalle = false;
       this.modoVista = false;
 
       axios.get('./productos/getAll').then(res=>{
@@ -373,24 +444,28 @@ export default {
     backForm(){
       this.modoCrearDetalle = false;
       this.modoCrear = true;
-      this.modoEditar = false;
+      this.modoDetalle = false;
       this.modoVista = false;
-      this.models2 = null;
+      if(this.models2.length == 0)
+      this.emptyTable = true;
     },
     cancelForm(){
       this.modoCrear = false;
       this.modoCrearDetalle = false;
-      this.modoEditar = false;
+      this.modoDetalle = false;
       this.modoVista = true;
       this.model = {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''};
-      this.models2 = null;
+      if(this.models2.length == 0)
+      this.emptyTable = true;
+      else
+      this.models2.splice(0, this.models2.length);
     },
     changePage(page){
         this.pagination.current_page = page;
         this.getAllData(page);
     },
     addItem(){
-        var array = this.Producto.split(',');
+      var array = this.Producto.split(',');
 
       var model2 = {
         idProducto: array[0],
@@ -399,6 +474,10 @@ export default {
         Precio: this.Precio,
         Total: this.Cantidad * this.Precio
       };
+
+      if(this.models2.length == 0)
+      this.emptyTable = false;
+
       this.models2.push(model2)
 
       this.idProducto = '';
@@ -406,6 +485,12 @@ export default {
       this.Cantidad = '';
       this.Precio = '';
       this.Total = '';
+    },
+    removeItem(index){
+        if(this.models2.length == 1)
+        this.emptyTable = true;
+
+        this.models2.splice(index, 1);
     }
   }
 }

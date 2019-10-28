@@ -47,11 +47,14 @@ class CompraDetalleController extends Controller
     public function getAll(Request $request)
     {
         if($request->ajax()){
-            $data_model = CompraDetalle::orderBy('idDetalle', 'ASC')->get();
+            $data_model = CompraDetalle::select("detallecompra.*", "producto.Descripcion")
+            ->join("producto","producto.idProducto","=","detallecompra.idProducto")
+            ->where('detallecompra.idTransaccion', "=", $request->id)
+            ->orderBy('detallecompra.idDetalle', 'DESC')->get();
             return [
                 'model' => $data_model
             ];
-    }
+        }
     }
 
     /**

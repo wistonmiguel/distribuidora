@@ -100,7 +100,6 @@ export default {
     }
   },
   created(){
-      alert("creando");
     axios.get('./tipoPagos').then(res=>{
     this.models = null;
     this.models = res.data.model.data;
