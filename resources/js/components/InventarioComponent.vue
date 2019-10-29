@@ -15,8 +15,8 @@
                 <div v-if="modoEditar">
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
-                        <label for="formGroupExampleInput">Stock</label>
-                        <input type="text" class="form-control mb-2" placeholder="Cantidad de Producto" v-model="model.Stock">
+                        <label for="formGroupExampleInput">Existencias</label>
+                        <input type="text" class="form-control mb-2" placeholder="Existncias del Producto" v-model="model.Stock">
                         <label for="formGroupExampleInput">Producto</label>
                         <select v-model="model.idProducto" class="form-control">
                             <option v-for="item1 in fk1" :key="item1" :value="item1.idProducto">{{item1.Descripcion}}</option>
@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
                         <label for="formGroupExampleInput">Cantidad</label>
-                        <input type="text" class="form-control mb-2" placeholder="Cantidad del s" v-model="model.Stock">
+                        <input type="text" class="form-control mb-2" placeholder="Cantidad a Ingresar" v-model="model.Stock">
                         <label for="formGroupExampleInput">Producto</label>
                         <!-- FK1 -->
                         <select v-model="model.idProducto" class="form-control">

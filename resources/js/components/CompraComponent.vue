@@ -11,7 +11,7 @@
             <b>DETALLE DE LA COMPRA</b>
         </div>
         <div class="card-header" v-if="modoDetalle">
-            <b>EDICIÓN DE TRANSACCIÓN DE COMPRA</b>
+            <b>DETALLE DE TRANSACCIÓN DE COMPRA</b>
         </div>
         <div class="card-body">
             <div>
@@ -23,7 +23,7 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary">
+                                <div class="card-header primary bg-info text-white border-dark">
                                     FECHA
                                 </div>
                                 <ul class="list-group list-group-flush">
@@ -34,7 +34,7 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary">
+                                <div class="card-header primary bg-info text-white border-dark">
                                     ESTADO
                                 </div>
                                 <ul class="list-group list-group-flush">
@@ -45,7 +45,7 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary">
+                                <div class="card-header primary bg-info text-white border-dark">
                                     PROVEEDOR
                                 </div>
                                 <ul class="list-group list-group-flush">
@@ -56,7 +56,7 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary">
+                                <div class="card-header primary bg-info text-white border-dark">
                                       TIPO DE PAGO
                                 </div>
                                 <ul class="list-group list-group-flush">
@@ -88,7 +88,7 @@
                                     <tr>
                                     <td colspan="3"></td>
                                     <td>Total</td>
-                                    <td>C$ {{ formatCurrency(this.TotalCompra) }}</td>
+                                    <td>C$ {{ formatCurrency(TotalCompras) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -167,7 +167,7 @@
                             </div>
                             </div>
                             <div class="col-lg-1 col-md-6 col-xs-12">
-                            <button @click="addItem()" class="btn btn-primary mb-2 btn-block">✚</button>
+                            <button @click="addItem" class="btn btn-primary mb-2 btn-block">✚</button>
                             </div>
                         </div>
 
@@ -204,7 +204,7 @@
                                 <tr v-if="!emptyTable">
                                     <td colspan="3"></td>
                                     <td>Total</td>
-                                    <td>C$ {{ formatCurrency(this.TotalCompra) }}</td>
+                                    <td>C$ {{ formatCurrency(TotalCompras) }}</td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -293,7 +293,6 @@ export default {
     to: 0
     },
     offset: 1,
-    TotalCompra: 0,
       //MODEL_ATTR
       model: {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
@@ -348,6 +347,13 @@ export default {
             from++;
         }
         return pagesArray;
+    },
+    TotalCompras: function () {
+        var sum = 0;
+        this.models2.forEach(e => {
+            sum += (e.Cantidad * e.Precio);
+        });
+        return sum
     }
   },
   methods:{
@@ -411,8 +417,8 @@ export default {
         this.models2 = res.data.model;
 
         // AQUI RECORRER models2 para sumar al detalle total
+        //this.TotalCompra = TotalCompras();
     });
-
     },
     updateModel(model){
       if(this.model.Fecha.length == 0){
@@ -494,7 +500,8 @@ export default {
         Total: this.Cantidad * this.Precio
       };
 
-      this.TotalCompra = this.TotalCompra + (this.Cantidad * this.Precio);
+        //EVALUAR
+      //this.TotalCompra = this.TotalCompra + (this.Cantidad * this.Precio);
 
       if(this.models2.length == 0)
       this.emptyTable = false;
@@ -512,7 +519,8 @@ export default {
         if(this.models2.length == 1)
         this.emptyTable = true;
 
-        this.TotalCompra = this.TotalCompra - model2.Total;
+        //EVALUAR
+        //this.TotalCompra = this.TotalCompra - model2.Total;
         this.models2.splice(index, 1);
     }
   }

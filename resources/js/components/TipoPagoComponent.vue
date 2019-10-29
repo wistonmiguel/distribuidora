@@ -14,7 +14,7 @@
             <div>
                 <div v-if="modoEditar">
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Nombre del Tipo</label>
+                        <label for="formGroupExampleInput">Tipo de Pago</label>
                         <input type="text" class="form-control mb-2" placeholder="Nombre del Tipo de Pago" v-model="model.Nombre">
                     </div>
                     <div class="form-group">
@@ -25,7 +25,7 @@
 
                 <div v-if="modoCrear">
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Nombre del Tipo de Pago</label>
+                        <label for="formGroupExampleInput">Tipo de Pago</label>
                         <input type="text" class="form-control mb-2" placeholder="Nombre del Tipo de Pago" v-model="model.Nombre">
 
                     </div>

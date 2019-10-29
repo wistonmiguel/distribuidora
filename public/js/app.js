@@ -2655,7 +2655,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       last_page: 0,
       from: 0,
       to: 0
-    }), _defineProperty(_ref, "offset", 1), _defineProperty(_ref, "TotalCompra", 0), _defineProperty(_ref, "model", {
+    }), _defineProperty(_ref, "offset", 1), _defineProperty(_ref, "model", {
       Fecha: '',
       Estado: '',
       idTipoPago: '',
@@ -2719,6 +2719,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return pagesArray;
+    },
+    TotalCompras: function TotalCompras() {
+      var sum = 0;
+      this.models2.forEach(function (e) {
+        sum += e.Cantidad * e.Precio;
+      });
+      return sum;
     }
   },
   methods: {
@@ -2800,6 +2807,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (res) {
         _this4.models2 = null;
         _this4.models2 = res.data.model; // AQUI RECORRER models2 para sumar al detalle total
+        //this.TotalCompra = TotalCompras();
       });
     },
     updateModel: function updateModel(model) {
@@ -2889,8 +2897,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Cantidad: this.Cantidad,
         Precio: this.Precio,
         Total: this.Cantidad * this.Precio
-      };
-      this.TotalCompra = this.TotalCompra + this.Cantidad * this.Precio;
+      }; //EVALUAR
+      //this.TotalCompra = this.TotalCompra + (this.Cantidad * this.Precio);
+
       if (this.models2.length == 0) this.emptyTable = false;
       this.models2.push(model2);
       this.idProducto = '';
@@ -2900,8 +2909,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.Total = '';
     },
     removeItem: function removeItem(model2, index) {
-      if (this.models2.length == 1) this.emptyTable = true;
-      this.TotalCompra = this.TotalCompra - model2.Total;
+      if (this.models2.length == 1) this.emptyTable = true; //EVALUAR
+      //this.TotalCompra = this.TotalCompra - model2.Total;
+
       this.models2.splice(index, 1);
     }
   }
@@ -40544,7 +40554,7 @@ var render = function() {
     _vm._v(" "),
     _vm.modoDetalle
       ? _c("div", { staticClass: "card-header" }, [
-          _c("b", [_vm._v("EDICIÓN DE TRANSACCIÓN DE COMPRA")])
+          _c("b", [_vm._v("DETALLE DE TRANSACCIÓN DE COMPRA")])
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -40556,11 +40566,18 @@ var render = function() {
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _c("div", { staticClass: "card-header primary" }, [
-                        _vm._v(
-                          "\n                                FECHA\n                            "
-                        )
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "card-header primary bg-info text-white border-dark"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                FECHA\n                            "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -40572,11 +40589,18 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _c("div", { staticClass: "card-header primary" }, [
-                        _vm._v(
-                          "\n                                ESTADO\n                            "
-                        )
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "card-header primary bg-info text-white border-dark"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                ESTADO\n                            "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -40588,11 +40612,18 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _c("div", { staticClass: "card-header primary" }, [
-                        _vm._v(
-                          "\n                                PROVEEDOR\n                            "
-                        )
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "card-header primary bg-info text-white border-dark"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                PROVEEDOR\n                            "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -40604,11 +40635,18 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _c("div", { staticClass: "card-header primary" }, [
-                        _vm._v(
-                          "\n                                  TIPO DE PAGO\n                            "
-                        )
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "card-header primary bg-info text-white border-dark"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                  TIPO DE PAGO\n                            "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -40673,7 +40711,7 @@ var render = function() {
                                     _vm._v(
                                       "C$ " +
                                         _vm._s(
-                                          _vm.formatCurrency(this.TotalCompra)
+                                          _vm.formatCurrency(_vm.TotalCompras)
                                         )
                                     )
                                   ])
@@ -41075,11 +41113,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-primary mb-2 btn-block",
-                        on: {
-                          click: function($event) {
-                            return _vm.addItem()
-                          }
-                        }
+                        on: { click: _vm.addItem }
                       },
                       [_vm._v("✚")]
                     )
@@ -41150,7 +41184,7 @@ var render = function() {
                                     _vm._v(
                                       "C$ " +
                                         _vm._s(
-                                          _vm.formatCurrency(this.TotalCompra)
+                                          _vm.formatCurrency(_vm.TotalCompras)
                                         )
                                     )
                                   ]),
@@ -42037,7 +42071,7 @@ var render = function() {
           ? _c("div", [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                  _vm._v("Stock")
+                  _vm._v("Existencias")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -42050,7 +42084,10 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control mb-2",
-                  attrs: { type: "text", placeholder: "Cantidad de Producto" },
+                  attrs: {
+                    type: "text",
+                    placeholder: "Existncias del Producto"
+                  },
                   domProps: { value: _vm.model.Stock },
                   on: {
                     input: function($event) {
@@ -42198,7 +42235,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control mb-2",
-                  attrs: { type: "text", placeholder: "Cantidad del s" },
+                  attrs: { type: "text", placeholder: "Cantidad a Ingresar" },
                   domProps: { value: _vm.model.Stock },
                   on: {
                     input: function($event) {
@@ -43818,7 +43855,7 @@ var render = function() {
           ? _c("div", [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                  _vm._v("Nombre del Tipo")
+                  _vm._v("Tipo de Pago")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -43880,7 +43917,7 @@ var render = function() {
           ? _c("div", [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                  _vm._v("Nombre del Tipo de Pago")
+                  _vm._v("Tipo de Pago")
                 ]),
                 _vm._v(" "),
                 _c("input", {
