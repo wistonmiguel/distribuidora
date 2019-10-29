@@ -82,8 +82,13 @@
                                     <td>{{ item.idProducto }}</td>
                                     <td>{{ item.Descripcion }}</td>
                                     <td>{{ item.Cantidad }}</td>
-                                    <td>{{ item.Precio }}</td>
-                                    <td>{{ item.Cantidad * item.Precio }}</td>
+                                    <td>C$ {{ formatCurrency(item.Precio) }}</td>
+                                    <td>C$ {{ formatCurrency(item.Cantidad * item.Precio) }}</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="3"></td>
+                                    <td>Total</td>
+                                    <td>C$ {{ formatCurrency(this.TotalCompra) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -100,16 +105,16 @@
                 <div v-show="modoCrear">
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
-                        <input type="text" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Fecha">
-                        <label for="formGroupExampleInput">Estado</label>
-                        <select v-model="model.Estado" class="form-control">
-                            <option value="Cancelada">Cancelada</option>
-                            <option value="Pendiente">Pendiente</option>
-                        </select>
+                        <input type="hidden" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Fecha">
                         <label for="formGroupExampleInput">Tipo de Pago</label>
                         <!-- FK -->
                         <select v-model="model.idTipoPago" class="form-control">
                             <option v-for="item in fk1" :key="item" :value="item.idTipoPago">{{item.Nombre}}</option>
+                        </select>
+                        <label for="formGroupExampleInput">Estado</label>
+                        <select v-model="model.Estado" class="form-control">
+                            <option value="Cancelada">Cancelada</option>
+                            <option value="Pendiente">Pendiente</option>
                         </select>
                         <label for="formGroupExampleInput">Comprador</label>
                         <!-- FK -->
@@ -183,24 +188,30 @@
                             </thead>
                             <tbody>
                                 <tr v-if="emptyTable">
-                                    <td colspan="6"> No hay Datos<hr></td>
+                                    <td colspan="6"> Ingrese Productos a la Compra <hr></td>
                                 </tr>
-                                <tr v-for="item in models2" :key="item">
+                                <tr v-for="(item, index) in models2" :key="item.idProducto">
                                 <td>{{ item.idProducto }}</td>
                                 <td>{{ item.Producto }}</td>
                                 <td>{{ item.Cantidad }}</td>
-                                <td>{{ item.Precio }}</td>
-                                <td>{{ item.Total }}</td>
-
+                                <td>C$ {{ formatCurrency(item.Precio) }}</td>
+                                <td>C$ {{ formatCurrency(item.Total) }}</td>
                                 <td>
                                     <button title="Excluir" class="btn btn-danger btn-sm" @click="removeItem(item, index)"><b>-</b></button>
                                 </td>
+                                </tr>
+
+                                <tr v-if="!emptyTable">
+                                    <td colspan="3"></td>
+                                    <td>Total</td>
+                                    <td>C$ {{ formatCurrency(this.TotalCompra) }}</td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class=" text-right mt-4">
                             <button class="btn btn-success" @click="backForm">Volver</button>
-                            <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Guardar</button>
+                            <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Realizar Compra</button>
                         </div>
                     </div>
                 </div>
@@ -282,6 +293,7 @@ export default {
     to: 0
     },
     offset: 1,
+    TotalCompra: 0,
       //MODEL_ATTR
       model: {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
@@ -368,6 +380,10 @@ export default {
           this.changePage(1);
         })
     },
+     formatCurrency(value) {
+        let val = (value/1).toFixed(2);
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     viewCreateForm(){
       this.modoCrear = true;
       this.modoCrearDetalle = false;
@@ -393,7 +409,10 @@ export default {
         axios.get('./detallecompras/getAll/', { params : {id: item.idTransaccion} } ).then (res => {
         this.models2 = null;
         this.models2 = res.data.model;
+
+        // AQUI RECORRER models2 para sumar al detalle total
     });
+
     },
     updateModel(model){
       if(this.model.Fecha.length == 0){
@@ -469,11 +488,13 @@ export default {
 
       var model2 = {
         idProducto: array[0],
-        Producto:array[1],
-        Cantidad:this.Cantidad,
+        Producto: array[1],
+        Cantidad: this.Cantidad,
         Precio: this.Precio,
         Total: this.Cantidad * this.Precio
       };
+
+      this.TotalCompra = this.TotalCompra + (this.Cantidad * this.Precio);
 
       if(this.models2.length == 0)
       this.emptyTable = false;
@@ -486,10 +507,12 @@ export default {
       this.Precio = '';
       this.Total = '';
     },
-    removeItem(index){
+    removeItem(model2, index){
+
         if(this.models2.length == 1)
         this.emptyTable = true;
 
+        this.TotalCompra = this.TotalCompra - model2.Total;
         this.models2.splice(index, 1);
     }
   }

@@ -2619,6 +2619,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -2644,7 +2655,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       last_page: 0,
       from: 0,
       to: 0
-    }), _defineProperty(_ref, "offset", 1), _defineProperty(_ref, "model", {
+    }), _defineProperty(_ref, "offset", 1), _defineProperty(_ref, "TotalCompra", 0), _defineProperty(_ref, "model", {
       Fecha: '',
       Estado: '',
       idTipoPago: '',
@@ -2757,6 +2768,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.changePage(1);
       });
     },
+    formatCurrency: function formatCurrency(value) {
+      var val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     viewCreateForm: function viewCreateForm() {
       this.modoCrear = true;
       this.modoCrearDetalle = false;
@@ -2784,7 +2799,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (res) {
         _this4.models2 = null;
-        _this4.models2 = res.data.model;
+        _this4.models2 = res.data.model; // AQUI RECORRER models2 para sumar al detalle total
       });
     },
     updateModel: function updateModel(model) {
@@ -2875,6 +2890,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Precio: this.Precio,
         Total: this.Cantidad * this.Precio
       };
+      this.TotalCompra = this.TotalCompra + this.Cantidad * this.Precio;
       if (this.models2.length == 0) this.emptyTable = false;
       this.models2.push(model2);
       this.idProducto = '';
@@ -2883,8 +2899,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.Precio = '';
       this.Total = '';
     },
-    removeItem: function removeItem(index) {
+    removeItem: function removeItem(model2, index) {
       if (this.models2.length == 1) this.emptyTable = true;
+      this.TotalCompra = this.TotalCompra - model2.Total;
       this.models2.splice(index, 1);
     }
   }
@@ -3321,53 +3338,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3391,10 +3361,8 @@ __webpack_require__.r(__webpack_exports__);
       //MODEL_ATTR
       model: {
         Stock: '',
-        Und_Medida: '',
-        Presentacion: '',
         idProducto: '',
-        idProveedor: ''
+        idAlmacen: ''
       }
     };
   },
@@ -3468,8 +3436,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.model = {
         Stock: '',
-        Und_Medida: '',
-        Presentacion: '',
         idProducto: '',
         idAlmacen: ''
       };
@@ -3490,8 +3456,6 @@ __webpack_require__.r(__webpack_exports__);
       //MODEL_ATTR
       this.model.idInventario = item.idInventario;
       this.model.Stock = item.Stock;
-      this.model.Und_Medida = item.Und_Medida;
-      this.model.Presentacion = item.Presentacion;
       this.model.idProducto = item.idProducto;
       this.model.idAlmacen = item.idAlmacen;
       this.modoEditar = true;
@@ -3509,8 +3473,6 @@ __webpack_require__.r(__webpack_exports__);
 
       var params = {
         Stock: model.Stock,
-        Und_Medida: model.Und_Medida,
-        Presentacion: model.Presentacion,
         idProducto: model.idProducto,
         idAlmacen: model.idAlmacen
       };
@@ -3520,8 +3482,6 @@ __webpack_require__.r(__webpack_exports__);
         _this4.modoVista = true; //MODEL_ATTR
 
         _this4.model.Stock = '';
-        _this4.model.Und_Medida = '';
-        _this4.model.Presentacion = '';
         _this4.model.idProducto = '';
         _this4.model.idAlmacen = '';
 
@@ -3545,8 +3505,6 @@ __webpack_require__.r(__webpack_exports__);
       this.modoVista = true;
       this.model = {
         Stock: '',
-        Und_Medida: '',
-        Presentacion: '',
         idProducto: '',
         idAlmacen: ''
       };
@@ -3675,6 +3633,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3697,6 +3701,8 @@ __webpack_require__.r(__webpack_exports__);
       model: {
         Descripcion: '',
         Marca: '',
+        Und_Medida: '',
+        Presentacion: '',
         idProveedor: ''
       }
     };
@@ -3768,6 +3774,8 @@ __webpack_require__.r(__webpack_exports__);
       this.model = {
         Descripcion: '',
         Marca: '',
+        Und_Medida: '',
+        Presentacion: '',
         idProveedor: ''
       };
       axios.post('./productos', newModel).then(function (res) {
@@ -3788,6 +3796,8 @@ __webpack_require__.r(__webpack_exports__);
       this.model.idProducto = item.idProducto;
       this.model.Descripcion = item.Descripcion;
       this.model.Marca = item.Marca;
+      this.model.Und_Medida = item.Und_Medida;
+      this.model.Presentacion = item.Presentacion;
       this.model.idProveedor = item.idProveedor;
       this.modoEditar = true;
       this.modoCrear = false;
@@ -3805,6 +3815,8 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         Descripcion: model.Descripcion,
         Marca: model.Marca,
+        Und_Medida: model.Und_Medida,
+        Presentacion: model.Presentacion,
         idProveedor: model.idProveedor
       };
       axios.put("./productos/".concat(model.idProducto), params).then(function (res) {
@@ -3814,6 +3826,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this4.model.Descripcion = '';
         _this4.model.Marca = '';
+        _this4.model.Und_Medida = '';
+        _this4.model.Presentacion = '';
         _this4.model.idProveedor = '';
 
         _this4.changePage(1);
@@ -3837,6 +3851,8 @@ __webpack_require__.r(__webpack_exports__);
       this.model = {
         Descripcion: '',
         Marca: '',
+        Und_Medida: '',
+        Presentacion: '',
         idProveedor: ''
       };
     },
@@ -40615,22 +40631,55 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "tbody",
-                              _vm._l(_vm.models2, function(item) {
-                                return _c("tr", { key: item }, [
-                                  _c("td", [_vm._v(_vm._s(item.idProducto))]),
+                              [
+                                _vm._l(_vm.models2, function(item) {
+                                  return _c("tr", { key: item }, [
+                                    _c("td", [_vm._v(_vm._s(item.idProducto))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.Descripcion))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.Cantidad))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        "C$ " +
+                                          _vm._s(
+                                            _vm.formatCurrency(item.Precio)
+                                          )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        "C$ " +
+                                          _vm._s(
+                                            _vm.formatCurrency(
+                                              item.Cantidad * item.Precio
+                                            )
+                                          )
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _c("td", { attrs: { colspan: "3" } }),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(item.Descripcion))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(item.Cantidad))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(item.Precio))]),
+                                  _c("td", [_vm._v("Total")]),
                                   _vm._v(" "),
                                   _c("td", [
-                                    _vm._v(_vm._s(item.Cantidad * item.Precio))
+                                    _vm._v(
+                                      "C$ " +
+                                        _vm._s(
+                                          _vm.formatCurrency(this.TotalCompra)
+                                        )
+                                    )
                                   ])
                                 ])
-                              }),
-                              0
+                              ],
+                              2
                             )
                           ]
                         )
@@ -40676,7 +40725,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "Nombre del Producto" },
+                attrs: { type: "hidden", placeholder: "Nombre del Producto" },
                 domProps: { value: _vm.model.Fecha },
                 on: {
                   input: function($event) {
@@ -40687,6 +40736,52 @@ var render = function() {
                   }
                 }
               }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                _vm._v("Tipo de Pago")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.model.idTipoPago,
+                      expression: "model.idTipoPago"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.model,
+                        "idTipoPago",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.fk1, function(item) {
+                  return _c(
+                    "option",
+                    { key: item, domProps: { value: item.idTipoPago } },
+                    [_vm._v(_vm._s(item.Nombre))]
+                  )
+                }),
+                0
+              ),
               _vm._v(" "),
               _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                 _vm._v("Estado")
@@ -40733,52 +40828,6 @@ var render = function() {
                     _vm._v("Pendiente")
                   ])
                 ]
-              ),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                _vm._v("Tipo de Pago")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.model.idTipoPago,
-                      expression: "model.idTipoPago"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.model,
-                        "idTipoPago",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                _vm._l(_vm.fk1, function(item) {
-                  return _c(
-                    "option",
-                    { key: item, domProps: { value: item.idTipoPago } },
-                    [_vm._v(_vm._s(item.Nombre))]
-                  )
-                }),
-                0
               ),
               _vm._v(" "),
               _c("label", { attrs: { for: "formGroupExampleInput" } }, [
@@ -41051,17 +41100,27 @@ var render = function() {
                           [
                             _vm.emptyTable ? _c("tr", [_vm._m(5)]) : _vm._e(),
                             _vm._v(" "),
-                            _vm._l(_vm.models2, function(item) {
-                              return _c("tr", { key: item }, [
+                            _vm._l(_vm.models2, function(item, index) {
+                              return _c("tr", { key: item.idProducto }, [
                                 _c("td", [_vm._v(_vm._s(item.idProducto))]),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(item.Producto))]),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(item.Cantidad))]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(item.Precio))]),
+                                _c("td", [
+                                  _vm._v(
+                                    "C$ " +
+                                      _vm._s(_vm.formatCurrency(item.Precio))
+                                  )
+                                ]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(item.Total))]),
+                                _c("td", [
+                                  _vm._v(
+                                    "C$ " +
+                                      _vm._s(_vm.formatCurrency(item.Total))
+                                  )
+                                ]),
                                 _vm._v(" "),
                                 _c("td", [
                                   _c(
@@ -41071,7 +41130,7 @@ var render = function() {
                                       attrs: { title: "Excluir" },
                                       on: {
                                         click: function($event) {
-                                          return _vm.removeItem(item, _vm.index)
+                                          return _vm.removeItem(item, index)
                                         }
                                       }
                                     },
@@ -41079,7 +41138,26 @@ var render = function() {
                                   )
                                 ])
                               ])
-                            })
+                            }),
+                            _vm._v(" "),
+                            !_vm.emptyTable
+                              ? _c("tr", [
+                                  _c("td", { attrs: { colspan: "3" } }),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v("Total")]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      "C$ " +
+                                        _vm._s(
+                                          _vm.formatCurrency(this.TotalCompra)
+                                        )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td")
+                                ])
+                              : _vm._e()
                           ],
                           2
                         )
@@ -41107,7 +41185,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Guardar")]
+                    [_vm._v("Realizar Compra")]
                   )
                 ])
               ])
@@ -41349,7 +41427,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", { attrs: { colspan: "6" } }, [
-      _vm._v(" No hay Datos"),
+      _vm._v(" Ingrese Productos a la Compra "),
       _c("hr")
     ])
   },
@@ -41985,136 +42063,6 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                  _vm._v("Medida")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.model.Und_Medida,
-                        expression: "model.Und_Medida"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.model,
-                          "Und_Medida",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "ml" } }, [_vm._v("ml")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "gr" } }, [_vm._v("gr")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "lt" } }, [_vm._v("lt")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "yd" } }, [_vm._v("yd")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "cm" } }, [_vm._v("cm")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "mt" } }, [_vm._v("mt")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Galon" } }, [
-                      _vm._v("Galon")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Unidad" } }, [
-                      _vm._v("Unidad")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                  _vm._v("Presentacion")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.model.Presentacion,
-                        expression: "model.Presentacion"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.model,
-                          "Presentacion",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "Granel" } }, [
-                      _vm._v("Granel")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Bolsa" } }, [
-                      _vm._v("Bolsa")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Frasco" } }, [
-                      _vm._v("Frasco")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Barra" } }, [
-                      _vm._v("Barra")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja" } }, [
-                      _vm._v("Caja")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja 12 Piezas" } }, [
-                      _vm._v("Caja 12 Piezas")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja 24 Piezas" } }, [
-                      _vm._v("Caja 24 Piezas")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja 100 Piezas" } }, [
-                      _vm._v("Caja 100 Piezas")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                   _vm._v("Producto")
                 ]),
                 _vm._v(" "),
@@ -42250,7 +42198,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control mb-2",
-                  attrs: { type: "text", placeholder: "Cantidad del Producto" },
+                  attrs: { type: "text", placeholder: "Cantidad del s" },
                   domProps: { value: _vm.model.Stock },
                   on: {
                     input: function($event) {
@@ -42261,136 +42209,6 @@ var render = function() {
                     }
                   }
                 }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                  _vm._v("Medida")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.model.Und_Medida,
-                        expression: "model.Und_Medida"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.model,
-                          "Und_Medida",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "ml" } }, [_vm._v("ml")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "gr" } }, [_vm._v("gr")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "lt" } }, [_vm._v("lt")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "yd" } }, [_vm._v("yd")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "cm" } }, [_vm._v("cm")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "mt" } }, [_vm._v("mt")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Galon" } }, [
-                      _vm._v("Galon")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Unidad" } }, [
-                      _vm._v("Unidad")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                  _vm._v("Presentacion")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.model.Presentacion,
-                        expression: "model.Presentacion"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.model,
-                          "Presentacion",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "Granel" } }, [
-                      _vm._v("Granel")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Bolsa" } }, [
-                      _vm._v("Bolsa")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Frasco" } }, [
-                      _vm._v("Frasco")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Barra" } }, [
-                      _vm._v("Barra")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja" } }, [
-                      _vm._v("Caja")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja 12 Piezas" } }, [
-                      _vm._v("Caja 12 Piezas")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja 24 Piezas" } }, [
-                      _vm._v("Caja 24 Piezas")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Caja 100 Piezas" } }, [
-                      _vm._v("Caja 100 Piezas")
-                    ])
-                  ]
-                ),
                 _vm._v(" "),
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                   _vm._v("Producto")
@@ -42813,6 +42631,136 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                  _vm._v("Medida")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.model.Und_Medida,
+                        expression: "model.Und_Medida"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.model,
+                          "Und_Medida",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "ml" } }, [_vm._v("ml")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "gr" } }, [_vm._v("gr")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "lt" } }, [_vm._v("lt")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "yd" } }, [_vm._v("yd")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "cm" } }, [_vm._v("cm")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "mt" } }, [_vm._v("mt")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Galon" } }, [
+                      _vm._v("Galon")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Unidad" } }, [
+                      _vm._v("Unidad")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                  _vm._v("Presentacion")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.model.Presentacion,
+                        expression: "model.Presentacion"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.model,
+                          "Presentacion",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "Granel" } }, [
+                      _vm._v("Granel")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Bolsa" } }, [
+                      _vm._v("Bolsa")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Frasco" } }, [
+                      _vm._v("Frasco")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Barra" } }, [
+                      _vm._v("Barra")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja" } }, [
+                      _vm._v("Caja")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja 12 Piezas" } }, [
+                      _vm._v("Caja 12 Piezas")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja 24 Piezas" } }, [
+                      _vm._v("Caja 24 Piezas")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja 100 Piezas" } }, [
+                      _vm._v("Caja 100 Piezas")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                   _vm._v("Proveedor")
                 ]),
                 _vm._v(" "),
@@ -42939,6 +42887,136 @@ var render = function() {
                     }
                   }
                 }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                  _vm._v("Medida")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.model.Und_Medida,
+                        expression: "model.Und_Medida"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.model,
+                          "Und_Medida",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "ml" } }, [_vm._v("ml")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "gr" } }, [_vm._v("gr")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "lt" } }, [_vm._v("lt")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "yd" } }, [_vm._v("yd")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "cm" } }, [_vm._v("cm")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "mt" } }, [_vm._v("mt")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Galon" } }, [
+                      _vm._v("Galon")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Unidad" } }, [
+                      _vm._v("Unidad")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                  _vm._v("Presentacion")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.model.Presentacion,
+                        expression: "model.Presentacion"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.model,
+                          "Presentacion",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "Granel" } }, [
+                      _vm._v("Granel")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Bolsa" } }, [
+                      _vm._v("Bolsa")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Frasco" } }, [
+                      _vm._v("Frasco")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Barra" } }, [
+                      _vm._v("Barra")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja" } }, [
+                      _vm._v("Caja")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja 12 Piezas" } }, [
+                      _vm._v("Caja 12 Piezas")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja 24 Piezas" } }, [
+                      _vm._v("Caja 24 Piezas")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Caja 100 Piezas" } }, [
+                      _vm._v("Caja 100 Piezas")
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                   _vm._v("Proveedor")

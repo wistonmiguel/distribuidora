@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB; use App\Quotation;
 use App\Compra;
 use App\CompraDetalle;
+use App\Inventario;
 
 class CompraController extends Controller
 {
@@ -98,6 +99,17 @@ class CompraController extends Controller
                     $data_model2->Cantidad = $detalle['Cantidad'];
                     $data_model2->Precio = $detalle['Precio'];
                     $data_model2->save();
+
+                    //ACTUALIZAR INVENTARIO
+                    $model_finded = Inventario::select("inventario.idInventario", "inventario.Stock")->where("inventario.idProducto", "=", $detalle['idProducto'])->get();
+                    $stockActual = $model_finded[0]->Stock;
+                    $idInventario = $model_finded[0]->idInventario;
+
+                    if($model_finded){
+                        $data_model3 = Inventario::find($idInventario);
+                        $data_model3->Stock = $stockActual + $detalle['Cantidad'];
+                        $data_model3->save();
+                    }
                 }
             }
 

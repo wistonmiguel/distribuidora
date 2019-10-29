@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Producto;
-//use App\Proveedor;
+use DB; use App\Quotation;
+use App\Inventario;
 
 class ProductoController extends Controller
 {
@@ -78,13 +79,32 @@ class ProductoController extends Controller
             'idProveedor' => 'required'
         ]);
 
-        $data_model = new Producto();
-        $data_model->Descripcion = $request->Descripcion;
-        $data_model->Marca = $request->Marca;
-        $data_model->idProveedor = $request->idProveedor;
-        $data_model->save();
+        DB::beginTransaction();
+        try{
+            $data_model = new Producto();
+            $data_model->Descripcion = $request->Descripcion;
+            $data_model->Marca = $request->Marca;
+            $data_model->Und_Medida = $request->Und_Medida;
+            $data_model->Presentacion = $request->Presentacion;
+            $data_model->idProveedor = $request->idProveedor;
 
-        return $data_model;
+        if($data_model->save())
+            {
+                $last_id = $data_model->idProducto;
+
+                $data_model2 = new Inventario();
+                $data_model2->Stock = 0;
+                $data_model2->idProducto = $last_id;
+                $data_model2->idAlmacen = 1;
+                $data_model2->save();
+
+                DB::commit();
+            }
+        //return $data_model;
+        }catch(\Exception $e){
+        // rollback operation for failure
+            DB::rollback();
+        }
     }
 
     /**
@@ -121,6 +141,8 @@ class ProductoController extends Controller
         $data_model = Producto::find($id);
         $data_model->Descripcion = $request->Descripcion;
         $data_model->Marca = $request->Marca;
+        $data_model->Und_Medida = $request->Und_Medida;
+        $data_model->Presentacion = $request->Presentacion;
         $data_model->idProveedor = $request->idProveedor;
         $data_model->save();
         return $data_model;

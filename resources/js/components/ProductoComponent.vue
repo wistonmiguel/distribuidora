@@ -19,6 +19,29 @@
                         <input type="text" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Descripcion">
                         <label for="formGroupExampleInput">Marca</label>
                         <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Marca">
+                        <label for="formGroupExampleInput">Medida</label>
+                        <select v-model="model.Und_Medida" class="form-control">
+                            <option value="ml">ml</option>
+                            <option value="gr">gr</option>
+                            <option value="lt">lt</option>
+                            <option value="yd">yd</option>
+                            <option value="cm">cm</option>
+                            <option value="mt">mt</option>
+                            <option value="Galon">Galon</option>
+                            <option value="Unidad">Unidad</option>
+                        </select>
+                        <label for="formGroupExampleInput">Presentacion</label>
+                        <select v-model="model.Presentacion" class="form-control">
+                            <option value="Granel">Granel</option>
+                            <option value="Bolsa">Bolsa</option>
+                            <option value="Frasco">Frasco</option>
+                            <option value="Barra">Barra</option>
+                            <option value="Caja">Caja</option>
+                            <option value="Caja 12 Piezas">Caja 12 Piezas</option>
+                            <option value="Caja 24 Piezas">Caja 24 Piezas</option>
+                            <option value="Caja 100 Piezas">Caja 100 Piezas</option>
+                        </select>
+
                         <label for="formGroupExampleInput">Proveedor</label>
                         <select v-model="model.idProveedor" class="form-control">
                             <option v-for="item in fk1" :key="item" :value="item.idProveedor">{{item.Nombre}}</option>
@@ -38,6 +61,29 @@
                         <input type="text" class="form-control mb-2" placeholder="Nombre del Producto" v-model="model.Descripcion">
                         <label for="formGroupExampleInput">Marca</label>
                         <input type="text" class="form-control mb-2" placeholder="Marca del Producto" v-model="model.Marca">
+                        <label for="formGroupExampleInput">Medida</label>
+                        <select v-model="model.Und_Medida" class="form-control">
+                            <option value="ml">ml</option>
+                            <option value="gr">gr</option>
+                            <option value="lt">lt</option>
+                            <option value="yd">yd</option>
+                            <option value="cm">cm</option>
+                            <option value="mt">mt</option>
+                            <option value="Galon">Galon</option>
+                            <option value="Unidad">Unidad</option>
+                        </select>
+
+                        <label for="formGroupExampleInput">Presentacion</label>
+                        <select v-model="model.Presentacion" class="form-control">
+                            <option value="Granel">Granel</option>
+                            <option value="Bolsa">Bolsa</option>
+                            <option value="Frasco">Frasco</option>
+                            <option value="Barra">Barra</option>
+                            <option value="Caja">Caja</option>
+                            <option value="Caja 12 Piezas">Caja 12 Piezas</option>
+                            <option value="Caja 24 Piezas">Caja 24 Piezas</option>
+                            <option value="Caja 100 Piezas">Caja 100 Piezas</option>
+                        </select>
                         <label for="formGroupExampleInput">Proveedor</label>
                         <!-- FK -->
                         <select v-model="model.idProveedor" class="form-control">
@@ -123,7 +169,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Descripcion: '', Marca: '', idProveedor: ''}
+      model: {Descripcion: '', Marca: '', Und_Medida: '', Presentacion: '', idProveedor: ''}
     }
   },
   created(){
@@ -183,7 +229,7 @@ export default {
       const newModel = this.model;
 
       //MODEL_ATTR
-      this.model = {Descripcion: '', Marca: '', idProveedor: ''};
+      this.model = {Descripcion: '', Marca: '', Und_Medida: '', Presentacion: '', idProveedor: ''};
 
       axios.post('./productos', newModel)
         .then((res) =>{
@@ -204,6 +250,8 @@ export default {
         this.model.idProducto = item.idProducto;
         this.model.Descripcion = item.Descripcion;
         this.model.Marca = item.Marca;
+        this.model.Und_Medida = item.Und_Medida;
+        this.model.Presentacion = item.Presentacion;
         this.model.idProveedor = item.idProveedor;
 
         this.modoEditar = true;
@@ -217,7 +265,7 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Descripcion: model.Descripcion, Marca: model.Marca, idProveedor: model.idProveedor};
+      const params = {Descripcion: model.Descripcion, Marca: model.Marca, Und_Medida: model.Und_Medida, Presentacion: model.Presentacion, idProveedor: model.idProveedor};
 
       axios.put(`./productos/${model.idProducto}`, params)
         .then(res=>{
@@ -228,6 +276,8 @@ export default {
           //MODEL_ATTR
           this.model.Descripcion = '';
           this.model.Marca = '';
+          this.model.Und_Medida = '';
+          this.model.Presentacion = '';
           this.model.idProveedor = '';
 
           this.changePage(1);
@@ -246,7 +296,7 @@ export default {
       this.modoCrear = false;
       this.modoEditar = false;
       this.modoVista = true;
-      this.model = {Descripcion: '', Marca: '', idProveedor: ''};
+      this.model = {Descripcion: '', Marca: '', Und_Medida: '', Presentacion: '', idProveedor: ''};
     },
     changePage(page){
         this.pagination.current_page = page;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Inventario;
-//use App\Proveedor;
+use DB; use App\Quotation;
 
 class InventarioController extends Controller
 {
@@ -76,20 +76,28 @@ class InventarioController extends Controller
     {
         $request->validate([
             'Stock' => 'required',
-            'Und_Medida' => 'required',
-            'Presentacion' => 'required',
             'idProducto' => 'required',
             'idAlmacen' => 'required'
         ]);
 
-        $data_model = new Inventario();
-        $data_model->Stock = $request->Stock;
-        $data_model->Und_Medida = $request->Und_Medida;
-        $data_model->Presentacion = $request->Presentacion;
-        $data_model->idProducto = $request->idProducto;
-        $data_model->idAlmacen = $request->idAlmacen;
-        $data_model->save();
+        $model_finded = Inventario::select("inventario.idInventario", "inventario.Stock")->where("inventario.idProducto", "=", $request->idProducto)->get();
+        $stockActual = $model_finded[0]->Stock;
+        $idInventario = $model_finded[0]->idInventario;
 
+        if($model_finded){
+            $data_model = Inventario::find($idInventario);
+            $data_model->Stock = $stockActual + $request->Stock;
+            $data_model->save();
+        }
+        else
+        {
+            $data_model = null;
+            $data_model = new Inventario();
+            $data_model->Stock = $request->Stock;
+            $data_model->idProducto = $request->idProducto;
+            $data_model->idAlmacen = $request->idAlmacen;
+            $data_model->save();
+        }
         return $data_model;
     }
 
@@ -126,8 +134,6 @@ class InventarioController extends Controller
     {
         $data_model = Inventario::find($id);
         $data_model->Stock = $request->Stock;
-        $data_model->Und_Medida = $request->Und_Medida;
-        $data_model->Presentacion = $request->Presentacion;
         $data_model->idProducto = $request->idProducto;
         $data_model->idAlmacen = $request->idAlmacen;
         $data_model->save();

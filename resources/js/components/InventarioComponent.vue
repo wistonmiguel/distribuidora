@@ -17,28 +17,6 @@
                         <!-- MODEL_ATTR -->
                         <label for="formGroupExampleInput">Stock</label>
                         <input type="text" class="form-control mb-2" placeholder="Cantidad de Producto" v-model="model.Stock">
-                        <label for="formGroupExampleInput">Medida</label>
-                        <select v-model="model.Und_Medida" class="form-control">
-                            <option value="ml">ml</option>
-                            <option value="gr">gr</option>
-                            <option value="lt">lt</option>
-                            <option value="yd">yd</option>
-                            <option value="cm">cm</option>
-                            <option value="mt">mt</option>
-                            <option value="Galon">Galon</option>
-                            <option value="Unidad">Unidad</option>
-                        </select>
-                        <label for="formGroupExampleInput">Presentacion</label>
-                        <select v-model="model.Presentacion" class="form-control">
-                            <option value="Granel">Granel</option>
-                            <option value="Bolsa">Bolsa</option>
-                            <option value="Frasco">Frasco</option>
-                            <option value="Barra">Barra</option>
-                            <option value="Caja">Caja</option>
-                            <option value="Caja 12 Piezas">Caja 12 Piezas</option>
-                            <option value="Caja 24 Piezas">Caja 24 Piezas</option>
-                            <option value="Caja 100 Piezas">Caja 100 Piezas</option>
-                        </select>
                         <label for="formGroupExampleInput">Producto</label>
                         <select v-model="model.idProducto" class="form-control">
                             <option v-for="item1 in fk1" :key="item1" :value="item1.idProducto">{{item1.Descripcion}}</option>
@@ -47,7 +25,6 @@
                         <select v-model="model.idAlmacen" class="form-control">
                             <option v-for="item2 in fk2" :key="item2" :value="item2.idAlmacen">{{item2.Nombre}}</option>
                         </select>
-                        <!-- <input type="text" class="form-control mb-2" placeholder="Proveedor del Producto" v-model="model.idProveedor"> -->
                     </div>
                     <div class="form-group">
                         <button class="btn btn-warning" @click="updateModel(model)">Actualizar</button>
@@ -59,31 +36,7 @@
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
                         <label for="formGroupExampleInput">Cantidad</label>
-                        <input type="text" class="form-control mb-2" placeholder="Cantidad del Producto" v-model="model.Stock">
-                        <label for="formGroupExampleInput">Medida</label>
-
-                        <select v-model="model.Und_Medida" class="form-control">
-                            <option value="ml">ml</option>
-                            <option value="gr">gr</option>
-                            <option value="lt">lt</option>
-                            <option value="yd">yd</option>
-                            <option value="cm">cm</option>
-                            <option value="mt">mt</option>
-                            <option value="Galon">Galon</option>
-                            <option value="Unidad">Unidad</option>
-                        </select>
-
-                        <label for="formGroupExampleInput">Presentacion</label>
-                        <select v-model="model.Presentacion" class="form-control">
-                            <option value="Granel">Granel</option>
-                            <option value="Bolsa">Bolsa</option>
-                            <option value="Frasco">Frasco</option>
-                            <option value="Barra">Barra</option>
-                            <option value="Caja">Caja</option>
-                            <option value="Caja 12 Piezas">Caja 12 Piezas</option>
-                            <option value="Caja 24 Piezas">Caja 24 Piezas</option>
-                            <option value="Caja 100 Piezas">Caja 100 Piezas</option>
-                        </select>
+                        <input type="text" class="form-control mb-2" placeholder="Cantidad del s" v-model="model.Stock">
                         <label for="formGroupExampleInput">Producto</label>
                         <!-- FK1 -->
                         <select v-model="model.idProducto" class="form-control">
@@ -175,7 +128,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Stock: '', Und_Medida: '', Presentacion: '', idProducto: '', idProveedor: ''}
+      model: {Stock: '', idProducto: '', idAlmacen: ''}
     }
   },
   created(){
@@ -240,7 +193,7 @@ export default {
       const newModel = this.model;
 
       //MODEL_ATTR
-      this.model = {Stock: '', Und_Medida: '', Presentacion: '', idProducto: '', idAlmacen: ''};
+      this.model = {Stock: '', idProducto: '', idAlmacen: ''};
 
       axios.post('./inventarios', newModel)
         .then((res) =>{
@@ -260,8 +213,6 @@ export default {
         //MODEL_ATTR
         this.model.idInventario = item.idInventario;
         this.model.Stock = item.Stock;
-        this.model.Und_Medida = item.Und_Medida;
-        this.model.Presentacion = item.Presentacion;
         this.model.idProducto = item.idProducto;
         this.model.idAlmacen = item.idAlmacen;
 
@@ -276,7 +227,7 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Stock: model.Stock, Und_Medida: model.Und_Medida, Presentacion: model.Presentacion, idProducto: model.idProducto, idAlmacen: model.idAlmacen};
+      const params = {Stock: model.Stock, idProducto: model.idProducto, idAlmacen: model.idAlmacen};
 
       axios.put(`./inventarios/${model.idInventario}`, params)
         .then(res=>{
@@ -286,8 +237,6 @@ export default {
 
           //MODEL_ATTR
           this.model.Stock = '';
-          this.model.Und_Medida = '';
-          this.model.Presentacion = '';
           this.model.idProducto = '';
           this.model.idAlmacen = '';
 
@@ -307,7 +256,7 @@ export default {
       this.modoCrear = false;
       this.modoEditar = false;
       this.modoVista = true;
-      this.model = {Stock: '', Und_Medida: '', Presentacion: '', idProducto: '', idAlmacen: ''};
+      this.model = {Stock: '', idProducto: '', idAlmacen: ''};
     },
     changePage(page){
         this.pagination.current_page = page;
