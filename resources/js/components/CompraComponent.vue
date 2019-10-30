@@ -11,7 +11,14 @@
             <b>DETALLE DE LA COMPRA</b>
         </div>
         <div class="card-header" v-if="modoDetalle">
-            <b>DETALLE DE TRANSACCIÓN DE COMPRA</b>
+            <div class="row">
+                <div class="col-9">
+                    <b>DETALLE DE TRANSACCIÓN DE COMPRA</b>
+                </div>
+                <div class="col-3 text-right">
+                    <button class="btn btn-danger text-right" @click="realizarDevolucion">REALIZAR DEVOLUCIÓN</button>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div>
@@ -23,8 +30,8 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary bg-info text-white border-dark">
-                                    FECHA
+                                <div class="card-header primary bg-dark text-white border-dark">
+                                    <b>FECHA</b>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">{{ model.FechaESP }}</li>
@@ -34,8 +41,8 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary bg-info text-white border-dark">
-                                    ESTADO
+                                <div class="card-header primary bg-dark text-white border-dark">
+                                    <b>ESTADO</b>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">{{ model.Estado }}</li>
@@ -45,8 +52,8 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary bg-info text-white border-dark">
-                                    PROVEEDOR
+                                <div class="card-header primary bg-dark text-white border-dark">
+                                    <b>PROVEEDOR</b>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">{{ model.NProv }}</li>
@@ -56,8 +63,8 @@
 
                         <div class="col-3">
                             <div class="card text-right">
-                                <div class="card-header primary bg-info text-white border-dark">
-                                      TIPO DE PAGO
+                                <div class="card-header primary bg-dark text-white border-dark">
+                                      <b>TIPO DE PAGO</b>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">{{ model.NTP }}</li>
@@ -294,7 +301,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''},
+      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
     }
   },
@@ -373,7 +380,7 @@ export default {
       const newModel2 = this.models2;
 
       //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
-      this.model = {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
       this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
       axios.post('./compras', { newModel, newModel2 })
@@ -401,11 +408,16 @@ export default {
     },
     viewDetails(item){
         //MODEL_ATTR
-        this.model.idTransaccion = item.idTransaccion;
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+
         this.model.FechaESP = item.FechaESP;
+        this.model.idTransaccion = item.idTransaccion;
         this.model.Estado = item.Estado;
-        this.model.NProv = item.NProv;
         this.model.NTP = item.NTP;
+        this.model.idTipoPago = item.idTipoPago;
+        this.model.idComprador = item.idComprador;
+        this.model.NProv = item.NProv;
+        this.model.idProveedor = item.idProveedor;
 
         this.modoDetalle = true;
         this.modoCrear = false;
@@ -455,6 +467,19 @@ export default {
           })
       }
     },
+    realizarDevolucion(){
+      const confirmacion = confirm(`Desea hacer la Devolución de esta Compra?`);
+      if(confirmacion){
+          alert(this.model.idProveedor);
+          //alert(this.models2);
+        /*
+        axios.delete(`./compras/${model.idTransaccion}`)
+          .then(()=>{
+            this.changePage(page);
+          })
+          */
+      }
+    },
     nextForm(){
       this.modoCrearDetalle = true;
       this.modoCrear = false;
@@ -479,7 +504,7 @@ export default {
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = true;
-      this.model = {Fecha: '', Estado: '', idTipoPago: '', idComprador: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
       if(this.models2.length == 0)
       this.emptyTable = true;
       else
@@ -500,9 +525,6 @@ export default {
         Total: this.Cantidad * this.Precio
       };
 
-        //EVALUAR
-      //this.TotalCompra = this.TotalCompra + (this.Cantidad * this.Precio);
-
       if(this.models2.length == 0)
       this.emptyTable = false;
 
@@ -519,8 +541,6 @@ export default {
         if(this.models2.length == 1)
         this.emptyTable = true;
 
-        //EVALUAR
-        //this.TotalCompra = this.TotalCompra - model2.Total;
         this.models2.splice(index, 1);
     }
   }

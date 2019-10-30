@@ -17,8 +17,10 @@ Route::get('/clientes/getAll', 'ClienteController@getAll')->name('allCliente');
 Route::resource('/clientes', 'ClienteController')->middleware('auth');
 Route::get('/tipoPagos/getAll', 'TipoPagoController@getAll')->name('allTipoPago');
 Route::resource('/tipoPagos', 'TipoPagoController')->middleware('auth');
-
 Route::get('/compras/getAll', 'CompraController@getAll')->name('allCompra');
 Route::resource('/compras', 'CompraController')->middleware('auth');
 Route::get('/detallecompras/getAll', 'CompraDetalleController@getAll')->name('allCompraDetalle');
 Route::resource('/detallecompras', 'CompraDetalleController')->middleware('auth');
+
+Route::get('/comprasdevolucion/getAll', 'CompraDevolucionController@getAll')->name('allCompraDevolucion');
+Route::resource('/comprasdevolucion', 'CompraDevolucionController')->middleware('auth');

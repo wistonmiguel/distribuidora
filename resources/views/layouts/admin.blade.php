@@ -45,6 +45,7 @@
           <a class="list-group-item list-group-item-action bg-dark" style="color: white;">TRANSACCIONES</a>
           <a href="{{ asset('./inventarios') }}" class="list-group-item list-group-item-action bg-light">Inventario</a>
           <a href="{{ asset('./compras') }}" class="list-group-item list-group-item-action bg-light">Compras</a>
+          <a href="{{ asset('./comprasdevolucion') }}" class="list-group-item list-group-item-action bg-light">Devoluciones de Compras</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
