@@ -3428,8 +3428,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       FechaESP: '',
       idTransaccion: '',
       Estado: '',
-      NTP: '',
-      idTipoPago: '',
+      NCompr: '',
       idComprador: '',
       NProv: '',
       idProveedor: ''
@@ -3513,8 +3512,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Estado: '',
-        NTP: '',
-        idTipoPago: '',
+        NCompr: '',
         idComprador: '',
         NProv: '',
         idProveedor: ''
@@ -3522,7 +3520,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
       this.model.Estado = item.Estado;
-      this.model.NTP = item.NTP;
+      this.model.NCompr = item.NCompr;
       this.model.idTipoPago = item.idTipoPago;
       this.model.idComprador = item.idComprador;
       this.model.NProv = item.NProv;
@@ -3532,7 +3530,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.modoCrearDetalle = false;
       this.modoVista = false; //AQUI MOSTRAR EL DETALLE DE DEVOLUCION
 
-      axios.get('./detallecompras/getAll/', {
+      axios.get('./detallecomprasdevolucion/getAll/', {
         params: {
           id: item.idTransaccion
         }
@@ -3567,8 +3565,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Estado: '',
-        NTP: '',
-        idTipoPago: '',
+        NCompr: '',
         idComprador: '',
         NProv: '',
         idProveedor: ''
@@ -42409,7 +42406,7 @@ var render = function() {
                   staticClass: "btn btn-success text-right",
                   on: { click: _vm.realizarDevolucion }
                 },
-                [_vm._v("CONVERTIR EN COMPRA EFECTIVA")]
+                [_vm._v("REVERTIR DEVOLUCIÓN")]
               )
             ])
           ])
@@ -42464,7 +42461,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v(_vm._s(_vm.model.NTP))
+                          _vm._v(_vm._s(_vm.model.NCompr))
                         ])
                       ])
                     ])
@@ -42565,7 +42562,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.NProv))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.NTP))]),
+                    _c("td", [_vm._v(_vm._s(item.NCompr))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.Estado))]),
                     _vm._v(" "),
@@ -42764,7 +42761,7 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "card-header primary bg-dark text-white border-dark" },
-      [_c("b", [_vm._v("TIPO DE PAGO")])]
+      [_c("b", [_vm._v("COMPRADOR")])]
     )
   },
   function() {

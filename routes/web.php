@@ -21,6 +21,8 @@ Route::get('/compras/getAll', 'CompraController@getAll')->name('allCompra');
 Route::resource('/compras', 'CompraController')->middleware('auth');
 Route::get('/detallecompras/getAll', 'CompraDetalleController@getAll')->name('allCompraDetalle');
 Route::resource('/detallecompras', 'CompraDetalleController')->middleware('auth');
-
 Route::get('/comprasdevolucion/getAll', 'CompraDevolucionController@getAll')->name('allCompraDevolucion');
 Route::resource('/comprasdevolucion', 'CompraDevolucionController')->middleware('auth');
+
+Route::get('/detallecomprasdevolucion/getAll', 'CompraDetalleDevolucionController@getAll')->name('allCompraDetalleDevolucion');
+Route::resource('/detallecomprasdevolucion', 'CompraDetalleDevolucionController')->middleware('auth');

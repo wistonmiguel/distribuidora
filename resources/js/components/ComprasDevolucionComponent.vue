@@ -9,7 +9,7 @@
                     <b>DETALLE DE DEVOLUCION DE COMPRA</b>
                 </div>
                 <div class="col-4 text-right">
-                    <button class="btn btn-success text-right" @click="realizarDevolucion">CONVERTIR EN COMPRA EFECTIVA</button>
+                    <button class="btn btn-success text-right" @click="realizarDevolucion">REVERTIR DEVOLUCIÓN</button>
                 </div>
             </div>
         </div>
@@ -57,10 +57,10 @@
                         <div class="col-3">
                             <div class="card text-right">
                                 <div class="card-header primary bg-dark text-white border-dark">
-                                      <b>TIPO DE PAGO</b>
+                                      <b>COMPRADOR</b>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">{{ model.NTP }}</li>
+                                    <li class="list-group-item">{{ model.NCompr }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                         <!-- MODEL_ATTR -->
                         <td>{{item.FechaESP}}</td>
                         <td>{{item.NProv}}</td>
-                        <td>{{item.NTP}}</td>
+                        <td>{{item.NCompr}}</td>
                         <td>{{item.Estado}}</td>
 
                         <td>
@@ -175,7 +175,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''},
+      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
     }
   },
@@ -240,12 +240,12 @@ export default {
     },
     viewDetails(item){
         //MODEL_ATTR
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''};
 
         this.model.FechaESP = item.FechaESP;
         this.model.idTransaccion = item.idTransaccion;
         this.model.Estado = item.Estado;
-        this.model.NTP = item.NTP;
+        this.model.NCompr = item.NCompr;
         this.model.idTipoPago = item.idTipoPago;
         this.model.idComprador = item.idComprador;
         this.model.NProv = item.NProv;
@@ -257,7 +257,7 @@ export default {
         this.modoVista = false;
 
         //AQUI MOSTRAR EL DETALLE DE DEVOLUCION
-        axios.get('./detallecompras/getAll/', { params : {id: item.idTransaccion} } ).then (res => {
+        axios.get('./detallecomprasdevolucion/getAll/', { params : {id: item.idTransaccion} } ).then (res => {
         this.models2 = null;
         this.models2 = res.data.model;
 
@@ -286,7 +286,7 @@ export default {
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = true;
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''};
       if(this.models2.length == 0)
       this.emptyTable = true;
       else

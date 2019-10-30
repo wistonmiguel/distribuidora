@@ -23,8 +23,9 @@ class CompraDevolucionController extends Controller
     {
         if($request->ajax()){
 
-          $data_model = CompraDevolucion::select(DB::raw("DATE_FORMAT(dev_compra.Fecha, '%d/%m/%Y') AS FechaESP"), "dev_compra.*", "proveedor.Nombre AS NProv")
+          $data_model = CompraDevolucion::select(DB::raw("DATE_FORMAT(dev_compra.Fecha, '%d/%m/%Y') AS FechaESP"), "dev_compra.*", "proveedor.Nombre AS NProv", "comprador.Nombre AS NCompr")
           ->join("proveedor","proveedor.idProveedor","=","dev_compra.idProveedor")
+          ->join("comprador","comprador.idComprador","=","dev_compra.idComprador")
           ->orderBy('dev_compra.idTransaccion', 'DESC')->paginate(10);
 
           return [
