@@ -121,6 +121,58 @@ class CompraController extends Controller
     }
     }
 
+    public function devAll(Request $request)
+    {
+    echo $request;
+    /*
+    DB::beginTransaction();
+
+    try{
+        // Database operations
+        $data_model = new Compra();
+        $data_model->Fecha = $request->newModel['Fecha'];
+        $data_model->Estado = $request->newModel['Estado'];
+        $data_model->idTipoPago = $request->newModel['idTipoPago'];
+        $data_model->idComprador = $request->newModel['idComprador'];
+        $data_model->idProveedor = $request->newModel['idProveedor'];
+
+        if($data_model->save())
+            {
+                $last_id = $data_model->idTransaccion;
+
+                //GUARDAR DETALLE
+                foreach ($request->newModel2 as $detalle) {
+                    //echo $detalle['idProducto']." con idTransaccion: ".$last_id." <br>";
+                    $data_model2 = null;
+                    $data_model2 = new CompraDetalle();
+                    $data_model2->idProducto = $detalle['idProducto'];
+                    $data_model2->idTransaccion = $last_id;
+                    $data_model2->Cantidad = $detalle['Cantidad'];
+                    $data_model2->Precio = $detalle['Precio'];
+                    $data_model2->save();
+
+                    //ACTUALIZAR INVENTARIO
+                    $model_finded = Inventario::select("inventario.idInventario", "inventario.Stock")->where("inventario.idProducto", "=", $detalle['idProducto'])->get();
+                    $stockActual = $model_finded[0]->Stock;
+                    $idInventario = $model_finded[0]->idInventario;
+
+                    if($model_finded){
+                        $data_model3 = Inventario::find($idInventario);
+                        $data_model3->Stock = $stockActual + $detalle['Cantidad'];
+                        $data_model3->save();
+                    }
+                }
+            }
+
+        DB::commit();
+        //return $data_model;
+    }catch(\Exception $e){
+    // rollback operation for failure
+        DB::rollback();
+    }
+    */
+    }
+
     /**
      * Display the specified resource.
      *

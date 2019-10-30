@@ -470,7 +470,22 @@ export default {
     realizarDevolucion(){
       const confirmacion = confirm(`Desea hacer la Devolución de esta Compra?`);
       if(confirmacion){
-          alert(this.model.idProveedor);
+
+        const newModel = this.model;
+        const newModel2 = this.models2;
+
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+        this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
+
+        axios.post('./compras/devAll', { newModel, newModel2 })
+        .then((res) =>{
+          this.modoCrear=false;
+          this.modoCrearDetalle = false;
+          this.modoDetalle=false;
+          this.modoVista=true;
+
+          this.changePage(1);
+        })
           //alert(this.models2);
         /*
         axios.delete(`./compras/${model.idTransaccion}`)

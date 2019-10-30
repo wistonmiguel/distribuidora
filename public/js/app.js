@@ -2882,10 +2882,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     realizarDevolucion: function realizarDevolucion() {
+      var _this7 = this;
+
       var confirmacion = confirm("Desea hacer la Devoluci\xF3n de esta Compra?");
 
       if (confirmacion) {
-        alert(this.model.idProveedor); //alert(this.models2);
+        var newModel = this.model;
+        var newModel2 = this.models2;
+        this.model = {
+          Fecha: '',
+          FechaESP: '',
+          idTransaccion: '',
+          Estado: '',
+          NTP: '',
+          idTipoPago: '',
+          idComprador: '',
+          NProv: '',
+          idProveedor: ''
+        };
+        this.model2 = {
+          idProducto: '',
+          Producto: '',
+          Cantidad: '',
+          Precio: '',
+          Total: ''
+        };
+        axios.post('./compras/devAll', {
+          newModel: newModel,
+          newModel2: newModel2
+        }).then(function (res) {
+          _this7.modoCrear = false;
+          _this7.modoCrearDetalle = false;
+          _this7.modoDetalle = false;
+          _this7.modoVista = true;
+
+          _this7.changePage(1);
+        }); //alert(this.models2);
 
         /*
         axios.delete(`./compras/${model.idTransaccion}`)
@@ -2896,15 +2928,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     nextForm: function nextForm() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.modoCrearDetalle = true;
       this.modoCrear = false;
       this.modoDetalle = false;
       this.modoVista = false;
       axios.get('./productos/getAll').then(function (res) {
-        _this7.fk4 = null;
-        _this7.fk4 = res.data.model;
+        _this8.fk4 = null;
+        _this8.fk4 = res.data.model;
       });
     },
     backForm: function backForm() {
