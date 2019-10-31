@@ -470,6 +470,8 @@ export default {
     realizarDevolucion(){
       const confirmacion = confirm(`Desea hacer la Devolución de esta Compra?`);
       if(confirmacion){
+        var today = new Date();
+        this.model.Fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
         const newModel = this.model;
         const newModel2 = this.models2;
@@ -486,13 +488,6 @@ export default {
 
           this.changePage(1);
         })
-          //alert(this.models2);
-        /*
-        axios.delete(`./compras/${model.idTransaccion}`)
-          .then(()=>{
-            this.changePage(page);
-          })
-          */
       }
     },
     nextForm(){

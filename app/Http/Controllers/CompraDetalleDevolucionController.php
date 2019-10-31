@@ -83,7 +83,7 @@ class CompraDetalleDevolucionController extends Controller
         ]);
         */
 
-        $data_model2 = null;
+        $data_model = null;
         $data_model = new CompraDetalleDevolucion();
         $data_model->idProducto = $request->idProducto;
         $data_model->idTransaccion = $request->idTransaccion;

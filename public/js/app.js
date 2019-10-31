@@ -2887,6 +2887,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var confirmacion = confirm("Desea hacer la Devoluci\xF3n de esta Compra?");
 
       if (confirmacion) {
+        var today = new Date();
+        this.model.Fecha = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         var newModel = this.model;
         var newModel2 = this.models2;
         this.model = {
@@ -2917,14 +2919,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this7.modoVista = true;
 
           _this7.changePage(1);
-        }); //alert(this.models2);
-
-        /*
-        axios.delete(`./compras/${model.idTransaccion}`)
-          .then(()=>{
-            this.changePage(page);
-          })
-          */
+        });
       }
     },
     nextForm: function nextForm() {
@@ -3435,10 +3430,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -3574,19 +3565,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     updateModel: function updateModel(model) {},
     deleteModel: function deleteModel(model, index, page) {},
-    realizarDevolucion: function realizarDevolucion() {
-      var confirmacion = confirm("Desea hacer la Devoluci\xF3n de esta Compra?");
-
-      if (confirmacion) {//alert(this.models2);
-
-        /*
-        axios.delete(`./comprasdevolucion/${model.idTransaccion}`)
-          .then(()=>{
-            this.changePage(page);
-          })
-          */
-      }
-    },
     cancelForm: function cancelForm() {
       this.modoCrear = false;
       this.modoCrearDetalle = false;
@@ -42427,22 +42405,7 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.modoDetalle
-      ? _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "row" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-4 text-right" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success text-right",
-                  on: { click: _vm.realizarDevolucion }
-                },
-                [_vm._v("REVERTIR DEVOLUCIÓN")]
-              )
-            ])
-          ])
-        ])
+      ? _c("div", { staticClass: "card-header" }, [_vm._m(0)])
       : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -42615,24 +42578,6 @@ var render = function() {
                             _vm._v("👁")
                           ])
                         ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: { title: "Eliminar" },
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteModel(
-                                item,
-                                index,
-                                _vm.pagination.current_page
-                              )
-                            }
-                          }
-                        },
-                        [_c("b", [_vm._v("✕")])]
                       )
                     ])
                   ])
@@ -42752,8 +42697,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8" }, [
-      _c("b", [_vm._v("DETALLE DE DEVOLUCION DE COMPRA")])
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-8" }, [
+        _c("b", [_vm._v("DETALLE DE DEVOLUCION DE COMPRA")])
+      ])
     ])
   },
   function() {

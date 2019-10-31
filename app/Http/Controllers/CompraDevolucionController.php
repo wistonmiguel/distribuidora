@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB; use App\Quotation;
 use App\CompraDevolucion;
+use App\CompraDetalleDevolucion;
 //use App\CompraDevolucionDetalle;
 use App\Inventario;
 
@@ -74,49 +75,16 @@ class CompraDevolucionController extends Controller
         ]);
         */
 
-    DB::beginTransaction();
-
-    try{
         // Database operations
-        $data_model = new CompraDevolucion();
-        $data_model->Fecha = $request->newModel['Fecha'];
-        $data_model->Estado = $request->newModel['Estado'];
-        $data_model->idComprador = $request->newModel['idComprador'];
-        $data_model->idProveedor = $request->newModel['idProveedor'];
+        $data_model = null;
+        $data_model = new CompraDetalleDevolucion();
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Cantidad = $request->Cantidad;
+        $data_model->Precio = $request->Precio;
+        $data_model->save();
 
-        if($data_model->save())
-            {
-                $last_id = $data_model->idTransaccion;
-
-                //GUARDAR DETALLE
-                foreach ($request->newModel2 as $detalle) {
-                    $data_model2 = null;
-                    $data_model2 = new CompraDevolucionDetalle();
-                    $data_model2->idProducto = $detalle['idProducto'];
-                    $data_model2->idTransaccion = $last_id;
-                    $data_model2->Cantidad = $detalle['Cantidad'];
-                    $data_model2->Precio = $detalle['Precio'];
-                    $data_model2->save();
-
-                    //ACTUALIZAR INVENTARIO
-                    $model_finded = Inventario::select("inventario.idInventario", "inventario.Stock")->where("inventario.idProducto", "=", $detalle['idProducto'])->get();
-                    $stockActual = $model_finded[0]->Stock;
-                    $idInventario = $model_finded[0]->idInventario;
-
-                    if($model_finded){
-                        $data_model3 = Inventario::find($idInventario);
-                        $data_model3->Stock = $stockActual - $detalle['Cantidad'];
-                        $data_model3->save();
-                    }
-                }
-            }
-
-        DB::commit();
-        //return $data_model;
-    }catch(\Exception $e){
-    // rollback operation for failure
-        DB::rollback();
-    }
+        return $data_model;
     }
 
     /**

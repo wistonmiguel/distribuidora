@@ -8,9 +8,6 @@
                 <div class="col-8">
                     <b>DETALLE DE DEVOLUCION DE COMPRA</b>
                 </div>
-                <div class="col-4 text-right">
-                    <button class="btn btn-success text-right" @click="realizarDevolucion">REVERTIR DEVOLUCIÓN</button>
-                </div>
             </div>
         </div>
         <div class="card-body">
@@ -125,7 +122,6 @@
 
                         <td>
                             <button title="Ver Detalle" class="btn btn-success btn-sm" @click="viewDetails(item)"><b style='color: white;'>👁</b></button>
-                            <button title="Eliminar" class="btn btn-danger btn-sm" @click="deleteModel(item, index, pagination.current_page)"><b>✕</b></button>
                         </td>
                         </tr>
                     </tbody>
@@ -268,18 +264,6 @@ export default {
     updateModel(model){
     },
     deleteModel(model, index, page){
-    },
-    realizarDevolucion(){
-      const confirmacion = confirm(`Desea hacer la Devolución de esta Compra?`);
-      if(confirmacion){
-          //alert(this.models2);
-        /*
-        axios.delete(`./comprasdevolucion/${model.idTransaccion}`)
-          .then(()=>{
-            this.changePage(page);
-          })
-          */
-      }
     },
     cancelForm(){
       this.modoCrear = false;
