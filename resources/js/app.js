@@ -28,9 +28,9 @@ Vue.component('comprador-crud', require('./components/CompradorComponent.vue').d
 Vue.component('cliente-crud', require('./components/ClienteComponent.vue').default);
 Vue.component('tipopago-crud', require('./components/TipoPagoComponent.vue').default);
 Vue.component('compra-management', require('./components/CompraComponent.vue').default);
-
 Vue.component('comprasdevolucion-management', require('./components/ComprasDevolucionComponent.vue').default);
 
+Vue.component('pedido-management', require('./components/PedidoComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
