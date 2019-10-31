@@ -206,7 +206,7 @@
                         </table>
                         <div class=" text-right mt-4">
                             <button class="btn btn-success" @click="backForm">Volver</button>
-                            <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Realizar Compra</button>
+                            <button class="btn btn-primary" @click="insertModel(pagination.current_page)">Realizar Pedido</button>
                         </div>
                     </div>
                 </div>

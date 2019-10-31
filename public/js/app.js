@@ -44555,7 +44555,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Realizar Compra")]
+                    [_vm._v("Realizar Pedido")]
                   )
                 ])
               ])

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB; use App\Quotation;
-use App\Pedido;
 use App\PedidoDetalle;
+//use App\Proveedor;
 
-class PedidoController extends Controller
+class PedidoDetalleController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +20,9 @@ class PedidoController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-
-          $data_model = Pedido::select(DB::raw("DATE_FORMAT(pedido.Fecha, '%d/%m/%Y') AS FechaESP"), "pedido.*", "cliente.Nombre AS NCli")
-          ->join("cliente","cliente.idCliente","=","pedido.idCliente")
-          ->orderBy('pedido.idTransaccion', 'DESC')->paginate(10);
+          $data_model = PedidoDetalle::select("detallepedido.*", "producto.Descripcion")
+          ->join("producto","producto.idProducto","=","detallepedido.idProducto")
+          ->orderBy('detallepedido.idDetalle', 'DESC')->paginate(10);
 
           return [
             'pagination' => [
@@ -37,11 +35,26 @@ class PedidoController extends Controller
             ],
             'model' => $data_model
         ];
+
     }
     else
     {
         return view('pedido');
     }
+    }
+
+    //FUNCION PARA IMPLEMENTAR
+    public function getAll(Request $request)
+    {
+        if($request->ajax()){
+            $data_model = PedidoDetalle::select("detallepedido.*", "producto.Descripcion")
+            ->join("producto","producto.idProducto","=","detallepedido.idProducto")
+            ->where('detallepedido.idTransaccion', "=", $request->id)
+            ->orderBy('detallepedido.idDetalle', 'DESC')->get();
+            return [
+                'model' => $data_model
+            ];
+        }
     }
 
     /**
@@ -64,46 +77,21 @@ class PedidoController extends Controller
     {
         /*
         $request->validate([
-            'Fecha' => 'required',
-            'Estado' => 'required',
-            'idTipoPago' => 'required',
-            'idComprador' => 'required',
-            'idCliente' => 'required'
+            'Descripcion' => 'required',
+            'Marca' => 'required',
+            'idProveedor' => 'required'
         ]);
         */
 
-    DB::beginTransaction();
+        $data_model = null;
+        $data_model = new PedidoDetalle();
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Cantidad = $request->Cantidad;
+        $data_model->Precio = $request->Precio;
+        $data_model->save();
 
-    try{
-        // Database operations
-        $data_model = new Pedido();
-        $data_model->Fecha = $request->newModel['Fecha'];
-        $data_model->Estado = $request->newModel['Estado'];
-        $data_model->idCliente = $request->newModel['idCliente'];
-
-        if($data_model->save())
-            {
-                $last_id = $data_model->idTransaccion;
-
-                //GUARDAR DETALLE
-                foreach ($request->newModel2 as $detalle) {
-                    //echo $detalle['idProducto']." con idTransaccion: ".$last_id." <br>";
-                    $data_model2 = null;
-                    $data_model2 = new PedidoDetalle();
-                    $data_model2->idProducto = $detalle['idProducto'];
-                    $data_model2->idTransaccion = $last_id;
-                    $data_model2->Cantidad = $detalle['Cantidad'];
-                    $data_model2->Precio = $detalle['Precio'];
-                    $data_model2->save();
-                }
-            }
-
-        DB::commit();
-        //return $data_model;
-    }catch(\Exception $e){
-    // rollback operation for failure
-        DB::rollback();
-    }
+        return $data_model;
     }
 
     /**
@@ -137,6 +125,13 @@ class PedidoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data_model = PedidoDetalle::find($id);
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Cantidad = $request->Cantidad;
+        $data_model->Precio = $request->Precio;
+        $data_model->save();
+        return $data_model;
     }
 
     /**
@@ -145,9 +140,9 @@ class PedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($idPedido)
+    public function destroy($idDetalle)
     {
-        $data_model = Pedido::find($idPedido);
+        $data_model = PedidoDetalle::find($idDetalle);
         $data_model->delete();
     }
 }

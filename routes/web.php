@@ -29,3 +29,4 @@ Route::resource('/detallecomprasdevolucion', 'CompraDetalleDevolucionController'
 
 Route::get('/pedidos/getAll', 'PedidoController@getAll')->name('allPedido');
 Route::resource('/pedidos', 'PedidoController')->middleware('auth');
+Route::get('/detallepedidos/getAll', 'PedidoDetalleController@getAll')->name('allCompraDetalle');
