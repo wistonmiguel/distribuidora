@@ -40,6 +40,7 @@
           <a href="{{ asset('./proveedores') }}" class="list-group-item list-group-item-action bg-light">Proveedores</a>
           <a href="{{ asset('./productos') }}" class="list-group-item list-group-item-action bg-light">Productos</a>
           <a href="{{ asset('./compradores') }}" class="list-group-item list-group-item-action bg-light">Compradores</a>
+          <a href="{{ asset('./vendedores') }}" class="list-group-item list-group-item-action bg-light">Vendedores</a>
           <a href="{{ asset('./clientes') }}" class="list-group-item list-group-item-action bg-light">Clientes</a>
           <a href="{{ asset('./tipoPagos') }}" class="list-group-item list-group-item-action bg-light">Tipos de Pago</a>
           <a class="list-group-item list-group-item-action bg-dark" style="color: white;">TRANSACCIONES</a>
@@ -47,6 +48,7 @@
           <a href="{{ asset('./compras') }}" class="list-group-item list-group-item-action bg-light">Compras</a>
           <a href="{{ asset('./comprasdevolucion') }}" class="list-group-item list-group-item-action bg-light">Devoluciones de Compras</a>
           <a href="{{ asset('./pedidos') }}" class="list-group-item list-group-item-action bg-light">Pedidos</a>
+          <a href="{{ asset('./ventas') }}" class="list-group-item list-group-item-action bg-light">Ventas</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->

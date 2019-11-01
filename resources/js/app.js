@@ -25,12 +25,13 @@ Vue.component('proveedor-crud', require('./components/ProveedorComponent.vue').d
 Vue.component('producto-crud', require('./components/ProductoComponent.vue').default);
 Vue.component('inventario-crud', require('./components/InventarioComponent.vue').default);
 Vue.component('comprador-crud', require('./components/CompradorComponent.vue').default);
+Vue.component('vendedor-crud', require('./components/VendedorComponent.vue').default);
 Vue.component('cliente-crud', require('./components/ClienteComponent.vue').default);
 Vue.component('tipopago-crud', require('./components/TipoPagoComponent.vue').default);
 Vue.component('compra-management', require('./components/CompraComponent.vue').default);
 Vue.component('comprasdevolucion-management', require('./components/ComprasDevolucionComponent.vue').default);
-
 Vue.component('pedido-management', require('./components/PedidoComponent.vue').default);
+Vue.component('venta-management', require('./components/VentaComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

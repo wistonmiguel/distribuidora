@@ -13,6 +13,8 @@ Route::get('/inventarios/getAll', 'InventarioController@getAll')->name('allInven
 Route::resource('/inventarios', 'InventarioController')->middleware('auth');
 Route::get('/compradores/getAll', 'CompradorController@getAll')->name('allComprador');
 Route::resource('/compradores', 'CompradorController')->middleware('auth');
+Route::get('/vendedores/getAll', 'VendedorController@getAll')->name('allVendedor');
+Route::resource('/vendedores', 'VendedorController')->middleware('auth');
 Route::get('/clientes/getAll', 'ClienteController@getAll')->name('allCliente');
 Route::resource('/clientes', 'ClienteController')->middleware('auth');
 Route::get('/tipoPagos/getAll', 'TipoPagoController@getAll')->name('allTipoPago');
@@ -26,7 +28,10 @@ Route::get('/comprasdevolucion/getAll', 'CompraDevolucionController@getAll')->na
 Route::resource('/comprasdevolucion', 'CompraDevolucionController')->middleware('auth');
 Route::get('/detallecomprasdevolucion/getAll', 'CompraDetalleDevolucionController@getAll')->name('allCompraDetalleDevolucion');
 Route::resource('/detallecomprasdevolucion', 'CompraDetalleDevolucionController')->middleware('auth');
-
 Route::get('/pedidos/getAll', 'PedidoController@getAll')->name('allPedido');
 Route::resource('/pedidos', 'PedidoController')->middleware('auth');
 Route::get('/detallepedidos/getAll', 'PedidoDetalleController@getAll')->name('allCompraDetalle');
+
+Route::get('/ventas/getAll', 'VentaController@getAll')->name('allVenta');
+Route::post('/ventas/devAll', 'VentaController@devAll')->name('devolucionVenta');
+Route::resource('/ventas', 'VentaController')->middleware('auth');
