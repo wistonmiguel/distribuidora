@@ -4198,6 +4198,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -4224,6 +4230,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       FechaESP: '',
       idTransaccion: '',
       Estado: '',
+      Origen: '',
       NCli: '',
       idCliente: ''
     }), _defineProperty(_ref, "model2", {
@@ -4311,6 +4318,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Estado: '',
+        Origen: '',
         NCli: '',
         idCliente: ''
       };
@@ -4354,12 +4362,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Estado: '',
+        Origen: '',
         NCli: '',
         idCliente: ''
       };
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
       this.model.Estado = item.Estado;
+      this.model.Origen = item.Origen;
       this.model.NCli = item.NCli;
       this.model.idCliente = item.idCliente;
       this.modoDetalle = true;
@@ -4388,6 +4398,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var params = {
         Fecha: model.Fecha,
         Estado: model.Estado,
+        Origen: model.Origen,
         idCliente: model.idCliente
       };
       axios.put("./pedidos/".concat(model.idTransaccion), params).then(function (res) {
@@ -4429,6 +4440,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           FechaESP: '',
           idTransaccion: '',
           Estado: '',
+          Origen: '',
           NCli: '',
           idCliente: ''
         };
@@ -4481,6 +4493,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Estado: '',
+        Origen: '',
         NCli: '',
         idCliente: ''
       };
@@ -44074,7 +44087,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v(_vm._s(_vm.model.NTP))
+                          _vm._v(_vm._s(_vm.model.Origen))
                         ])
                       ])
                     ])
@@ -44294,6 +44307,57 @@ var render = function() {
                   )
                 }),
                 0
+              ),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                _vm._v("Estado del Pedido")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.model.Origen,
+                      expression: "model.Origen"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.model,
+                        "Origen",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "Mostrador" } }, [
+                    _vm._v("Mostrador")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Telefono" } }, [
+                    _vm._v("Telefono")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Correo" } }, [
+                    _vm._v("Correo")
+                  ])
+                ]
               )
             ]),
             _vm._v(" "),
@@ -44773,7 +44837,7 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "card-header primary bg-dark text-white border-dark" },
-      [_c("b", [_vm._v("LUGAR PEDIDO")])]
+      [_c("b", [_vm._v("ORIGEN PEDIDO")])]
     )
   },
   function() {

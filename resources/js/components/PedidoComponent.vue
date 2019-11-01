@@ -61,10 +61,10 @@
                         <div class="col-3">
                             <div class="card text-right">
                                 <div class="card-header primary bg-dark text-white border-dark">
-                                      <b>LUGAR PEDIDO</b>
+                                      <b>ORIGEN PEDIDO</b>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">{{ model.NTP }}</li>
+                                    <li class="list-group-item">{{ model.Origen }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -120,6 +120,12 @@
                         <!-- FK -->
                         <select v-model="model.idCliente" class="form-control">
                             <option v-for="item in fk3" :key="item" :value="item.idCliente">{{item.Nombre}}</option>
+                        </select>
+                        <label for="formGroupExampleInput">Estado del Pedido</label>
+                        <select v-model="model.Origen" class="form-control">
+                            <option value="Mostrador">Mostrador</option>
+                            <option value="Telefono">Telefono</option>
+                            <option value="Correo">Correo</option>
                         </select>
                     </div>
                     <div class="form-group text-right">
@@ -285,7 +291,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCli: '', idCliente: ''},
+      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', Origen: '', NCli: '', idCliente: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
     }
   },
@@ -354,7 +360,7 @@ export default {
       const newModel2 = this.models2;
 
       //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCli: '', idCliente: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', Origen: '', NCli: '', idCliente: ''};
       this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
       axios.post('./pedidos', { newModel, newModel2 })
@@ -382,11 +388,12 @@ export default {
     },
     viewDetails(item){
         //MODEL_ATTR
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCli: '', idCliente: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', Origen: '', NCli: '', idCliente: ''};
 
         this.model.FechaESP = item.FechaESP;
         this.model.idTransaccion = item.idTransaccion;
         this.model.Estado = item.Estado;
+        this.model.Origen = item.Origen;
         this.model.NCli = item.NCli;
         this.model.idCliente = item.idCliente;
 
@@ -410,7 +417,7 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Fecha: model.Fecha, Estado: model.Estado, idCliente: model.idCliente};
+      const params = {Fecha: model.Fecha, Estado: model.Estado, Origen: model.Origen, idCliente: model.idCliente};
 
       axios.put(`./pedidos/${model.idTransaccion}`, params)
         .then(res=>{
@@ -445,7 +452,7 @@ export default {
         const newModel = this.model;
         const newModel2 = this.models2;
 
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCli: '', idCliente: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', Origen: '', NCli: '', idCliente: ''};
         this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
         axios.post('./pedidos/devAll', { newModel, newModel2 })
@@ -483,7 +490,7 @@ export default {
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = true;
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCli: '', idCliente: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', Origen: '', NCli: '', idCliente: ''};
       if(this.models2.length == 0)
       this.emptyTable = true;
       else

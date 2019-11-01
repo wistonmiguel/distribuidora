@@ -79,6 +79,7 @@ class PedidoController extends Controller
         $data_model = new Pedido();
         $data_model->Fecha = $request->newModel['Fecha'];
         $data_model->Estado = $request->newModel['Estado'];
+        $data_model->Origen = $request->newModel['Origen'];
         $data_model->idCliente = $request->newModel['idCliente'];
 
         if($data_model->save())
