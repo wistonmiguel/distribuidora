@@ -532,16 +532,31 @@ export default {
         Total: this.Cantidad * this.Precio
       };
 
-      if(this.models2.length == 0)
-      this.emptyTable = false;
+      axios.get('./inventarios/checkStock/', { params : {idProducto: model2.idProducto} } ).then (res => {
+          var Stock = res.data.model[0].Stock;
 
-      this.models2.push(model2)
+        if(model2.Cantidad <= Stock)
+        {
+            if(this.models2.length == 0)
+            this.emptyTable = false;
 
-      this.idProducto = '';
-      this.Producto = '';
-      this.Cantidad = '';
-      this.Precio = '';
-      this.Total = '';
+            this.models2.push(model2)
+
+            this.idProducto = '';
+            this.Producto = '';
+            this.Cantidad = '';
+            this.Precio = '';
+            this.Total = '';
+        }
+        else
+        {
+            alert("No hay tal cantidad en Inventario");
+        }
+        // AQUI RECORRER models2 para sumar al detalle total
+        //this.TotalCompra = TotalCompras();
+    });
+
+
     },
     removeItem(model2, index){
 

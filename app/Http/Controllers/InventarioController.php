@@ -56,6 +56,18 @@ class InventarioController extends Controller
     }
     }
 
+    //FUNCION PARA IMPLEMENTAR
+    public function checkStock(Request $request)
+    {
+        if($request->ajax()){
+            $data_model = Inventario::select("inventario.Stock")
+            ->where("inventario.idProducto","=", $request->idProducto)->get();
+            return [
+                'model' => $data_model
+            ];
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

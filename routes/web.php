@@ -8,6 +8,7 @@ Route::resource('/almacenes', 'AlmacenController')->middleware('auth');
 Route::get('/proveedores/getAll', 'ProveedorController@getAll')->name('allProveedor');
 Route::resource('/proveedores', 'ProveedorController')->middleware('auth');
 Route::get('/productos/getAll', 'ProductoController@getAll')->name('allProducto');
+Route::get('/inventarios/checkStock', 'InventarioController@checkStock')->name('checkStock');
 Route::resource('/productos', 'ProductoController')->middleware('auth');
 Route::get('/inventarios/getAll', 'InventarioController@getAll')->name('allInventario');
 Route::resource('/inventarios', 'InventarioController')->middleware('auth');
@@ -37,3 +38,5 @@ Route::post('/ventas/devAll', 'VentaController@devAll')->name('devolucionVenta')
 Route::resource('/ventas', 'VentaController')->middleware('auth');
 Route::get('/detalleventas/getAll', 'VentaDetalleController@getAll')->name('allVentaDetalle');
 Route::resource('/detalleventas', 'VentaDetalleController')->middleware('auth');
+Route::get('/ventasdevolucion/getAll', 'VentaDevolucionController@getAll')->name('allVentaDevolucion');
+Route::resource('/ventasdevolucion', 'VentaDevolucionController')->middleware('auth');

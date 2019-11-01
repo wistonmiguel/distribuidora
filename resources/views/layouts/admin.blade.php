@@ -49,6 +49,8 @@
           <a href="{{ asset('./comprasdevolucion') }}" class="list-group-item list-group-item-action bg-light">Devoluciones de Compras</a>
           <a href="{{ asset('./pedidos') }}" class="list-group-item list-group-item-action bg-light">Pedidos</a>
           <a href="{{ asset('./ventas') }}" class="list-group-item list-group-item-action bg-light">Ventas</a>
+          <a href="{{ asset('./ventasdevolucion') }}" class="list-group-item list-group-item-action bg-light">Devoluciones de Ventas</a>
+          <a class="list-group-item list-group-item-action bg-dark" style="color: white;">REPORTERÍA</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->

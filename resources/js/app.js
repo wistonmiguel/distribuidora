@@ -32,6 +32,7 @@ Vue.component('compra-management', require('./components/CompraComponent.vue').d
 Vue.component('comprasdevolucion-management', require('./components/ComprasDevolucionComponent.vue').default);
 Vue.component('pedido-management', require('./components/PedidoComponent.vue').default);
 Vue.component('venta-management', require('./components/VentaComponent.vue').default);
+Vue.component('ventasdevolucion-management', require('./components/VentasDevolucionComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

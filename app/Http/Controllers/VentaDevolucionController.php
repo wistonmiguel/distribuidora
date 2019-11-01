@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB; use App\Quotation;
-use App\CompraDevolucion;
-use App\CompraDetalleDevolucion;
-//use App\CompraDevolucionDetalle;
+use App\VentaDevolucion;
+//use App\VentaDetalleDevolucion;
+//use App\VentaDevolucionDetalle;
 use App\Inventario;
 
-class CompraDevolucionController extends Controller
+class VentaDevolucionController extends Controller
 {
     public function __construct()
     {
@@ -24,10 +24,10 @@ class CompraDevolucionController extends Controller
     {
         if($request->ajax()){
 
-          $data_model = CompraDevolucion::select(DB::raw("DATE_FORMAT(dev_compra.Fecha, '%d/%m/%Y') AS FechaESP"), "dev_compra.*", "proveedor.Nombre AS NProv", "comprador.Nombre AS NCompr")
-          ->join("proveedor","proveedor.idProveedor","=","dev_compra.idProveedor")
-          ->join("comprador","comprador.idComprador","=","dev_compra.idComprador")
-          ->orderBy('dev_compra.idTransaccion', 'DESC')->paginate(10);
+          $data_model = VentaDevolucion::select(DB::raw("DATE_FORMAT(dev_venta.Fecha, '%d/%m/%Y') AS FechaESP"), "dev_venta.*", "cliente.Nombre AS NCli", "vendedor.Nombre AS NVend")
+          ->join("cliente","cliente.idCliente","=","dev_venta.idCliente")
+          ->join("vendedor","vendedor.idVendedor","=","dev_venta.idVendedor")
+          ->orderBy('dev_venta.idTransaccion', 'DESC')->paginate(10);
 
           return [
             'pagination' => [
@@ -43,7 +43,7 @@ class CompraDevolucionController extends Controller
     }
     else
     {
-        return view('comprasdevolucion');
+        return view('ventasdevolucion');
     }
     }
 
@@ -77,7 +77,7 @@ class CompraDevolucionController extends Controller
 
         // Database operations
         $data_model = null;
-        $data_model = new CompraDevolucion();
+        $data_model = new VentaDevolucion();
         $data_model->idProducto = $request->idProducto;
         $data_model->idTransaccion = $request->idTransaccion;
         $data_model->Cantidad = $request->Cantidad;
@@ -137,7 +137,7 @@ class CompraDevolucionController extends Controller
      */
     public function destroy($idTransaccion)
     {
-        $data_model = CompraDevolucion::find($idTransaccion);
+        $data_model = VentaDevolucion::find($idTransaccion);
         $data_model->delete();
     }
 }
