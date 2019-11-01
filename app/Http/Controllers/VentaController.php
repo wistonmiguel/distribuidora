@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB; use App\Quotation;
 use App\Venta;
-//use App\VentaDetalle;
+use App\VentaDetalle;
 //use App\VentaDevolucion;
 //use App\VentaDetalleDevolucion;
 use App\Inventario;
@@ -25,8 +25,9 @@ class VentaController extends Controller
     {
         if($request->ajax()){
 
-          $data_model = Venta::select(DB::raw("DATE_FORMAT(venta.Fecha, '%d/%m/%Y') AS FechaESP"), "venta.*", "cliente.Nombre AS NCli", "tipo_pago.Nombre AS NTP")
+          $data_model = Venta::select(DB::raw("DATE_FORMAT(venta.Fecha, '%d/%m/%Y') AS FechaESP"), "venta.*", "cliente.Nombre AS NCli", "vendedor.Nombre AS NVend", "tipo_pago.Nombre AS NTP")
           ->join("cliente","cliente.idCliente","=","venta.idCliente")
+          ->join("vendedor","vendedor.idVendedor","=","venta.idVendedor")
           ->join("tipo_pago","tipo_pago.idTipoPago","=","venta.idTipoPago")
           ->orderBy('venta.idTransaccion', 'DESC')->paginate(10);
 
@@ -95,7 +96,7 @@ class VentaController extends Controller
                 foreach ($request->newModel2 as $detalle) {
                     //echo $detalle['idProducto']." con idTransaccion: ".$last_id." <br>";
                     $data_model2 = null;
-                    $data_model2 = new CompraDetalle();
+                    $data_model2 = new VentaDetalle();
                     $data_model2->idProducto = $detalle['idProducto'];
                     $data_model2->idTransaccion = $last_id;
                     $data_model2->Cantidad = $detalle['Cantidad'];
@@ -109,7 +110,7 @@ class VentaController extends Controller
 
                     if($model_finded){
                         $data_model3 = Inventario::find($idInventario);
-                        $data_model3->Stock = $stockActual + $detalle['Cantidad'];
+                        $data_model3->Stock = $stockActual - $detalle['Cantidad'];
                         $data_model3->save();
                     }
                 }

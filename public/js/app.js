@@ -6091,9 +6091,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Estado: '',
         NTP: '',
         idTipoPago: '',
+        NVend: '',
         idVendedor: '',
         NCli: '',
-        idProveedor: ''
+        idCliente: ''
       };
       this.model2 = {
         idProducto: '',
@@ -6137,15 +6138,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Estado: '',
         NTP: '',
         idTipoPago: '',
+        NVend: '',
         idVendedor: '',
         NCli: '',
-        idProveedor: ''
+        idCliente: ''
       };
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
       this.model.Estado = item.Estado;
       this.model.NTP = item.NTP;
       this.model.idTipoPago = item.idTipoPago;
+      this.model.NVend = item.NVend;
       this.model.idVendedor = item.idVendedor;
       this.model.NCli = item.NCli;
       this.model.idCliente = item.idCliente;
@@ -6177,19 +6180,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Estado: model.Estado,
         idTipoPago: model.idTipoPago,
         idVendedor: model.idVendedor,
-        idProveedor: model.idCliente
+        idCliente: model.idCliente
       };
       axios.put("./ventas/".concat(model.idTransaccion), params).then(function (res) {
         _this5.modoDetalle = false;
         _this5.modoCrearDetalle = false;
         _this5.modoCrear = false;
         _this5.modoVista = true; //MODEL_ATTR
-        //this.model.Fecha = '';
 
-        _this5.model.Estado = '';
-        _this5.model.idTipoPago = '';
-        _this5.model.idVendedor = '';
-        _this5.model.idCliente = '';
+        _this5.model = {
+          Fecha: '',
+          FechaESP: '',
+          idTransaccion: '',
+          Estado: '',
+          NTP: '',
+          idTipoPago: '',
+          NVend: '',
+          idVendedor: '',
+          NCli: '',
+          idCliente: ''
+        };
 
         _this5.changePage(1);
       });
@@ -6222,9 +6232,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           Estado: '',
           NTP: '',
           idTipoPago: '',
+          NVend: '',
           idVendedor: '',
           NCli: '',
-          idProveedor: ''
+          idCliente: ''
         };
         this.model2 = {
           idProducto: '',
@@ -6277,9 +6288,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Estado: '',
         NTP: '',
         idTipoPago: '',
+        NVend: '',
         idVendedor: '',
         NCli: '',
-        idProveedor: ''
+        idCliente: ''
       };
       if (this.models2.length == 0) this.emptyTable = true;else this.models2.splice(0, this.models2.length);
     },
