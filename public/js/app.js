@@ -5994,7 +5994,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       NTP: '',
       idTipoPago: '',
       idVendedor: '',
-      NVend: '',
+      NCli: '',
       idProveedor: ''
     }), _defineProperty(_ref, "model2", {
       idProducto: '',
@@ -6055,7 +6055,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return pagesArray;
     },
-    TotalCompras: function TotalCompras() {
+    TotalVentas: function TotalVentas() {
       var sum = 0;
       this.models2.forEach(function (e) {
         sum += e.Cantidad * e.Precio;
@@ -6092,7 +6092,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         NTP: '',
         idTipoPago: '',
         idVendedor: '',
-        NVend: '',
+        NCli: '',
         idProveedor: ''
       };
       this.model2 = {
@@ -6138,7 +6138,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         NTP: '',
         idTipoPago: '',
         idVendedor: '',
-        NVend: '',
+        NCli: '',
         idProveedor: ''
       };
       this.model.FechaESP = item.FechaESP;
@@ -6147,13 +6147,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.model.NTP = item.NTP;
       this.model.idTipoPago = item.idTipoPago;
       this.model.idVendedor = item.idVendedor;
-      this.model.NVend = item.NVend;
+      this.model.NCli = item.NCli;
       this.model.idCliente = item.idCliente;
       this.modoDetalle = true;
       this.modoCrear = false;
       this.modoCrearDetalle = false;
       this.modoVista = false;
-      axios.get('./detallecompras/getAll/', {
+      axios.get('./detalleventas/getAll/', {
         params: {
           id: item.idTransaccion
         }
@@ -6223,7 +6223,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           NTP: '',
           idTipoPago: '',
           idVendedor: '',
-          NVend: '',
+          NCli: '',
           idProveedor: ''
         };
         this.model2 = {
@@ -6278,7 +6278,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         NTP: '',
         idTipoPago: '',
         idVendedor: '',
-        NVend: '',
+        NCli: '',
         idProveedor: ''
       };
       if (this.models2.length == 0) this.emptyTable = true;else this.models2.splice(0, this.models2.length);
@@ -48029,7 +48029,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
-                          _vm._v(_vm._s(_vm.model.NVend))
+                          _vm._v(_vm._s(_vm.model.NCli))
                         ])
                       ])
                     ])

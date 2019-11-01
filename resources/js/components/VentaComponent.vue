@@ -56,7 +56,7 @@
                                     <b>CLIENTE</b>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">{{ model.NVend }}</li>
+                                    <li class="list-group-item">{{ model.NCli }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -301,7 +301,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NVend: '', idProveedor: ''},
+      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NCli: '', idProveedor: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
     }
   },
@@ -355,7 +355,7 @@ export default {
         }
         return pagesArray;
     },
-    TotalCompras: function () {
+    TotalVentas: function () {
         var sum = 0;
         this.models2.forEach(e => {
             sum += (e.Cantidad * e.Precio);
@@ -380,7 +380,7 @@ export default {
       const newModel2 = this.models2;
 
       //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NVend: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NCli: '', idProveedor: ''};
       this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
       axios.post('./ventas', { newModel, newModel2 })
@@ -408,7 +408,7 @@ export default {
     },
     viewDetails(item){
         //MODEL_ATTR
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NVend: '', idProveedor: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NCli: '', idProveedor: ''};
 
         this.model.FechaESP = item.FechaESP;
         this.model.idTransaccion = item.idTransaccion;
@@ -416,7 +416,7 @@ export default {
         this.model.NTP = item.NTP;
         this.model.idTipoPago = item.idTipoPago;
         this.model.idVendedor = item.idVendedor;
-        this.model.NVend = item.NVend;
+        this.model.NCli = item.NCli;
         this.model.idCliente = item.idCliente;
 
         this.modoDetalle = true;
@@ -424,7 +424,7 @@ export default {
         this.modoCrearDetalle = false;
         this.modoVista = false;
 
-        axios.get('./detallecompras/getAll/', { params : {id: item.idTransaccion} } ).then (res => {
+        axios.get('./detalleventas/getAll/', { params : {id: item.idTransaccion} } ).then (res => {
         this.models2 = null;
         this.models2 = res.data.model;
 
@@ -476,7 +476,7 @@ export default {
         const newModel = this.model;
         const newModel2 = this.models2;
 
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NVend: '', idProveedor: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NCli: '', idProveedor: ''};
         this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
         axios.post('./ventas/devAll', { newModel, newModel2 })
@@ -514,7 +514,7 @@ export default {
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = true;
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NVend: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idVendedor: '', NCli: '', idProveedor: ''};
       if(this.models2.length == 0)
       this.emptyTable = true;
       else

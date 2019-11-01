@@ -35,3 +35,5 @@ Route::get('/detallepedidos/getAll', 'PedidoDetalleController@getAll')->name('al
 Route::get('/ventas/getAll', 'VentaController@getAll')->name('allVenta');
 Route::post('/ventas/devAll', 'VentaController@devAll')->name('devolucionVenta');
 Route::resource('/ventas', 'VentaController')->middleware('auth');
+Route::get('/detalleventas/getAll', 'VentaDetalleController@getAll')->name('allVentaDetalle');
+Route::resource('/detalleventas', 'VentaDetalleController')->middleware('auth');
