@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB; use App\Quotation;
-use App\VentaDevolucion;
 use App\VentaDetalleDevolucion;
-use App\Inventario;
+//use App\Proveedor;
 
-class VentaDevolucionController extends Controller
+class VentaDetalleDevolucionController extends Controller
 {
     public function __construct()
     {
@@ -22,11 +20,9 @@ class VentaDevolucionController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-
-          $data_model = VentaDevolucion::select(DB::raw("DATE_FORMAT(dev_venta.Fecha, '%d/%m/%Y') AS FechaESP"), "dev_venta.*", "cliente.Nombre AS NCli", "vendedor.Nombre AS NVend")
-          ->join("cliente","cliente.idCliente","=","dev_venta.idCliente")
-          ->join("vendedor","vendedor.idVendedor","=","dev_venta.idVendedor")
-          ->orderBy('dev_venta.idTransaccion', 'DESC')->paginate(10);
+          $data_model = VentaDetalleDevolucion::select("detalledev_venta.*", "producto.Descripcion")
+          ->join("producto","producto.idProducto","=","detalledev_venta.idProducto")
+          ->orderBy('detalledev_venta.idDetalle', 'DESC')->paginate(10);
 
           return [
             'pagination' => [
@@ -39,11 +35,26 @@ class VentaDevolucionController extends Controller
             ],
             'model' => $data_model
         ];
+
     }
     else
     {
-        return view('ventasdevolucion');
+        return view('venta');
     }
+    }
+
+    //FUNCION PARA IMPLEMENTAR
+    public function getAll(Request $request)
+    {
+        if($request->ajax()){
+            $data_model = VentaDetalleDevolucion::select("detalledev_venta.*", "producto.Descripcion")
+            ->join("producto","producto.idProducto","=","detalledev_venta.idProducto")
+            ->where('detalledev_venta.idTransaccion', "=", $request->id)
+            ->orderBy('detalledev_venta.idDetalle', 'DESC')->get();
+            return [
+                'model' => $data_model
+            ];
+        }
     }
 
     /**
@@ -66,17 +77,14 @@ class VentaDevolucionController extends Controller
     {
         /*
         $request->validate([
-            'Fecha' => 'required',
-            'Estado' => 'required',
-            'idTipoPago' => 'required',
-            'idComprador' => 'required',
+            'Descripcion' => 'required',
+            'Marca' => 'required',
             'idProveedor' => 'required'
         ]);
         */
 
-        // Database operations
         $data_model = null;
-        $data_model = new VentaDevolucion();
+        $data_model = new VentaDetalleDevolucion();
         $data_model->idProducto = $request->idProducto;
         $data_model->idTransaccion = $request->idTransaccion;
         $data_model->Cantidad = $request->Cantidad;
@@ -117,15 +125,13 @@ class VentaDevolucionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // TODO
-        /*
-        $data_model = CompraDevolucion::find($id);
-        $data_model->Descripcion = $request->Descripcion;
-        $data_model->Marca = $request->Marca;
-        $data_model->idProveedor = $request->idProveedor;
+        $data_model = VentaDetalleDevolucion::find($id);
+        $data_model->idProducto = $request->idProducto;
+        $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Cantidad = $request->Cantidad;
+        $data_model->Precio = $request->Precio;
         $data_model->save();
         return $data_model;
-        */
     }
 
     /**
@@ -134,9 +140,9 @@ class VentaDevolucionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($idTransaccion)
+    public function destroy($idDetalle)
     {
-        $data_model = VentaDevolucion::find($idTransaccion);
+        $data_model = VentaDetalleDevolucion::find($idDetalle);
         $data_model->delete();
     }
 }

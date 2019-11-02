@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use DB; use App\Quotation;
 use App\Venta;
 use App\VentaDetalle;
-//use App\VentaDevolucion;
-//use App\VentaDetalleDevolucion;
+use App\VentaDevolucion;
+use App\VentaDetalleDevolucion;
 use App\Inventario;
 
 class VentaController extends Controller
@@ -133,11 +133,12 @@ class VentaController extends Controller
         $data_model = new VentaDevolucion();
         $data_model->Fecha = $request->newModel['Fecha'];
         $data_model->Estado = $request->newModel['Estado'];
-        $data_model->idVendedor = $request->newModel['idVendedor'];
         $data_model->idCliente = $request->newModel['idCliente'];
+        $data_model->idVendedor = $request->newModel['idVendedor'];
 
         if($data_model->save())
             {
+                echo $request;
                 $last_id = $data_model->idTransaccion;
 
                 //GUARDAR DETALLE
@@ -161,7 +162,7 @@ class VentaController extends Controller
                         $data_model3->save();
                     }
 
-                    //QUITAR LA COMPRA CON SU DETALLE
+                    //QUITAR LA VENTA CON SU DETALLE
                     $data_model4 = VentaDetalle::where('idTransaccion', $request->newModel['idTransaccion']);
                     $data_model4->delete();
 

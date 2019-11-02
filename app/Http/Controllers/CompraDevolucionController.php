@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use DB; use App\Quotation;
 use App\CompraDevolucion;
 use App\CompraDetalleDevolucion;
-//use App\CompraDevolucionDetalle;
 use App\Inventario;
 
 class CompraDevolucionController extends Controller
