@@ -4204,6 +4204,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -4463,6 +4466,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this7.changePage(1);
         });
       }
+    },
+    pedidoPDF: function pedidoPDF() {
+      var today = new Date();
+      this.model.Fecha = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      var newModel = this.model;
+      var newModel2 = this.models2; //axios.post('./pedidos/generate-pdf', { newModel, newModel2 });
+
+      window.open("./pedidos/generate-pdf?idT=" + newModel.idTransaccion, '_blank');
+      /*
+          axios({
+          url: `./pedidos/generate-pdf`,
+        data: {
+          newModel, newModel2
+        },
+          method: 'POST',
+          responseType: 'blob', // important
+          }).then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'file.pdf');
+          document.body.appendChild(link);
+          link.click();
+          });
+          */
     },
     nextForm: function nextForm() {
       var _this8 = this;
@@ -45309,7 +45337,22 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.modoDetalle
-      ? _c("div", { staticClass: "card-header" }, [_vm._m(0)])
+      ? _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3 text-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger text-right",
+                  on: { click: _vm.pedidoPDF }
+                },
+                [_vm._v("PDF")]
+              )
+            ])
+          ])
+        ])
       : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -46067,10 +46110,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-9" }, [
-        _c("b", [_vm._v("DETALLE DEL PEDIDO")])
-      ])
+    return _c("div", { staticClass: "col-9" }, [
+      _c("b", [_vm._v("DETALLE DEL PEDIDO")])
     ])
   },
   function() {

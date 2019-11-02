@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB; use App\Quotation;
 use App\Pedido;
 use App\PedidoDetalle;
+use PDF;
 
 class PedidoController extends Controller
 {
@@ -151,4 +152,18 @@ class PedidoController extends Controller
         $data_model = Pedido::find($idPedido);
         $data_model->delete();
     }
+
+    public function generatePDF()
+    {
+        $id = $_GET['idT'];
+
+        $data_model = Pedido::select(DB::raw("DATE_FORMAT(pedido.Fecha, '%d/%m/%Y') AS FechaESP"), "pedido.*", "detallepedido.*","producto.Descripcion", "cliente.Nombre AS NCli")
+        ->join("detallepedido","detallepedido.idTransaccion","=","pedido.idTransaccion")
+        ->join("producto","producto.idProducto","=","detallepedido.idProducto")
+        ->join("cliente","cliente.idCliente","=","pedido.idCliente")
+        ->where('pedido.idTransaccion', '=', $id)->get();
+
+        $pdf = PDF::loadView('pedidoPDF', compact('data_model'));
+        return $pdf->stream('itsolutionstuff.pdf');
+     }
 }

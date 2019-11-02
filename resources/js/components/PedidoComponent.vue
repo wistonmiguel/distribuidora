@@ -15,6 +15,9 @@
                 <div class="col-9">
                     <b>DETALLE DEL PEDIDO</b>
                 </div>
+                <div class="col-3 text-right">
+                    <button class="btn btn-danger text-right" @click="pedidoPDF">PDF</button>
+                </div>
             </div>
         </div>
         <div class="card-body">
@@ -465,6 +468,35 @@ export default {
           this.changePage(1);
         })
       }
+    },
+    pedidoPDF(){
+        var today = new Date();
+        this.model.Fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+        const newModel = this.model;
+        const newModel2 = this.models2;
+
+        //axios.post('./pedidos/generate-pdf', { newModel, newModel2 });
+
+        window.open("./pedidos/generate-pdf?idT="+newModel.idTransaccion, '_blank');
+
+    /*
+        axios({
+        url: `./pedidos/generate-pdf`,
+      data: {
+        newModel, newModel2
+      },
+        method: 'POST',
+        responseType: 'blob', // important
+        }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.pdf');
+        document.body.appendChild(link);
+        link.click();
+        });
+        */
     },
     nextForm(){
       this.modoCrearDetalle = true;

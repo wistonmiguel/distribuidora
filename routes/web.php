@@ -29,8 +29,13 @@ Route::get('/comprasdevolucion/getAll', 'CompraDevolucionController@getAll')->na
 Route::resource('/comprasdevolucion', 'CompraDevolucionController')->middleware('auth');
 Route::get('/detallecomprasdevolucion/getAll', 'CompraDetalleDevolucionController@getAll')->name('allCompraDetalleDevolucion');
 Route::resource('/detallecomprasdevolucion', 'CompraDetalleDevolucionController')->middleware('auth');
+
+
+Route::get('/pedidos/generate-pdf','PedidoController@generatePDF');
 Route::get('/pedidos/getAll', 'PedidoController@getAll')->name('allPedido');
 Route::resource('/pedidos', 'PedidoController')->middleware('auth');
+
+
 Route::get('/detallepedidos/getAll', 'PedidoDetalleController@getAll')->name('allCompraDetalle');
 Route::get('/ventas/getAll', 'VentaController@getAll')->name('allVenta');
 Route::post('/ventas/devAll', 'VentaController@devAll')->name('devolucionVenta');
