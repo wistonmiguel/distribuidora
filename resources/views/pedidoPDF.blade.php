@@ -80,7 +80,7 @@
                         @foreach ($data_model as $model)
 
                             @php
-                                $total += $total + ($model->Cantidad * $model->Precio);
+                                $total += ($model->Cantidad * $model->Precio);
                             @endphp
 
                         <tr>

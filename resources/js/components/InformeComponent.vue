@@ -62,7 +62,7 @@ export default {
         window.open('./compras/comprasMesPDF', 'Informe de Compras' , 'width=462,height=642,scrollbars=YES');
     },
     funcion2(){
-    alert("cargar informe 2");
+        window.open('./ventas/ventasJabonBaño', 'Informe de Ventas' , 'width=462,height=642,scrollbars=YES');
     },
     funcion3(){
     alert("cargar informe 3");

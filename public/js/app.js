@@ -3662,7 +3662,7 @@ __webpack_require__.r(__webpack_exports__);
       window.open('./compras/comprasMesPDF', 'Informe de Compras', 'width=462,height=642,scrollbars=YES');
     },
     funcion2: function funcion2() {
-      alert("cargar informe 2");
+      window.open('./ventas/ventasJabonBaño', 'Informe de Ventas', 'width=462,height=642,scrollbars=YES');
     },
     funcion3: function funcion3() {
       alert("cargar informe 3");
@@ -44373,7 +44373,8 @@ var render = function() {
               _c("b", [
                 _vm._v(
                   "DETALLE DE DEVOLUCION DE COMPRA NO. " +
-                    _vm._s(_vm.model.idTransaccion)
+                    _vm._s(_vm.model.idTransaccion) +
+                    "    "
                 )
               ])
             ])

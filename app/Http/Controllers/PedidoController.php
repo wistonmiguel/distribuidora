@@ -153,7 +153,7 @@ class PedidoController extends Controller
         $data_model->delete();
     }
 
-    public function verPedidoPDF()
+    public function PedidoPDF()
     {
         $id = $_GET['idT'];
 
@@ -164,6 +164,6 @@ class PedidoController extends Controller
         ->where('pedido.idTransaccion', '=', $id)->get();
 
         $pdf = PDF::loadView('pedidoPDF', compact('data_model'));
-        return $pdf->stream('itsolutionstuff.pdf');
+        return $pdf->stream();
      }
 }
