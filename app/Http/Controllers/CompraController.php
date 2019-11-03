@@ -104,14 +104,31 @@ class CompraController extends Controller
                     $data_model2->save();
 
                     //ACTUALIZAR INVENTARIO
-                    $model_finded = Inventario::select("inventario.idInventario", "inventario.Stock")->where("inventario.idProducto", "=", $detalle['idProducto'])->get();
+                    $model_finded = Inventario::select("inventario.idInventario", "inventario.Stock", "inventario.Precio")->where("inventario.idProducto", "=", $detalle['idProducto'])->get();
                     $stockActual = $model_finded[0]->Stock;
+                    $precioActual = $model_finded[0]->Precio;
                     $idInventario = $model_finded[0]->idInventario;
 
                     if($model_finded){
-                        $data_model3 = Inventario::find($idInventario);
-                        $data_model3->Stock = $stockActual + $detalle['Cantidad'];
-                        $data_model3->save();
+
+                        $PrecioVentaNuevo = ($detalle['Precio'] + ($detalle['Precio'] * 0.30));
+
+                        if($precioActual >= $PrecioVentaNuevo)
+                        {
+                            $data_model3 = null;
+                            $data_model3 = Inventario::find($idInventario);
+                            $data_model3->Stock = $stockActual + $detalle['Cantidad'];
+                            $data_model3->Precio = $precioActual;
+                            $data_model3->save();
+                        }
+                        else{
+                            $data_model3 = null;
+                            $data_model3 = Inventario::find($idInventario);
+                            $data_model3->Stock = $stockActual + $detalle['Cantidad'];
+                            $data_model3->Precio = $PrecioVentaNuevo;
+                            $data_model3->save();
+                        }
+
                     }
                 }
             }

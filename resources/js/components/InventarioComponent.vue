@@ -17,6 +17,8 @@
                         <!-- MODEL_ATTR -->
                         <label for="formGroupExampleInput">Existencias</label>
                         <input type="text" class="form-control mb-2" placeholder="Existncias del Producto" v-model="model.Stock">
+                        <label for="formGroupExampleInput">Precio</label>
+                        <input type="text" class="form-control mb-2" placeholder="Precio de Venta" v-model="model.Precio">
                         <label for="formGroupExampleInput">Producto</label>
                         <select v-model="model.idProducto" class="form-control">
                             <option v-for="item1 in fk1" :key="item1" :value="item1.idProducto">{{item1.Descripcion}}</option>
@@ -62,6 +64,7 @@
                         <!-- MODEL_ATTR -->
                         <th>Producto</th>
                         <th>Cantidad</th>
+                        <th>Precio de Venta</th>
                         <th>Almacen</th>
 
                         <th width="15%" scope="col">Acciones</th>
@@ -74,6 +77,7 @@
                         <th scope="row">{{item.idInventario}}</th>
                         <td>{{item.Descripcion}}</td>
                         <td>{{item.Stock}}</td>
+                        <td>C$ {{ formatCurrency(item.Precio) }}</td>
                         <td>{{item.Nombre}}</td>
 
                         <td>
@@ -128,7 +132,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Stock: '', idProducto: '', idAlmacen: ''}
+      model: {Stock: '', idProducto: '', Precio: '', idAlmacen: ''}
     }
   },
   created(){
@@ -193,7 +197,7 @@ export default {
       const newModel = this.model;
 
       //MODEL_ATTR
-      this.model = {Stock: '', idProducto: '', idAlmacen: ''};
+      this.model = {Stock: '', idProducto: '', Precio: '', idAlmacen: ''};
 
       axios.post('./inventarios', newModel)
         .then((res) =>{
@@ -204,6 +208,10 @@ export default {
           this.changePage(1);
         })
     },
+     formatCurrency(value) {
+        let val = (value/1).toFixed(2);
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     viewCreateForm(){
       this.modoCrear = true;
       this.modoEditar = false;
@@ -213,6 +221,7 @@ export default {
         //MODEL_ATTR
         this.model.idInventario = item.idInventario;
         this.model.Stock = item.Stock;
+        this.model.Precio = item.Precio;
         this.model.idProducto = item.idProducto;
         this.model.idAlmacen = item.idAlmacen;
 
@@ -227,7 +236,7 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Stock: model.Stock, idProducto: model.idProducto, idAlmacen: model.idAlmacen};
+      const params = {Stock: model.Stock, idProducto: model.idProducto, Precio: model.Precio, idAlmacen: model.idAlmacen};
 
       axios.put(`./inventarios/${model.idInventario}`, params)
         .then(res=>{
@@ -237,6 +246,7 @@ export default {
 
           //MODEL_ATTR
           this.model.Stock = '';
+          this.model.Precio = '';
           this.model.idProducto = '';
           this.model.idAlmacen = '';
 
@@ -256,7 +266,7 @@ export default {
       this.modoCrear = false;
       this.modoEditar = false;
       this.modoVista = true;
-      this.model = {Stock: '', idProducto: '', idAlmacen: ''};
+      this.model = {Stock: '', idProducto: '', Precio: '', idAlmacen: ''};
     },
     changePage(page){
         this.pagination.current_page = page;

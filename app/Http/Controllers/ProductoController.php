@@ -94,6 +94,7 @@ class ProductoController extends Controller
 
                 $data_model2 = new Inventario();
                 $data_model2->Stock = 0;
+                $data_model2->Precio = 0;
                 $data_model2->idProducto = $last_id;
                 $data_model2->idAlmacen = 1;
                 $data_model2->save();

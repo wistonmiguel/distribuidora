@@ -3794,6 +3794,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3818,6 +3822,7 @@ __webpack_require__.r(__webpack_exports__);
       model: {
         Stock: '',
         idProducto: '',
+        Precio: '',
         idAlmacen: ''
       }
     };
@@ -3893,6 +3898,7 @@ __webpack_require__.r(__webpack_exports__);
       this.model = {
         Stock: '',
         idProducto: '',
+        Precio: '',
         idAlmacen: ''
       };
       axios.post('./inventarios', newModel).then(function (res) {
@@ -3903,6 +3909,10 @@ __webpack_require__.r(__webpack_exports__);
         _this3.changePage(1);
       });
     },
+    formatCurrency: function formatCurrency(value) {
+      var val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     viewCreateForm: function viewCreateForm() {
       this.modoCrear = true;
       this.modoEditar = false;
@@ -3912,6 +3922,7 @@ __webpack_require__.r(__webpack_exports__);
       //MODEL_ATTR
       this.model.idInventario = item.idInventario;
       this.model.Stock = item.Stock;
+      this.model.Precio = item.Precio;
       this.model.idProducto = item.idProducto;
       this.model.idAlmacen = item.idAlmacen;
       this.modoEditar = true;
@@ -3930,6 +3941,7 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         Stock: model.Stock,
         idProducto: model.idProducto,
+        Precio: model.Precio,
         idAlmacen: model.idAlmacen
       };
       axios.put("./inventarios/".concat(model.idInventario), params).then(function (res) {
@@ -3938,6 +3950,7 @@ __webpack_require__.r(__webpack_exports__);
         _this4.modoVista = true; //MODEL_ATTR
 
         _this4.model.Stock = '';
+        _this4.model.Precio = '';
         _this4.model.idProducto = '';
         _this4.model.idAlmacen = '';
 
@@ -3962,6 +3975,7 @@ __webpack_require__.r(__webpack_exports__);
       this.model = {
         Stock: '',
         idProducto: '',
+        Precio: '',
         idAlmacen: ''
       };
     },
@@ -6286,7 +6300,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     deleteModel: function deleteModel(model, index, page) {
       var _this6 = this;
 
-      var confirmacion = confirm("Eliminar la Compra con fecha ".concat(model.FechaESP));
+      var confirmacion = confirm("Eliminar la Venta con fecha ".concat(model.FechaESP));
 
       if (confirmacion) {
         axios["delete"]("./ventas/".concat(model.idTransaccion)).then(function () {
@@ -6297,7 +6311,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     realizarDevolucion: function realizarDevolucion() {
       var _this7 = this;
 
-      var confirmacion = confirm("Desea hacer la Devoluci\xF3n de esta Compra?");
+      var confirmacion = confirm("Desea hacer la Devoluci\xF3n de esta Venta?");
 
       if (confirmacion) {
         var today = new Date();
@@ -6378,6 +6392,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.pagination.current_page = page;
       this.getAllData(page);
     },
+    checkProductPrice: function checkProductPrice(event) {
+      var array = event.target.value.split(',');
+      axios.get('./inventarios/checkStock/', {
+        params: {
+          idProducto: array[0]
+        }
+      }).then(function (res) {});
+    },
     addItem: function addItem() {
       var _this9 = this;
 
@@ -6388,6 +6410,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Cantidad: this.Cantidad,
         Precio: this.Precio,
         Total: this.Cantidad * this.Precio
+      };
+      this.model2 = {
+        idProducto: '',
+        Producto: '',
+        Cantidad: '',
+        Precio: '',
+        Total: ''
       };
       axios.get('./inventarios/checkStock/', {
         params: {
@@ -44979,6 +45008,32 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                  _vm._v("Precio")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.model.Precio,
+                      expression: "model.Precio"
+                    }
+                  ],
+                  staticClass: "form-control mb-2",
+                  attrs: { type: "text", placeholder: "Precio de Venta" },
+                  domProps: { value: _vm.model.Precio },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.model, "Precio", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                   _vm._v("Producto")
                 ]),
                 _vm._v(" "),
@@ -45261,6 +45316,10 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.Stock))]),
                     _vm._v(" "),
+                    _c("td", [
+                      _vm._v("C$ " + _vm._s(_vm.formatCurrency(item.Precio)))
+                    ]),
+                    _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.Nombre))]),
                     _vm._v(" "),
                     _c("td", [
@@ -45424,6 +45483,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Producto")]),
         _vm._v(" "),
         _c("th", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Precio de Venta")]),
         _vm._v(" "),
         _c("th", [_vm._v("Almacen")]),
         _vm._v(" "),
@@ -48954,19 +49015,24 @@ var render = function() {
                           staticClass: "custom-select",
                           attrs: { id: "idProducto" },
                           on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.Producto = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.Producto = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                return _vm.checkProductPrice($event)
+                              }
+                            ]
                           }
                         },
                         _vm._l(_vm.fk4, function(item) {

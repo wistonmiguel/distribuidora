@@ -47,7 +47,7 @@ class InventarioController extends Controller
     public function getAll(Request $request)
     {
         if($request->ajax()){
-            $data_model = Inventario::select("inventario.idInventario", "inventario.Stock", "inventario.idProducto", "producto.Descripcion")
+            $data_model = Inventario::select("inventario.idInventario", "inventario.Stock", "inventario.Precio", "inventario.idProducto", "producto.Descripcion")
             ->join("producto","producto.idProducto","=","inventario.idProducto")
             ->orderBy('producto.Descripcion', 'DESC')->get(10);
             return [
@@ -60,7 +60,7 @@ class InventarioController extends Controller
     public function checkStock(Request $request)
     {
         if($request->ajax()){
-            $data_model = Inventario::select("inventario.Stock")
+            $data_model = Inventario::select("inventario.Stock, inventario.Precio")
             ->where("inventario.idProducto","=", $request->idProducto)->get();
             return [
                 'model' => $data_model
@@ -106,6 +106,7 @@ class InventarioController extends Controller
             $data_model = null;
             $data_model = new Inventario();
             $data_model->Stock = $request->Stock;
+            $data_model->Precio = $request->Precio;
             $data_model->idProducto = $request->idProducto;
             $data_model->idAlmacen = $request->idAlmacen;
             $data_model->save();
@@ -146,6 +147,7 @@ class InventarioController extends Controller
     {
         $data_model = Inventario::find($id);
         $data_model->Stock = $request->Stock;
+        $data_model->Precio = $request->Precio;
         $data_model->idProducto = $request->idProducto;
         $data_model->idAlmacen = $request->idAlmacen;
         $data_model->save();

@@ -150,7 +150,7 @@
                                 <div class="input-group-prepend">
                                 <div class="input-group-text">Producto</div>
                                 </div>
-                                <select class="custom-select" id="idProducto" v-model="Producto">
+                                <select @change="checkProductPrice($event)" class="custom-select" id="idProducto" v-model="Producto">
                                 <option v-for="item in fk4" :key="item" :value="item.idProducto+','+item.Descripcion">{{item.Descripcion}}</option>
                             </select>
                             </div>
@@ -456,7 +456,7 @@ export default {
         })
     },
     deleteModel(model, index, page){
-      const confirmacion = confirm(`Eliminar la Compra con fecha ${model.FechaESP}`);
+      const confirmacion = confirm(`Eliminar la Venta con fecha ${model.FechaESP}`);
       if(confirmacion){
         axios.delete(`./ventas/${model.idTransaccion}`)
           .then(()=>{
@@ -465,7 +465,7 @@ export default {
       }
     },
     realizarDevolucion(){
-      const confirmacion = confirm(`Desea hacer la Devolución de esta Compra?`);
+      const confirmacion = confirm(`Desea hacer la Devolución de esta Venta?`);
       if(confirmacion){
         var today = new Date();
         this.model.Fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -521,6 +521,13 @@ export default {
         this.pagination.current_page = page;
         this.getAllData(page);
     },
+    checkProductPrice(event) {
+        var array = event.target.value.split(',');
+
+        axios.get('./inventarios/checkStock/', { params : {idProducto: array[0]} } ).then (res => {
+
+        });
+        },
     addItem(){
       var array = this.Producto.split(',');
 
@@ -531,6 +538,8 @@ export default {
         Precio: this.Precio,
         Total: this.Cantidad * this.Precio
       };
+
+      this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
       axios.get('./inventarios/checkStock/', { params : {idProducto: model2.idProducto} } ).then (res => {
           var Stock = res.data.model[0].Stock;
