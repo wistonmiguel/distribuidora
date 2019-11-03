@@ -12,8 +12,8 @@
         </div>
         <div class="card-header" v-if="modoDetalle">
             <div class="row">
-                <div class="col-9">
-                    <b>DETALLE DE TRANSACCIÓN DE COMPRA</b>
+                <div class="col-9" style="padding-top: 7px;">
+                    &nbsp; <b>FACTURA <span style="color: red;"> No. {{ model.idTransaccion }} </span></b>
                 </div>
                 <div class="col-3 text-right">
                     <button class="btn btn-danger text-right" @click="realizarDevolucion">REALIZAR DEVOLUCIÓN</button>

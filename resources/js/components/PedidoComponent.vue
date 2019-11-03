@@ -478,8 +478,7 @@ export default {
 
         //axios.post('./pedidos/generate-pdf', { newModel, newModel2 });
 
-        window.open("./pedidos/generate-pdf?idT="+newModel.idTransaccion, '_blank');
-
+        window.open('./pedidos/pedidoPDF?idT='+newModel.idTransaccion, 'Pedido' , 'width=462,height=642,scrollbars=YES');
     /*
         axios({
         url: `./pedidos/generate-pdf`,

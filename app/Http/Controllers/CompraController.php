@@ -9,6 +9,7 @@ use App\CompraDetalle;
 use App\CompraDevolucion;
 use App\CompraDetalleDevolucion;
 use App\Inventario;
+use PDF;
 
 class CompraController extends Controller
 {
@@ -227,4 +228,16 @@ class CompraController extends Controller
         $data_model = Compra::find($idCompra);
         $data_model->delete();
     }
+
+    public function ComprasMesPDF()
+    {
+        //COMPLETAR ESTA QUERY
+        $data_model = CompraDetalle::select(DB::raw("DATE_FORMAT(compra.Fecha, '%d/%m/%Y') AS FechaESP"), "detallecompra.*", "producto.Descripcion", "proveedor.Nombre AS Proveedor")
+        ->join("producto","producto.idProducto","=","detallecompra.idProducto")
+        ->join("compra","compra.idTransaccion","=","detallecompra.idTransaccion")
+        ->join("proveedor","proveedor.idProveedor","=","compra.idProveedor")->get();
+
+        $pdf = PDF::loadView('comprasMesPDF', compact('data_model'));
+        return $pdf->stream();
+     }
 }

@@ -153,7 +153,7 @@ class PedidoController extends Controller
         $data_model->delete();
     }
 
-    public function generatePDF()
+    public function verPedidoPDF()
     {
         $id = $_GET['idT'];
 

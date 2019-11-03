@@ -6,7 +6,7 @@
         <div class="card-header" v-if="modoDetalle">
             <div class="row">
                 <div class="col-8">
-                    <b>DETALLE DE DEVOLUCION DE COMPRA</b>
+                    <b>DETALLE DE DEVOLUCION DE COMPRA NO. {{ model.idTransaccion }}</b>
                 </div>
             </div>
         </div>

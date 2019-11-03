@@ -19,7 +19,6 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('almacen-crud', require('./components/AlmacenComponent.vue').default);
 Vue.component('proveedor-crud', require('./components/ProveedorComponent.vue').default);
 Vue.component('producto-crud', require('./components/ProductoComponent.vue').default);
@@ -33,6 +32,7 @@ Vue.component('comprasdevolucion-management', require('./components/ComprasDevol
 Vue.component('pedido-management', require('./components/PedidoComponent.vue').default);
 Vue.component('venta-management', require('./components/VentaComponent.vue').default);
 Vue.component('ventasdevolucion-management', require('./components/VentasDevolucionComponent.vue').default);
+Vue.component('informe-panel', require('./components/InformeComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

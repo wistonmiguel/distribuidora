@@ -21,6 +21,7 @@ Route::resource('/clientes', 'ClienteController')->middleware('auth');
 Route::get('/tipoPagos/getAll', 'TipoPagoController@getAll')->name('allTipoPago');
 Route::resource('/tipoPagos', 'TipoPagoController')->middleware('auth');
 Route::get('/compras/getAll', 'CompraController@getAll')->name('allCompra');
+Route::get('/compras/comprasMesPDF','CompraController@comprasMesPDF');
 Route::post('/compras/devAll', 'CompraController@devAll')->name('devolucionCompra');
 Route::resource('/compras', 'CompraController')->middleware('auth');
 Route::get('/detallecompras/getAll', 'CompraDetalleController@getAll')->name('allCompraDetalle');
@@ -29,13 +30,9 @@ Route::get('/comprasdevolucion/getAll', 'CompraDevolucionController@getAll')->na
 Route::resource('/comprasdevolucion', 'CompraDevolucionController')->middleware('auth');
 Route::get('/detallecomprasdevolucion/getAll', 'CompraDetalleDevolucionController@getAll')->name('allCompraDetalleDevolucion');
 Route::resource('/detallecomprasdevolucion', 'CompraDetalleDevolucionController')->middleware('auth');
-
-
-Route::get('/pedidos/generate-pdf','PedidoController@generatePDF');
+Route::get('/pedidos/pedidoPDF','PedidoController@pedidoPDF');
 Route::get('/pedidos/getAll', 'PedidoController@getAll')->name('allPedido');
 Route::resource('/pedidos', 'PedidoController')->middleware('auth');
-
-
 Route::get('/detallepedidos/getAll', 'PedidoDetalleController@getAll')->name('allCompraDetalle');
 Route::get('/ventas/getAll', 'VentaController@getAll')->name('allVenta');
 Route::post('/ventas/devAll', 'VentaController@devAll')->name('devolucionVenta');
@@ -46,3 +43,5 @@ Route::get('/ventasdevolucion/getAll', 'VentaDevolucionController@getAll')->name
 Route::resource('/ventasdevolucion', 'VentaDevolucionController')->middleware('auth');
 Route::get('/detalleventasdevolucion/getAll', 'VentaDetalleDevolucionController@getAll')->name('allVentaDetalleDevolucion');
 Route::resource('/detalleventasdevolucion', 'VentaDetalleDevolucionController')->middleware('auth');
+
+Route::get('/informes', 'InformeController@index')->name('informes');
