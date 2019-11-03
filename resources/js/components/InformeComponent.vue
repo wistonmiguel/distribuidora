@@ -65,7 +65,7 @@ export default {
         window.open('./ventas/ventasJabonBaño', 'Informe de Ventas' , 'width=462,height=642,scrollbars=YES');
     },
     funcion3(){
-    alert("cargar informe 3");
+        window.open('./ventasdevolucion/devolucionesPDF', 'Informe de Devoluciones sobre Ventas' , 'width=462,height=642,scrollbars=YES');
     },
     funcion4(){
     alert("cargar informe 4");

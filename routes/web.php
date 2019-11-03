@@ -41,6 +41,7 @@ Route::resource('/ventas', 'VentaController')->middleware('auth');
 Route::get('/detalleventas/getAll', 'VentaDetalleController@getAll')->name('allVentaDetalle');
 Route::resource('/detalleventas', 'VentaDetalleController')->middleware('auth');
 Route::get('/ventasdevolucion/getAll', 'VentaDevolucionController@getAll')->name('allVentaDevolucion');
+Route::get('/ventasdevolucion/devolucionesPDF', 'VentaDevolucionController@devolucionesPDF')->name('allVentaDevolucionPDF');
 Route::resource('/ventasdevolucion', 'VentaDevolucionController')->middleware('auth');
 Route::get('/detalleventasdevolucion/getAll', 'VentaDetalleDevolucionController@getAll')->name('allVentaDetalleDevolucion');
 Route::resource('/detalleventasdevolucion', 'VentaDetalleDevolucionController')->middleware('auth');

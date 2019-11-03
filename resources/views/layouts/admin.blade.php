@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="{{ asset('./img/logomini.png') }}">
 
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -33,7 +34,7 @@
 
       <!-- Sidebar -->
       <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading"><a href="{{ asset('./home') }}" class="list-group-item list-group-item-action bg-light">Nueva Inglaterra</a></div>
+        <div class="sidebar-heading"><a href="{{ asset('./home') }}" class="list-group-item list-group-item-action bg-light"> <img width="25" style="margin-top: -5px; " src="{{ asset('./img/logomini.png') }}" /> <small style="color: DarkBlue;">Nueva Inglaterra</small></a></div>
         <div class="list-group list-group-flush">
           <a class="list-group-item list-group-item-action bg-dark" style="color: white;">CATÁLOGOS</a>
           <a href="{{ asset('./almacenes') }}" class="list-group-item list-group-item-action bg-light">Almacenes</a>

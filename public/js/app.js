@@ -3665,7 +3665,7 @@ __webpack_require__.r(__webpack_exports__);
       window.open('./ventas/ventasJabonBaño', 'Informe de Ventas', 'width=462,height=642,scrollbars=YES');
     },
     funcion3: function funcion3() {
-      alert("cargar informe 3");
+      window.open('./ventasdevolucion/devolucionesPDF', 'Informe de Devoluciones sobre Ventas', 'width=462,height=642,scrollbars=YES');
     },
     funcion4: function funcion4() {
       alert("cargar informe 4");

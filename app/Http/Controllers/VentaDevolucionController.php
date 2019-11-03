@@ -7,6 +7,7 @@ use DB; use App\Quotation;
 use App\VentaDevolucion;
 use App\VentaDetalleDevolucion;
 use App\Inventario;
+use PDF;
 
 class VentaDevolucionController extends Controller
 {
@@ -139,4 +140,17 @@ class VentaDevolucionController extends Controller
         $data_model = VentaDevolucion::find($idTransaccion);
         $data_model->delete();
     }
+
+    public function devolucionesPDF()
+    {
+        //COMPLETAR ESTA QUERY
+        $data_model = VentaDetalleDevolucion::select(DB::raw("DATE_FORMAT(dev_venta.Fecha, '%d/%m/%Y') AS FechaESP"), "detalledev_venta.*", "dev_venta.*", "producto.Descripcion", "cliente.Nombre AS NCli", "vendedor.Nombre as NVend")
+        ->join("producto","producto.idProducto","=","detalledev_venta.idProducto")
+        ->join("dev_venta","dev_venta.idTransaccion","=","detalledev_venta.idTransaccion")
+        ->join("vendedor","vendedor.idVendedor","=","dev_venta.idVendedor")
+        ->join("cliente","cliente.idCliente","=","dev_venta.idCliente")->get();
+
+        $pdf = PDF::loadView('devolucionesPDF', compact('data_model'))->setPaper('legal', 'landscape');
+        return $pdf->stream();
+     }
 }
