@@ -6393,23 +6393,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.getAllData(page);
     },
     checkProductPrice: function checkProductPrice(event) {
+      var _this9 = this;
+
       var array = event.target.value.split(',');
       axios.get('./inventarios/checkStock/', {
         params: {
           idProducto: array[0]
         }
-      }).then(function (res) {});
+      }).then(function (res) {
+        var Price = res.data.model[0].Precio;
+        _this9.model2.idProducto = array[0];
+        _this9.model2.Producto = array[1];
+        _this9.model2.Precio = Price;
+      });
     },
     addItem: function addItem() {
-      var _this9 = this;
+      var _this10 = this;
 
-      var array = this.Producto.split(',');
-      var model2 = {
-        idProducto: array[0],
-        Producto: array[1],
-        Cantidad: this.Cantidad,
-        Precio: this.Precio,
-        Total: this.Cantidad * this.Precio
+      var NewModel2 = {
+        idProducto: this.model2.idProducto,
+        Producto: this.model2.Producto,
+        Cantidad: this.model2.Cantidad,
+        Precio: this.model2.Precio,
+        Total: this.model2.Cantidad * this.model2.Precio
       };
       this.model2 = {
         idProducto: '',
@@ -6420,21 +6426,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       axios.get('./inventarios/checkStock/', {
         params: {
-          idProducto: model2.idProducto
+          idProducto: NewModel2.idProducto
         }
       }).then(function (res) {
         var Stock = res.data.model[0].Stock;
 
-        if (model2.Cantidad <= Stock) {
-          if (_this9.models2.length == 0) _this9.emptyTable = false;
+        if (NewModel2.Cantidad <= Stock) {
+          if (_this10.models2.length == 0) _this10.emptyTable = false;
 
-          _this9.models2.push(model2);
+          _this10.models2.push(NewModel2);
 
-          _this9.idProducto = '';
-          _this9.Producto = '';
-          _this9.Cantidad = '';
-          _this9.Precio = '';
-          _this9.Total = '';
+          _this10.idProducto = '';
+          _this10.Producto = '';
+          _this10.model2.Cantidad = '';
+          _this10.Precio = '';
+          _this10.Total = '';
         } else {
           alert("No hay tal cantidad en Inventario");
         } // AQUI RECORRER models2 para sumar al detalle total
@@ -49070,19 +49076,23 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.Cantidad,
-                            expression: "Cantidad"
+                            value: _vm.model2.Cantidad,
+                            expression: "model2.Cantidad"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: { type: "text", id: "inlineFormInputGroup" },
-                        domProps: { value: _vm.Cantidad },
+                        domProps: { value: _vm.model2.Cantidad },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.Cantidad = $event.target.value
+                            _vm.$set(
+                              _vm.model2,
+                              "Cantidad",
+                              $event.target.value
+                            )
                           }
                         }
                       })
@@ -49107,19 +49117,23 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.Precio,
-                            expression: "Precio"
+                            value: _vm.model2.Precio,
+                            expression: "model2.Precio"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text", id: "inlineFormInputGroup" },
-                        domProps: { value: _vm.Precio },
+                        attrs: {
+                          type: "text",
+                          id: "inlineFormInputGroup",
+                          disabled: "disabled"
+                        },
+                        domProps: { value: _vm.model2.Precio },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.Precio = $event.target.value
+                            _vm.$set(_vm.model2, "Precio", $event.target.value)
                           }
                         }
                       })

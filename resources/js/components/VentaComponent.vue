@@ -161,7 +161,7 @@
                                 <div class="input-group-prepend">
                                 <div class="input-group-text">Cantidad</div>
                                 </div>
-                                <input type="text" class="form-control" id="inlineFormInputGroup" v-model="Cantidad">
+                                <input type="text" class="form-control" id="inlineFormInputGroup" v-model="model2.Cantidad">
                             </div>
                             </div>
                             <div class="col-lg-2 col-md-6 col-xs-12">
@@ -170,7 +170,7 @@
                                 <div class="input-group-prepend">
                                 <div class="input-group-text">Precio</div>
                                 </div>
-                                <input type="text" class="form-control" id="inlineFormInputGroup" v-model="Precio">
+                                <input type="text" class="form-control" id="inlineFormInputGroup" v-model="model2.Precio" disabled="disabled">
                             </div>
                             </div>
                             <div class="col-lg-1 col-md-6 col-xs-12">
@@ -525,35 +525,36 @@ export default {
         var array = event.target.value.split(',');
 
         axios.get('./inventarios/checkStock/', { params : {idProducto: array[0]} } ).then (res => {
-
+            var Price = res.data.model[0].Precio;
+            this.model2.idProducto = array[0];
+            this.model2.Producto = array[1];
+            this.model2.Precio = Price;
         });
         },
     addItem(){
-      var array = this.Producto.split(',');
-
-      var model2 = {
-        idProducto: array[0],
-        Producto: array[1],
-        Cantidad: this.Cantidad,
-        Precio: this.Precio,
-        Total: this.Cantidad * this.Precio
+      var NewModel2 = {
+        idProducto: this.model2.idProducto,
+        Producto: this.model2.Producto,
+        Cantidad: this.model2.Cantidad,
+        Precio: this.model2.Precio,
+        Total: this.model2.Cantidad * this.model2.Precio
       };
 
       this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
-      axios.get('./inventarios/checkStock/', { params : {idProducto: model2.idProducto} } ).then (res => {
+      axios.get('./inventarios/checkStock/', { params : {idProducto: NewModel2.idProducto} } ).then (res => {
           var Stock = res.data.model[0].Stock;
 
-        if(model2.Cantidad <= Stock)
+        if(NewModel2.Cantidad <= Stock)
         {
             if(this.models2.length == 0)
             this.emptyTable = false;
 
-            this.models2.push(model2)
+            this.models2.push(NewModel2)
 
             this.idProducto = '';
             this.Producto = '';
-            this.Cantidad = '';
+            this.model2.Cantidad = '';
             this.Precio = '';
             this.Total = '';
         }

@@ -60,7 +60,7 @@ class InventarioController extends Controller
     public function checkStock(Request $request)
     {
         if($request->ajax()){
-            $data_model = Inventario::select("inventario.Stock, inventario.Precio")
+            $data_model = Inventario::select("inventario.Stock", "inventario.Precio")
             ->where("inventario.idProducto","=", $request->idProducto)->get();
             return [
                 'model' => $data_model
