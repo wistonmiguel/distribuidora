@@ -85,6 +85,7 @@ class VentaController extends Controller
         $data_model = new Venta();
         $data_model->Fecha = $request->newModel['Fecha'];
         $data_model->Estado = $request->newModel['Estado'];
+        $data_model->Factura = $request->newModel['Factura'];
         $data_model->idTipoPago = $request->newModel['idTipoPago'];
         $data_model->idVendedor = $request->newModel['idVendedor'];
         $data_model->idCliente = $request->newModel['idCliente'];
@@ -134,6 +135,7 @@ class VentaController extends Controller
         $data_model = new VentaDevolucion();
         $data_model->Fecha = $request->newModel['Fecha'];
         $data_model->Estado = $request->newModel['Estado'];
+        $data_model->Factura = $request->newModel['Factura'];
         $data_model->idCliente = $request->newModel['idCliente'];
         $data_model->idVendedor = $request->newModel['idVendedor'];
 

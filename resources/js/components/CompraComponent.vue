@@ -118,6 +118,8 @@
                         <select v-model="model.idTipoPago" class="form-control">
                             <option v-for="item in fk1" :key="item" :value="item.idTipoPago">{{item.Nombre}}</option>
                         </select>
+                        <label for="formGroupExampleInput">No. Factura</label>
+                        <input type="text" class="form-control mb-2" placeholder="Ingresar en el caso que se reciba una Factura" v-model="model.Factura">
                         <label for="formGroupExampleInput">Estado</label>
                         <select v-model="model.Estado" class="form-control">
                             <option value="Cancelada">Cancelada</option>
@@ -301,7 +303,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''},
+      model: {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
     }
   },
@@ -376,11 +378,12 @@ export default {
         alert('Debes completar todos los campos antes de guardar');
         return;
       }
+
       const newModel = this.model;
       const newModel2 = this.models2;
 
       //MODEL_ATTR COMPRA + DETALLES DE COMPRA (DINAMICO)
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
       this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
       axios.post('./compras', { newModel, newModel2 })
@@ -403,16 +406,20 @@ export default {
       this.modoDetalle = false;
       this.modoVista = false;
 
+      this.models2 = [];
+      this.emptyTable = true;
+
       var today = new Date();
       this.model.Fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     },
     viewDetails(item){
         //MODEL_ATTR
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
 
         this.model.FechaESP = item.FechaESP;
         this.model.idTransaccion = item.idTransaccion;
         this.model.Estado = item.Estado;
+        this.model.Factura = item.Factura;
         this.model.NTP = item.NTP;
         this.model.idTipoPago = item.idTipoPago;
         this.model.idComprador = item.idComprador;
@@ -425,7 +432,7 @@ export default {
         this.modoVista = false;
 
         axios.get('./detallecompras/getAll/', { params : {id: item.idTransaccion} } ).then (res => {
-        this.models2 = null;
+        this.models2 = [];
         this.models2 = res.data.model;
 
         // AQUI RECORRER models2 para sumar al detalle total
@@ -439,7 +446,7 @@ export default {
       }
 
       //MODEL_ATTR
-      const params = {Fecha: model.Fecha, Estado: model.Estado, idTipoPago: model.idTipoPago, idComprador: model.idComprador, idProveedor: model.idProveedor};
+      const params = {Fecha: model.Fecha, Estado: model.Estado, Factura: model.Factura, idTipoPago: model.idTipoPago, idComprador: model.idComprador, idProveedor: model.idProveedor};
 
       axios.put(`./compras/${model.idTransaccion}`, params)
         .then(res=>{
@@ -451,6 +458,7 @@ export default {
           //MODEL_ATTR
           //this.model.Fecha = '';
           this.model.Estado = '';
+          this.model.Factura = '';
           this.model.idTipoPago = '';
           this.model.idComprador = '';
           this.model.idProveedor = '';
@@ -476,7 +484,7 @@ export default {
         const newModel = this.model;
         const newModel2 = this.models2;
 
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
         this.model2 = {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
 
         axios.post('./compras/devAll', { newModel, newModel2 })
@@ -514,11 +522,11 @@ export default {
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = true;
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NTP: '', idTipoPago: '', idComprador: '', NProv: '', idProveedor: ''};
       if(this.models2.length == 0)
       this.emptyTable = true;
       else
-      this.models2.splice(0, this.models2.length);
+      this.models2 = [];
     },
     changePage(page){
         this.pagination.current_page = page;

@@ -83,6 +83,7 @@ class CompraController extends Controller
         // Database operations
         $data_model = new Compra();
         $data_model->Fecha = $request->newModel['Fecha'];
+        $data_model->Factura = $request->newModel['Factura'];
         $data_model->Estado = $request->newModel['Estado'];
         $data_model->idTipoPago = $request->newModel['idTipoPago'];
         $data_model->idComprador = $request->newModel['idComprador'];
@@ -150,6 +151,7 @@ class CompraController extends Controller
         $data_model = new CompraDevolucion();
         $data_model->Fecha = $request->newModel['Fecha'];
         $data_model->Estado = $request->newModel['Estado'];
+        $data_model->Factura = $request->newModel['Factura'];
         $data_model->idProveedor = $request->newModel['idProveedor'];
         $data_model->idComprador = $request->newModel['idComprador'];
 

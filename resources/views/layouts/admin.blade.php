@@ -34,7 +34,7 @@
 
       <!-- Sidebar -->
       <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading"><a href="{{ asset('./home') }}" class="list-group-item list-group-item-action bg-light"> <img width="25" style="margin-top: -5px; " src="{{ asset('./img/logomini.png') }}" /> <small style="color: DarkBlue;">Nueva Inglaterra</small></a></div>
+        <div class="sidebar-heading"> <div class="list-group-item list-group-item-action bg-light"> <img width="25" style="margin-top: -5px; " src="{{ asset('./img/logomini.png') }}" /> <a style="text-decoration: none;" href="{{ asset('./home') }}"> <small style="color: DarkBlue;">Nueva Inglaterra</small></a></div></div>
         <div class="list-group list-group-flush">
           <a class="list-group-item list-group-item-action bg-dark" style="color: white;">CATÁLOGOS</a>
           <a href="{{ asset('./almacenes') }}" class="list-group-item list-group-item-action bg-light">Almacenes</a>

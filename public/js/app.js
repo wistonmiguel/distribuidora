@@ -2637,6 +2637,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -2666,6 +2668,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Fecha: '',
       FechaESP: '',
       idTransaccion: '',
+      Factura: '',
       Estado: '',
       NTP: '',
       idTipoPago: '',
@@ -2764,6 +2767,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
@@ -2799,6 +2803,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = false;
+      this.models2 = [];
+      this.emptyTable = true;
       var today = new Date();
       this.model.Fecha = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     },
@@ -2810,6 +2816,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
@@ -2820,6 +2827,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
       this.model.Estado = item.Estado;
+      this.model.Factura = item.Factura;
       this.model.NTP = item.NTP;
       this.model.idTipoPago = item.idTipoPago;
       this.model.idComprador = item.idComprador;
@@ -2834,7 +2842,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           id: item.idTransaccion
         }
       }).then(function (res) {
-        _this4.models2 = null;
+        _this4.models2 = [];
         _this4.models2 = res.data.model; // AQUI RECORRER models2 para sumar al detalle total
         //this.TotalCompra = TotalCompras();
       });
@@ -2851,6 +2859,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var params = {
         Fecha: model.Fecha,
         Estado: model.Estado,
+        Factura: model.Factura,
         idTipoPago: model.idTipoPago,
         idComprador: model.idComprador,
         idProveedor: model.idProveedor
@@ -2863,6 +2872,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         //this.model.Fecha = '';
 
         _this5.model.Estado = '';
+        _this5.model.Factura = '';
         _this5.model.idTipoPago = '';
         _this5.model.idComprador = '';
         _this5.model.idProveedor = '';
@@ -2895,6 +2905,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           Fecha: '',
           FechaESP: '',
           idTransaccion: '',
+          Factura: '',
           Estado: '',
           NTP: '',
           idTipoPago: '',
@@ -2950,6 +2961,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
@@ -2957,7 +2969,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         NProv: '',
         idProveedor: ''
       };
-      if (this.models2.length == 0) this.emptyTable = true;else this.models2.splice(0, this.models2.length);
+      if (this.models2.length == 0) this.emptyTable = true;else this.models2 = [];
     },
     changePage: function changePage(page) {
       this.pagination.current_page = page;
@@ -6054,6 +6066,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -6083,6 +6097,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Fecha: '',
       FechaESP: '',
       idTransaccion: '',
+      Factura: '',
       Estado: '',
       NTP: '',
       idTipoPago: '',
@@ -6181,13 +6196,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
-        NVend: '',
         idVendedor: '',
         NCli: '',
-        idCliente: ''
+        idProveedor: ''
       };
       this.model2 = {
         idProducto: '',
@@ -6217,6 +6232,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = false;
+      this.models2 = [];
+      this.emptyTable = true;
       var today = new Date();
       this.model.Fecha = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     },
@@ -6228,17 +6245,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
-        NVend: '',
         idVendedor: '',
         NCli: '',
-        idCliente: ''
+        idProveedor: ''
       };
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
       this.model.Estado = item.Estado;
+      this.model.Factura = item.Factura;
       this.model.NTP = item.NTP;
       this.model.idTipoPago = item.idTipoPago;
       this.model.NVend = item.NVend;
@@ -6254,7 +6272,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           id: item.idTransaccion
         }
       }).then(function (res) {
-        _this4.models2 = null;
+        _this4.models2 = [];
         _this4.models2 = res.data.model; // AQUI RECORRER models2 para sumar al detalle total
         //this.TotalCompra = TotalCompras();
       });
@@ -6270,6 +6288,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var params = {
         Fecha: model.Fecha,
+        Factura: model.Factura,
         Estado: model.Estado,
         idTipoPago: model.idTipoPago,
         idVendedor: model.idVendedor,
@@ -6285,13 +6304,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           Fecha: '',
           FechaESP: '',
           idTransaccion: '',
+          Factura: '',
           Estado: '',
           NTP: '',
           idTipoPago: '',
-          NVend: '',
           idVendedor: '',
           NCli: '',
-          idCliente: ''
+          idProveedor: ''
         };
 
         _this5.changePage(1);
@@ -6322,13 +6341,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           Fecha: '',
           FechaESP: '',
           idTransaccion: '',
+          Factura: '',
           Estado: '',
           NTP: '',
           idTipoPago: '',
-          NVend: '',
           idVendedor: '',
           NCli: '',
-          idCliente: ''
+          idProveedor: ''
         };
         this.model2 = {
           idProducto: '',
@@ -6378,15 +6397,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
-        NVend: '',
         idVendedor: '',
         NCli: '',
-        idCliente: ''
+        idProveedor: ''
       };
-      if (this.models2.length == 0) this.emptyTable = true;else this.models2.splice(0, this.models2.length);
+      if (this.models2.length == 0) this.emptyTable = true;else this.models2 = [];
     },
     changePage: function changePage(page) {
       this.pagination.current_page = page;
@@ -43191,6 +43210,35 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                _vm._v("No. Factura")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.model.Factura,
+                    expression: "model.Factura"
+                  }
+                ],
+                staticClass: "form-control mb-2",
+                attrs: {
+                  type: "text",
+                  placeholder: "Ingresar en el caso que se reciba una Factura"
+                },
+                domProps: { value: _vm.model.Factura },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.model, "Factura", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                 _vm._v("Estado")
               ]),
               _vm._v(" "),
@@ -48795,8 +48843,37 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                _vm._v("No. Factura")
+              ]),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
                 _vm._v("Tipo de Pago")
               ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.model.Factura,
+                    expression: "model.Factura"
+                  }
+                ],
+                staticClass: "form-control mb-2",
+                attrs: {
+                  type: "text",
+                  placeholder: "Ingresar en el caso que se reciba una Factura"
+                },
+                domProps: { value: _vm.model.Factura },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.model, "Factura", $event.target.value)
+                  }
+                }
+              }),
               _vm._v(" "),
               _c(
                 "select",
