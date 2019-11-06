@@ -13,7 +13,7 @@
         <div class="card-header" v-if="modoDetalle">
             <div class="row">
                 <div class="col-9" style="padding-top: 7px;">
-                    &nbsp; <b>FACTURA <span style="color: red;"> No. {{ model.idTransaccion }} </span></b>
+                    &nbsp; <b>DETALLE DE LA TRANSACCION DE VENTA No. {{ model.idTransaccion }} </b>
                 </div>
                 <div class="col-3 text-right">
                     <button class="btn btn-danger text-right" @click="realizarDevolucion">REALIZAR DEVOLUCIÓN</button>
@@ -25,6 +25,25 @@
                 <div v-if="modoDetalle">
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
+
+                        <div class="row mb-4">
+
+                        <div class="col-9">
+
+                        </div>
+
+                        <div class="col-3">
+                            <div class="card text-right">
+                                <div class="card-header primary bg-dark text-white border-dark">
+                                    <b>No. Factura</b>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ model.Factura }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        </div>
 
                         <div class="row">
 
