@@ -3461,6 +3461,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -3481,6 +3500,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Fecha: '',
       FechaESP: '',
       idTransaccion: '',
+      Factura: '',
       Estado: '',
       NCompr: '',
       idComprador: '',
@@ -3565,6 +3585,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NCompr: '',
         idComprador: '',
@@ -3574,6 +3595,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
       this.model.Estado = item.Estado;
+      this.model.Factura = item.Factura;
       this.model.NCompr = item.NCompr;
       this.model.idTipoPago = item.idTipoPago;
       this.model.idComprador = item.idComprador;
@@ -3605,6 +3627,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NCompr: '',
         idComprador: '',
@@ -6678,6 +6701,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -6698,6 +6740,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Fecha: '',
       FechaESP: '',
       idTransaccion: '',
+      Factura: '',
       Estado: '',
       NCli: '',
       idCliente: '',
@@ -6782,6 +6825,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NCli: '',
         idCliente: '',
@@ -6791,6 +6835,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
       this.model.Estado = item.Estado;
+      this.model.Factura = item.Factura;
       this.model.NVend = item.NVend;
       this.model.idTipoPago = item.idTipoPago;
       this.model.idVendedor = item.idVendedor;
@@ -6822,6 +6867,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Fecha: '',
         FechaESP: '',
         idTransaccion: '',
+        Factura: '',
         Estado: '',
         NCli: '',
         idCliente: '',
@@ -44535,10 +44581,26 @@ var render = function() {
         _vm.modoDetalle
           ? _c("div", [
               _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "row mb-4" }, [
+                  _c("div", { staticClass: "col-9" }),
+                  _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
                       _vm._m(0),
+                      _vm._v(" "),
+                      _c("ul", { staticClass: "list-group list-group-flush" }, [
+                        _c("li", { staticClass: "list-group-item" }, [
+                          _vm._v(_vm._s(_vm.model.Factura))
+                        ])
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("div", { staticClass: "card text-right" }, [
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -44550,7 +44612,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _vm._m(1),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -44562,7 +44624,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -44574,7 +44636,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _vm._m(3),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -44593,7 +44655,7 @@ var render = function() {
                             attrs: { id: "tablaDetalle" }
                           },
                           [
-                            _vm._m(4),
+                            _vm._m(5),
                             _vm._v(" "),
                             _c(
                               "tbody",
@@ -44669,7 +44731,7 @@ var render = function() {
         _vm._v(" "),
         _vm.modoVista
           ? _c("table", { staticClass: "table" }, [
-              _vm._m(5),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -44815,6 +44877,16 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header primary bg-dark text-white border-dark" },
+      [_c("b", [_vm._v("No. Factura")])]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -49765,10 +49837,26 @@ var render = function() {
         _vm.modoDetalle
           ? _c("div", [
               _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "row mb-4" }, [
+                  _c("div", { staticClass: "col-9" }),
+                  _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
                       _vm._m(1),
+                      _vm._v(" "),
+                      _c("ul", { staticClass: "list-group list-group-flush" }, [
+                        _c("li", { staticClass: "list-group-item" }, [
+                          _vm._v(_vm._s(_vm.model.Factura))
+                        ])
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("div", { staticClass: "card text-right" }, [
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -49780,7 +49868,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -49792,7 +49880,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _vm._m(3),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -49804,7 +49892,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "card text-right" }, [
-                      _vm._m(4),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("ul", { staticClass: "list-group list-group-flush" }, [
                         _c("li", { staticClass: "list-group-item" }, [
@@ -49823,7 +49911,7 @@ var render = function() {
                             attrs: { id: "tablaDetalle" }
                           },
                           [
-                            _vm._m(5),
+                            _vm._m(6),
                             _vm._v(" "),
                             _c(
                               "tbody",
@@ -49899,7 +49987,7 @@ var render = function() {
         _vm._v(" "),
         _vm.modoVista
           ? _c("table", { staticClass: "table" }, [
-              _vm._m(6),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -50054,6 +50142,16 @@ var staticRenderFns = [
         _c("b", [_vm._v("DETALLE DE DEVOLUCION DE VENTA")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header primary bg-dark text-white border-dark" },
+      [_c("b", [_vm._v("No. Factura")])]
+    )
   },
   function() {
     var _vm = this

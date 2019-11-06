@@ -79,6 +79,7 @@ class CompraDevolucionController extends Controller
         $data_model = new CompraDevolucion();
         $data_model->idProducto = $request->idProducto;
         $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Factura = $request->Factura;
         $data_model->Cantidad = $request->Cantidad;
         $data_model->Precio = $request->Precio;
         $data_model->save();

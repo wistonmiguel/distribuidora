@@ -80,6 +80,7 @@ class VentaDevolucionController extends Controller
         $data_model = new VentaDevolucion();
         $data_model->idProducto = $request->idProducto;
         $data_model->idTransaccion = $request->idTransaccion;
+        $data_model->Factura = $request->Factura;
         $data_model->Cantidad = $request->Cantidad;
         $data_model->Precio = $request->Precio;
         $data_model->save();

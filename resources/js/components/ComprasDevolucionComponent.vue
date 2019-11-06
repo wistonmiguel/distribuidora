@@ -16,6 +16,25 @@
                     <div class="form-group">
                         <!-- MODEL_ATTR -->
 
+                        <div class="row mb-4">
+
+                        <div class="col-9">
+
+                        </div>
+
+                        <div class="col-3">
+                            <div class="card text-right">
+                                <div class="card-header primary bg-dark text-white border-dark">
+                                    <b>No. Factura</b>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ model.Factura }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        </div>
+
                         <div class="row">
 
                         <div class="col-3">
@@ -171,7 +190,7 @@ export default {
     },
     offset: 1,
       //MODEL_ATTR
-      model: {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''},
+      model: {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''},
       model2: {idProducto: '', Producto: '', Cantidad: '', Precio: '', Total: ''}
     }
   },
@@ -236,11 +255,12 @@ export default {
     },
     viewDetails(item){
         //MODEL_ATTR
-        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''};
+        this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''};
 
         this.model.FechaESP = item.FechaESP;
         this.model.idTransaccion = item.idTransaccion;
         this.model.Estado = item.Estado;
+        this.model.Factura = item.Factura;
         this.model.NCompr = item.NCompr;
         this.model.idTipoPago = item.idTipoPago;
         this.model.idComprador = item.idComprador;
@@ -270,7 +290,7 @@ export default {
       this.modoCrearDetalle = false;
       this.modoDetalle = false;
       this.modoVista = true;
-      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''};
+      this.model = {Fecha: '', FechaESP: '', idTransaccion: '', Factura: '', Estado: '', NCompr: '', idComprador: '', NProv: '', idProveedor: ''};
       if(this.models2.length == 0)
       this.emptyTable = true;
       else

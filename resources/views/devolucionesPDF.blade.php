@@ -23,6 +23,7 @@
                         <tr style="background-color: DarkBlue; color: white; text-align: center;">
                         <!-- MODEL_ATTR -->
                         <th>Fecha</th>
+                        <th>No. Factura</th>
                         <th>Cliente</th>
                         <th>Vendedor</th>
                         <th>Producto</th>
@@ -45,6 +46,7 @@
 
                         <tr>
                             <td>{{ $model->FechaESP }}</td>
+                            <td>{{ $model->Factura }}</td>
                             <td>{{ $model->NCli }}</td>
                             <td>{{ $model->NVend }}</td>
                             <td>{{ $model->Descripcion }}</td>
@@ -54,7 +56,7 @@
                         </tr>
                         @endforeach
                         <tr>
-                        <td colspan="4"></td>
+                        <td colspan="6"></td>
                         <td>Total Mensual</td>
                         <td>C$ @php echo $total; @endphp</td>
                         </tr>
