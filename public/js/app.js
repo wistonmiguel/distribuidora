@@ -3716,13 +3716,13 @@ __webpack_require__.r(__webpack_exports__);
       window.open('./compras/comprasMesPDF', 'Informe de Compras', 'width=462,height=642,scrollbars=YES');
     },
     funcion2: function funcion2() {
-      window.open('./ventas/ventasJabonBaño', 'Informe de Ventas', 'width=462,height=642,scrollbars=YES');
+      window.open('./ventas/ventasJabonBañoPDF', 'Informe de Ventas', 'width=462,height=642,scrollbars=YES');
     },
     funcion3: function funcion3() {
       window.open('./ventasdevolucion/devolucionesPDF', 'Informe de Devoluciones sobre Ventas', 'width=462,height=642,scrollbars=YES');
     },
     funcion4: function funcion4() {
-      alert("cargar informe 4");
+      window.open('./ventas/ventasMenudeoPDF', 'Informe de Ventas al Menudeo', 'width=462,height=642,scrollbars=YES');
     }
   }
 });
@@ -6129,6 +6129,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -6159,6 +6164,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       FechaESP: '',
       idTransaccion: '',
       Factura: '',
+      Distribucion: '',
       Estado: '',
       NTP: '',
       idTipoPago: '',
@@ -6258,6 +6264,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Factura: '',
+        Distribucion: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
@@ -6307,6 +6314,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Factura: '',
+        Distribucion: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
@@ -6316,6 +6324,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       this.model.FechaESP = item.FechaESP;
       this.model.idTransaccion = item.idTransaccion;
+      this.model.Distribucion = item.Distribucion;
       this.model.Estado = item.Estado;
       this.model.Factura = item.Factura;
       this.model.NTP = item.NTP;
@@ -6350,6 +6359,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var params = {
         Fecha: model.Fecha,
         Factura: model.Factura,
+        Distribucion: model.Distribucion,
         Estado: model.Estado,
         idTipoPago: model.idTipoPago,
         idVendedor: model.idVendedor,
@@ -6366,6 +6376,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           FechaESP: '',
           idTransaccion: '',
           Factura: '',
+          Distribucion: '',
           Estado: '',
           NTP: '',
           idTipoPago: '',
@@ -6403,6 +6414,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           FechaESP: '',
           idTransaccion: '',
           Factura: '',
+          Distribucion: '',
           Estado: '',
           NTP: '',
           idTipoPago: '',
@@ -6459,6 +6471,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         FechaESP: '',
         idTransaccion: '',
         Factura: '',
+        Distribucion: '',
         Estado: '',
         NTP: '',
         idTipoPago: '',
@@ -49000,10 +49013,6 @@ var render = function() {
                 _vm._v("No. Factura")
               ]),
               _vm._v(" "),
-              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
-                _vm._v("Tipo de Pago")
-              ]),
-              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -49028,6 +49037,10 @@ var render = function() {
                   }
                 }
               }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                _vm._v("Tipo de Pago")
+              ]),
               _vm._v(" "),
               _c(
                 "select",
@@ -49069,6 +49082,53 @@ var render = function() {
                   )
                 }),
                 0
+              ),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "formGroupExampleInput" } }, [
+                _vm._v("Tipo de Distribucion")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.model.Distribucion,
+                      expression: "model.Distribucion"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.model,
+                        "Distribucion",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "Mayoreo" } }, [
+                    _vm._v("Mayoreo")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Menudeo" } }, [
+                    _vm._v("Menudeo")
+                  ])
+                ]
               ),
               _vm._v(" "),
               _c("label", { attrs: { for: "formGroupExampleInput" } }, [
@@ -62819,14 +62879,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/js/components/InformeComponent.vue ***!
   \******************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InformeComponent_vue_vue_type_template_id_54a9f82c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InformeComponent.vue?vue&type=template&id=54a9f82c& */ "./resources/js/components/InformeComponent.vue?vue&type=template&id=54a9f82c&");
 /* harmony import */ var _InformeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InformeComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/InformeComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _InformeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _InformeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -62856,7 +62917,7 @@ component.options.__file = "resources/js/components/InformeComponent.vue"
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/InformeComponent.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

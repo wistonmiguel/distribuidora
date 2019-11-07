@@ -62,14 +62,14 @@ export default {
         window.open('./compras/comprasMesPDF', 'Informe de Compras' , 'width=462,height=642,scrollbars=YES');
     },
     funcion2(){
-        window.open('./ventas/ventasJabonBaño', 'Informe de Ventas' , 'width=462,height=642,scrollbars=YES');
+        window.open('./ventas/ventasJabonBañoPDF', 'Informe de Ventas' , 'width=462,height=642,scrollbars=YES');
     },
     funcion3(){
         window.open('./ventasdevolucion/devolucionesPDF', 'Informe de Devoluciones sobre Ventas' , 'width=462,height=642,scrollbars=YES');
     },
     funcion4(){
-    alert("cargar informe 4");
+        window.open('./ventas/ventasMenudeoPDF', 'Informe de Ventas al Menudeo' , 'width=462,height=642,scrollbars=YES');
     }
-}
+  }
 }
 </script>

@@ -84,6 +84,7 @@ class VentaController extends Controller
         // Database operations
         $data_model = new Venta();
         $data_model->Fecha = $request->newModel['Fecha'];
+        $data_model->Distribucion = $request->newModel['Distribucion'];
         $data_model->Estado = $request->newModel['Estado'];
         $data_model->Factura = $request->newModel['Factura'];
         $data_model->idTipoPago = $request->newModel['idTipoPago'];
@@ -233,7 +234,7 @@ class VentaController extends Controller
         $data_model->delete();
     }
 
-    public function ventasJabonBaño()
+    public function ventasJabonBañoPDF()
     {
         $data_model = Venta::select(DB::raw("DATE_FORMAT(venta.Fecha, '%d/%m/%Y') AS FechaESP"), "venta.*", "detalleventa.*","producto.Descripcion", "cliente.Nombre AS NCli")
         ->join("detalleventa","detalleventa.idTransaccion","=","venta.idTransaccion")
@@ -241,7 +242,19 @@ class VentaController extends Controller
         ->join("cliente","cliente.idCliente","=","venta.idCliente")
         ->where("producto.Descripcion","=","Jabon de Baño")->get();
 
-        $pdf = PDF::loadView('ventasJabonBaño', compact('data_model'));
+        $pdf = PDF::loadView('ventasJabonBañoPDF', compact('data_model'));
+        return $pdf->stream();
+     }
+
+     public function ventasMenudeoPDF()
+    {
+        $data_model = Venta::select(DB::raw("DATE_FORMAT(venta.Fecha, '%d/%m/%Y') AS FechaESP"), "venta.*", "detalleventa.*","producto.Descripcion", "cliente.Nombre AS NCli")
+        ->join("detalleventa","detalleventa.idTransaccion","=","venta.idTransaccion")
+        ->join("producto","producto.idProducto","=","detalleventa.idProducto")
+        ->join("cliente","cliente.idCliente","=","venta.idCliente")
+        ->where("venta.Distribucion","=","Menudeo")->get();
+
+        $pdf = PDF::loadView('ventasMenudeoPDF', compact('data_model'))->setPaper('legal', 'landscape');
         return $pdf->stream();
      }
 }

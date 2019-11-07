@@ -42,19 +42,19 @@
                                 $total += ($model->Cantidad * $model->Precio);
                             @endphp
 
-                        <tr>
+                        <tr style="text-align: center">
                             <td>{{ $model->FechaESP }}</td>
                             <td>{{ $model->NCli }}</td>
-                            <td>{{ $model->Descripcion }}</td>
+                            <td style="text-align: left;">{{ $model->Descripcion }}</td>
                             <td>{{ $model->Cantidad }}</td>
                             <td>C$ {{ $model->Precio }}</td>
                             <td>C$ {{ $model->Cantidad * $model->Precio }} </td>
                         </tr>
                         @endforeach
-                        <tr>
+                        <tr style="text-align: center;">
                         <td colspan="3"></td>
                         <td colspan="2">Venta Total en Jabon de Baño</td>
-                        <td>C$ @php echo $total; @endphp</td>
+                        <td>C$ @php echo sprintf('%0.2f', $total) @endphp</td>
                         </tr>
                     </tbody>
                 </table>

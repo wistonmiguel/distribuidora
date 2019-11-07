@@ -22,8 +22,8 @@
                     <thead class="thead-dark">
                         <tr style="background-color: DarkBlue; color: white; text-align: center;">
                         <!-- MODEL_ATTR -->
-                        <th>Fecha</th>
                         <th>Proveedor</th>
+                        <th>Fecha</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Precio de Compra</th>
@@ -42,19 +42,19 @@
                                 $total += ($model->Cantidad * $model->Precio);
                             @endphp
 
-                        <tr>
-                            <td>{{ $model->FechaESP }}</td>
+                        <tr style="text-align: center;">
                             <td>{{ $model->Proveedor }}</td>
-                            <td>{{ $model->Descripcion }}</td>
+                            <td>{{ $model->FechaESP }}</td>
+                            <td style="text-align: left;">{{ $model->Descripcion }}</td>
                             <td>{{ $model->Cantidad }}</td>
-                            <td>C$ {{ $model->Precio }}</td>
-                            <td>C$ {{ $model->Cantidad * $model->Precio }} </td>
+                            <td>C$ {{ sprintf('%0.2f', $model->Precio) }}</td>
+                            <td>C$ {{ sprintf('%0.2f', $model->Cantidad * $model->Precio) }} </td>
                         </tr>
                         @endforeach
-                        <tr>
+                        <tr style="text-align: center;">
                         <td colspan="4"></td>
                         <td>Total Mensual</td>
-                        <td>C$ @php echo $total; @endphp</td>
+                        <td>C$ @php echo sprintf('%0.2f', $total) @endphp</td>
                         </tr>
                     </tbody>
                 </table>
