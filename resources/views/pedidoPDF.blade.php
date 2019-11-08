@@ -17,16 +17,16 @@
 
             <h1>Distribuidora Nueva Inglaterra</h1>
 
-            <div class="row">
+            <div class="row" style="margin-left: 87.5%;">
             <table class="table" id="tablaDetalle" border="1" style="text-align: rigth  ;">
                     <thead class="thead-dark">
                         <tr>
                         <!-- MODEL_ATTR -->
-                        <th style="background-color: DarkBlue; color: white; text-align: center;">FACTURA</th>
+                        <th style="background-color: DarkBlue; color: white; text-align: center;">No. Pedido</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr style="text-align: center;">
                             <td>{{ $data_model[0]['idTransaccion'] }}</td>
                         </tr>
                     </tbody>
@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr style="text-align: center;">
                             <td>{{ $data_model[0]['FechaESP'] }}</td>
                             <td>{{ $data_model[0]['Estado'] }}</td>
                             <td>{{ $data_model[0]['NCli'] }}</td>
@@ -83,18 +83,17 @@
                                 $total += ($model->Cantidad * $model->Precio);
                             @endphp
 
-                        <tr>
+                        <tr style="text-align: center;">
                             <td>{{ $model->idProducto }}</td>
                             <td>{{ $model->Descripcion }}</td>
                             <td>{{ $model->Cantidad }}</td>
-                            <td>C$ {{ $model->Precio }}</td>
-                            <td>C$ {{ $model->Cantidad * $model->Precio }} </td>
-                        </tr>
+                            <td>C$ {{ sprintf('%0.2f', $model->Precio) }}</td>
+                            <td>C$ {{ sprintf('%0.2f', $model->Cantidad * $model->Precio) }} </td>
                         @endforeach
-                        <tr>
+                        <tr style="text-align: center;">
                         <td colspan="3"></td>
                         <td>Total</td>
-                        <td>C$ @php echo $total; @endphp</td>
+                        <td>C$ @php echo sprintf('%0.2f', $total) @endphp</td>
                         </tr>
                     </tbody>
                 </table>
